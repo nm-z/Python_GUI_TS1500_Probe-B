@@ -6,11 +6,9 @@ The measurement system is designed to collect and display data from various devi
 
 ### Data Acquisition and Display
 
-- **Temperature** (from digital thermometer)
+- **Temperature** (using TEMPer1F)
 - **VNA data** (using miniVNA Tiny)
-- **Angle Position**:
-  - Accelerometer data (for tilt and potentially liquid level)
-  - Digital Electronic Level
+- **Angle Position** (using GY-521 MPU-6050)
 
 ### Automatic Logging Controls
 
