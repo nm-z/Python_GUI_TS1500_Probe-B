@@ -1,82 +1,111 @@
 # Measurement System Overview
 
-The measurement system is designed to collect and display data from various devices, including a digital thermometer, a miniVNA Tiny, and an accelerometer. The system allows users to select the measurement frequency in seconds and features automatic logging controls, data visualization, and file management.
+This project implements a comprehensive measurement system with various sensors and data visualization capabilities, utilizing a Raspberry Pi 4 as the central controller and an AURSINC NanoVNA-H Vector Network Analyzer for VNA measurements.
 
-## Main Components
+## Hardware Components
 
-### Data Acquisition and Display
+### VNA: AURSINC NanoVNA-H Vector Network Analyzer
 
-- **Temperature** (using TEMPer1F)
-- **VNA data** (using miniVNA Tiny)
-- **Angle Position** (using GY-521 MPU-6050)
+- Frequency range: 10kHz to 1.5GHz
+- Capable of performing sweeps from 1 MHz to 20 MHz with 1568 steps
+- Built-in display for standalone operation
+- MicroSD card slot for data storage
+- Cost-effective solution at $35.99
 
-### Automatic Logging Controls
+#### Advantages over Mini-VNA Tiny:
+- Lower frequency coverage
+- Built-in display
+- Data storage capabilities
+- Active open-source community
+- Significantly lower cost
 
-- Start/Stop logging button
-- Logging interval setting
+### Microcontroller: Raspberry Pi 4
 
-### Data Visualization
+- Quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz
+- 2GB, 4GB, or 8GB RAM options
+- Runs full Linux OS
+- Extensive connectivity (Ethernet, Wi-Fi, Bluetooth, USB 3.0)
+- 40 GPIO pins, supports various interfaces (I2C, SPI, UART)
 
-- Real-time graphs for temperature, tilt, and liquid level
+#### Advantages over Arduino:
+- Significantly more processing power
+- Much larger memory capacity
+- Full operating system support
+- Better connectivity options
+- Larger software ecosystem
+- Greater scalability for future expansions
 
-### File Management
+### Sensors
 
-- Log file naming option
-- Export data button
+1. **Temperature Sensor**: MAX31865 RTD Amplifier + PT100 Probe
+   - High-precision temperature readings
+   - SPI interface for Raspberry Pi connection
 
-## GUI Features
+2. **Angle Position Sensor**: BNO055 Absolute Orientation Sensor
+   - Accurate tilt and orientation data
+   - I2C interface for Raspberry Pi connection
 
-1. Real-time display of data from digital thermometer, VNA, and accelerometer
-2. Start/Stop button for automated logging
-3. Adjustable logging interval
-4. Real-time graph showing temperature trends
-5. Option to name and export the log file
+3. **Stepper Motor + Driver**: NEMA 17 Stepper Motor + A4988 Driver
+   - For automated angle adjustments of the sensor in the liquid container
+   - Controlled by the Raspberry Pi via GPIO
 
-## Device Communication and Implementation
+## Setup
 
-### Mini VNA Tiny (VNA Data)
+1. Connect NanoVNA-H to a USB port on the Raspberry Pi
+2. Connect MAX31865 RTD Amplifier to the Raspberry Pi's SPI pins
+3. Connect BNO055 sensor to the Raspberry Pi's I2C pins
+4. Connect A4988 stepper driver to GPIO pins for controlling the NEMA 17 motor
 
-- Library: **pySerial**
-- Installation: `pip install pyserial`
+## Software
 
-### TEMPer1F (USB Temperature Sensor)
+### Python Script Functionality
 
-- Library: **temper-python**
-- Installation: `pip install temperusb`
+1. Initialize all sensors and the VNA
+2. Continuous loop for:
+   - Reading temperature from the MAX31865
+   - Collecting data from the NanoVNA-H
+   - Getting orientation data from the BNO055
+   - Logging all data with accurate timestamps
+   - Adjusting the stepper motor to change sensor angle at predetermined intervals
 
-### GY-521 MPU-6050 (Accelerometer/Gyroscope)
+### Recommended Libraries
 
-- Library: **mpu6050-raspberrypi**
-- Installation: `pip install mpu6050-raspberrypi`
+- `python-nanovna`: for interfacing with the NanoVNA-H
+- `adafruit-circuitpython-max31865`: for the temperature sensor
+- `adafruit-circuitpython-bno055`: for the orientation sensor
+- `RpiMotorLib`: for controlling the stepper motor
 
-### To read from all these devices simultaneously and record the time:
+## Key Features
 
-1. Use the `threading` module to read from each device concurrently.
-2. Use the `time` module to record timestamps for each reading.
-
-### USB connection
-
-- Connect to the miniVNA Tiny using the identified serial port.
-- Read data from the miniVNA Tiny using the `pyserial` connection.
-
-## Future Enhancements
-
-- Host the GUI on a port for remote viewing of live data without being the host of the connected devices
+- Fully automated data collection
+- Synchronized timestamps for all data points
+- Automated angle adjustments
+- Continuous operation without human intervention
+- Real-time data visualization
+- Customizable measurement frequency
+- Automatic logging controls
+- File management and data export capabilities
 
 ## Development Steps
 
-1. Set up device communications
-2. Design and implement GUI layout
-3. Develop data acquisition and display functions
-4. Implement logging and data export functionality
-5. Create real-time graphing capabilities
-6. Add start/stop and interval control for logging
-7. Implement file management features
-8. Test and refine the system
+1. Set up hardware connections and test individual components
+2. Implement device communication for each sensor and the NanoVNA-H
+3. Develop data acquisition and synchronization routines
+4. Create GUI for real-time data display and system control
+5. Implement logging and data export functionality
+6. Develop automated angle adjustment system
+7. Integrate all components into a cohesive system
+8. Extensive testing and refinement
 
-## Notes
+## Future Enhancements
 
-- Ensure proper error handling for device communications
-- Consider multi-threading for smooth operation with multiple devices
-- Implement data validation to ensure accuracy
-- Design a user-friendly interface for easy operation
+- Remote viewing of live data via hosted GUI
+- Advanced data analysis and pattern recognition
+- Integration with cloud services for data backup and sharing
+
+## Important Considerations
+
+- Implement proper error handling and failsafes
+- Ensure accurate time synchronization across all measurements
+- Optimize power management for long-term operation
+- Develop a user-friendly interface for easy operation and monitoring
