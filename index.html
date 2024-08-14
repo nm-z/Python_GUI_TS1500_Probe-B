@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enhanced Automated Data Logger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enhanced Automated Data Logger</h1>
+    <table>
+        <tr>
+            <th>Measurement</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>{{ data.temperature }}</td>
+        </tr>
+        <tr>
+            <td>VNA Data</td>
+            <td>{{ data.vna_data }}</td>
+        </tr>
+        <tr>
+            <td>Accelerometer Angle</td>
+            <td>{{ data.accelerometer_angle }}</td>
+        </tr>
+        <tr>
+            <td>Digital Level Angle</td>
+            <td>{{ data.digital_level_angle }}</td>
+        </tr>
+    </table>
+</body>
+</html>

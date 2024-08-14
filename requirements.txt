@@ -1,0 +1,7 @@
+tkinter
+matplotlib
+pyserial
+temperusb
+mpu6050-raspberrypi
+pyserial
+flask
