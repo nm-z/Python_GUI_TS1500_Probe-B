@@ -108,3 +108,7 @@ This project implements a comprehensive measurement system with various sensors 
 - Ensure accurate time synchronization across all measurements
 - Optimize power management for long-term operation
 - Develop a user-friendly interface for easy operation and monitoring
+
+
+
+test github sync 
