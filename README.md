@@ -4,20 +4,19 @@ This project implements a comprehensive measurement system with various sensors 
 
 ## Hardware Components
 
-### VNA: AURSINC NanoVNA-H Vector Network Analyzer
+### VNA: Mini-VNA Tiny Vector Network Analyzer
 
-- Frequency range: 10kHz to 1.5GHz
-- Capable of performing sweeps from 1 MHz to 20 MHz with 1568 steps
-- Built-in display for standalone operation
-- MicroSD card slot for data storage
-- Cost-effective solution at $35.99
+- Frequency range: 1 MHz to 3 GHz
+- Capable of performing sweeps from 1 MHz to 20 MHz
+- USB connectivity for data transfer and control
+- Compact and portable design
+- Cost-effective solution
 
-#### Advantages over Mini-VNA Tiny:
-- Lower frequency coverage
-- Built-in display
-- Data storage capabilities
-- Active open-source community
-- Significantly lower cost
+#### Advantages of Mini-VNA Tiny:
+- Wide frequency range up to 3 GHz
+- Simple USB connectivity
+- Compact and portable form factor
+- Compatible with various software options
 
 ### Microcontroller: Raspberry Pi 4
 
@@ -51,7 +50,7 @@ This project implements a comprehensive measurement system with various sensors 
 
 ## Setup
 
-1. Connect NanoVNA-H to a USB port on the Raspberry Pi
+1. Connect Mini-VNA Tiny to a USB port on the Raspberry Pi
 2. Connect MAX31865 RTD Amplifier to the Raspberry Pi's SPI pins
 3. Connect BNO055 sensor to the Raspberry Pi's I2C pins
 4. Connect A4988 stepper driver to GPIO pins for controlling the NEMA 17 motor
@@ -60,17 +59,17 @@ This project implements a comprehensive measurement system with various sensors 
 
 ### Python Script Functionality
 
-1. Initialize all sensors and the VNA
+1. Initialize all sensors and the Mini-VNA Tiny
 2. Continuous loop for:
    - Reading temperature from the MAX31865
-   - Collecting data from the NanoVNA-H
+   - Collecting data from the Mini-VNA Tiny
    - Getting orientation data from the BNO055
    - Logging all data with accurate timestamps
    - Adjusting the stepper motor to change sensor angle at predetermined intervals
 
 ### Recommended Libraries
 
-- `python-nanovna`: for interfacing with the NanoVNA-H
+- `minivna-python`: for interfacing with the Mini-VNA Tiny
 - `adafruit-circuitpython-max31865`: for the temperature sensor
 - `adafruit-circuitpython-bno055`: for the orientation sensor
 - `RpiMotorLib`: for controlling the stepper motor
@@ -89,7 +88,7 @@ This project implements a comprehensive measurement system with various sensors 
 ## Development Steps
 
 1. Set up hardware connections and test individual components
-2. Implement device communication for each sensor and the NanoVNA-H
+2. Implement device communication for each sensor and the Mini-VNA Tiny
 3. Develop data acquisition and synchronization routines
 4. Create GUI for real-time data display and system control
 5. Implement logging and data export functionality
