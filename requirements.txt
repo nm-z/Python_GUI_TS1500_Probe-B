@@ -5,3 +5,6 @@ temperusb
 mpu6050-raspberrypi
 pyserial
 flask
+networkx
+matplotlib
+scipy

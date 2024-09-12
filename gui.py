@@ -50,6 +50,7 @@ class EnhancedAutoDataLoggerGUI:
         self.web_port_enabled = False
         self.vna_connected = False
         self.temp_sensor_connected = False
+        self.arduino = None
         
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window close event
     
@@ -141,18 +142,25 @@ class EnhancedAutoDataLoggerGUI:
         self.temp_status_label = ttk.Label(device_frame, text="Disconnected", foreground="red")
         self.temp_status_label.grid(row=1, column=2, padx=5)
         
+        ttk.Label(device_frame, text="Arduino Port:").grid(row=2, column=0, sticky="w", pady=5)
+        self.arduino_port = ttk.Combobox(device_frame, values=self.get_usb_ports(), state="readonly", width=15)
+        self.arduino_port.grid(row=2, column=1, pady=5)
+        self.arduino_port.bind("<<ComboboxSelected>>", self.on_arduino_port_selected)
+        self.arduino_status_label = ttk.Label(device_frame, text="Disconnected", foreground="red")
+        self.arduino_status_label.grid(row=2, column=2, padx=5)
+        
         # Export to CSV button
-        ttk.Button(device_frame, text="Export to CSV", command=self.save_to_csv).grid(row=2, column=0, columnspan=2, padx=5, pady=5)
+        ttk.Button(device_frame, text="Export to CSV", command=self.save_to_csv).grid(row=3, column=0, columnspan=2, padx=5, pady=5)
         
         # File name entry
-        ttk.Label(device_frame, text="File Name:").grid(row=3, column=0, sticky="w")
+        ttk.Label(device_frame, text="File Name:").grid(row=4, column=0, sticky="w")
         self.file_name = ttk.Entry(device_frame, width=20)
         self.file_name.insert(0, "data.csv")
-        self.file_name.grid(row=3, column=1, padx=5, pady=5)
+        self.file_name.grid(row=4, column=1, padx=5, pady=5)
         
         # Web Port toggle button
         self.web_button = ttk.Button(device_frame, text="Enable Web Port", command=self.toggle_web_port)
-        self.web_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
+        self.web_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
     
     def get_usb_ports(self):
         ports = [port.device for port in comports()]
@@ -420,6 +428,38 @@ sudo usermod -a -G dialout {current_user}
         copy_button.pack(pady=10)
         
         tk.Label(dialog, text="After running these commands, unplug and replug the TEMPer1F device, then restart this application.").pack(pady=10)
+
+    def setup_arduino(self, port):
+        try:
+            self.arduino = serial.Serial(port, 115200)
+            print(f"Connected to Arduino on port: {port}")
+        except Exception as e:
+            print(f"Error connecting to Arduino: {e}")
+            messagebox.showerror("Connection Error", f"Error connecting to Arduino: {e}")
+    
+    def read_tilt_angle(self):
+        if self.arduino:
+            self.arduino.write(b"GET_TILT\n")
+            response = self.arduino.readline().decode().strip()
+            if response.startswith("TILT_ANGLE:"):
+                tilt_angle = float(response.split(":")[1])
+                return tilt_angle
+        return None
+    
+    def set_stepper_angle(self, angle):
+        if self.arduino:
+            command = f"SET_ANGLE:{angle}\n".encode()
+            self.arduino.write(command)
+            response = self.arduino.readline().decode().strip()
+            if response == "ANGLE_SET":
+                print(f"Stepper angle set to {angle} degrees")
+            else:
+                print("Failed to set stepper angle")
+    
+    def on_arduino_port_selected(self, event):
+        selected_port = self.arduino_port.get()
+        print(f"Selected Arduino Port: {selected_port}")
+        self.setup_arduino(selected_port)
 
 @app.route('/')
 def index():

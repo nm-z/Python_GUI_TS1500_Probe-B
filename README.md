@@ -1,78 +1,71 @@
 # Measurement System Overview
 
-This project implements a comprehensive measurement system with various sensors and data visualization capabilities, utilizing a Raspberry Pi 4 as the central controller and an AURSINC NanoVNA-H Vector Network Analyzer for VNA measurements.
+This project implements a comprehensive measurement system with various sensors and data visualization capabilities, utilizing an Arduino Due as the central controller and a miniVNA tiny Vector Network Analyzer for VNA measurements.
 
 ## Hardware Components
 
-### VNA: Mini-VNA Tiny Vector Network Analyzer
+### VNA: miniVNA tiny Vector Network Analyzer
 
 - Frequency range: 1 MHz to 3 GHz
-- Capable of performing sweeps from 1 MHz to 20 MHz
+- Capable of performing sweeps from 1 MHz to 3 GHz
 - USB connectivity for data transfer and control
 - Compact and portable design
-- Cost-effective solution
+- Professional-grade solution
 
-#### Advantages of Mini-VNA Tiny:
+#### Advantages of miniVNA tiny:
 - Wide frequency range up to 3 GHz
 - Simple USB connectivity
 - Compact and portable form factor
-- Compatible with various software options
+- High accuracy and reliability
 
-### Microcontroller: Raspberry Pi 4
+### Microcontroller: Arduino Due
 
-- Quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5GHz
-- 2GB, 4GB, or 8GB RAM options
-- Runs full Linux OS
-- Extensive connectivity (Ethernet, Wi-Fi, Bluetooth, USB 3.0)
-- 40 GPIO pins, supports various interfaces (I2C, SPI, UART)
+- 84 MHz Atmel SAM3X8E ARM Cortex-M3 CPU
+- 512 KB Flash memory, 96 KB SRAM
+- 54 digital input/output pins (12 can be used as PWM outputs)
+- 12 analog inputs
+- 4 UARTs (hardware serial ports)
+- Native USB port
 
-#### Advantages over Arduino:
-- Significantly more processing power
-- Much larger memory capacity
-- Full operating system support
-- Better connectivity options
-- Larger software ecosystem
-- Greater scalability for future expansions
+#### Advantages of Arduino Due:
+- Powerful 32-bit ARM core microcontroller
+- Large number of digital and analog I/O pins
+- Hardware support for various communication protocols (SPI, I2C, CAN)
+- Real-time processing capabilities
+- Extensive Arduino library support
 
 ### Sensors
 
-1. **Temperature Sensor**: MAX31865 RTD Amplifier + PT100 Probe
-   - High-precision temperature readings
-   - SPI interface for Raspberry Pi connection
-
-2. **Angle Position Sensor**: BNO055 Absolute Orientation Sensor
+1. **Orientation and Temperature Sensor**: BNO055 Absolute Orientation Sensor
    - Accurate tilt and orientation data
-   - I2C interface for Raspberry Pi connection
+   - Built-in temperature sensor
+   - I2C interface for Arduino Due connection
 
-3. **Stepper Motor + Driver**: NEMA 17 Stepper Motor + A4988 Driver
+2. **Stepper Motor + Driver**: NEMA 17 Stepper Motor + A4988 Driver
    - For automated angle adjustments of the sensor in the liquid container
-   - Controlled by the Raspberry Pi via GPIO
+   - Controlled by the Arduino Due via digital pins
 
 ## Setup
 
-1. Connect Mini-VNA Tiny to a USB port on the Raspberry Pi
-2. Connect MAX31865 RTD Amplifier to the Raspberry Pi's SPI pins
-3. Connect BNO055 sensor to the Raspberry Pi's I2C pins
-4. Connect A4988 stepper driver to GPIO pins for controlling the NEMA 17 motor
+1. Connect miniVNA tiny to a USB port on the computer
+2. Connect BNO055 sensor to the Arduino Due's I2C pins
+3. Connect A4988 stepper driver to digital pins for controlling the NEMA 17 motor
 
 ## Software
 
-### Python Script Functionality
+### Arduino Sketch Functionality
 
-1. Initialize all sensors and the Mini-VNA Tiny
+1. Initialize all sensors
 2. Continuous loop for:
-   - Reading temperature from the MAX31865
-   - Collecting data from the Mini-VNA Tiny
-   - Getting orientation data from the BNO055
+   - Reading temperature and orientation data from the BNO055
    - Logging all data with accurate timestamps
    - Adjusting the stepper motor to change sensor angle at predetermined intervals
+3. Communicate with the computer for VNA data collection and overall system control
 
 ### Recommended Libraries
 
-- `minivna-python`: for interfacing with the Mini-VNA Tiny
-- `adafruit-circuitpython-max31865`: for the temperature sensor
-- `adafruit-circuitpython-bno055`: for the orientation sensor
-- `RpiMotorLib`: for controlling the stepper motor
+- `Adafruit_BNO055`: for the orientation and temperature sensor
+- `AccelStepper`: for controlling the stepper motor
 
 ## Key Features
 
@@ -88,7 +81,7 @@ This project implements a comprehensive measurement system with various sensors 
 ## Development Steps
 
 1. Set up hardware connections and test individual components
-2. Implement device communication for each sensor and the Mini-VNA Tiny
+2. Implement device communication for each sensor and the miniVNA tiny
 3. Develop data acquisition and synchronization routines
 4. Create GUI for real-time data display and system control
 5. Implement logging and data export functionality
@@ -108,7 +101,5 @@ This project implements a comprehensive measurement system with various sensors 
 - Ensure accurate time synchronization across all measurements
 - Optimize power management for long-term operation
 - Develop a user-friendly interface for easy operation and monitoring
+- Consider using a separate computer for GUI and data processing, communicating with the Arduino Due via USB
 
-
-
-test github sync 
