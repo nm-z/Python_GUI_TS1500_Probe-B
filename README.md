@@ -50,6 +50,21 @@ This project implements a comprehensive measurement system with various sensors 
 1. Connect miniVNA tiny to a USB port on the computer
 2. Connect BNO055 sensor to the Arduino Due's I2C pins
 3. Connect A4988 stepper driver to digital pins for controlling the NEMA 17 motor
+4. Upload the `arduino_data_collection.ino` sketch to the Arduino Due
+
+## Directions
+
+1. Ensure all hardware components are properly connected as described in the Setup section
+2. Open the Arduino IDE Serial Monitor
+3. Set the baud rate to 115200
+4. To retrieve the current tilt values for the X, Y, and Z axes in degrees, enter the command `GET_TILT` into the Serial Monitor input field and press Send
+5. The Arduino will respond with the current tilt values in the format: 
+   ```
+   Tilt X: <value>
+   Tilt Y: <value>
+   Tilt Z: <value>
+   ```
+6. Use the GUI application to control the system, visualize data, and perform automated tasks
 
 ## Software
 
