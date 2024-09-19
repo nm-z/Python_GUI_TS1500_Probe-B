@@ -1,3 +1,9 @@
+**Run:**
+```
+gui.py
+```
+
+
 # Measurement System Overview
 
 This project implements a comprehensive measurement system with various sensors and data visualization capabilities, utilizing an Arduino Due as the central controller and a miniVNA tiny Vector Network Analyzer for VNA measurements.
