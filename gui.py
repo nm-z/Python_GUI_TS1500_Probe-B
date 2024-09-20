@@ -13,7 +13,6 @@ import usb.core
 import usb.util
 import os
 import subprocess
-import pyperclip
 import math
 from mpl_toolkits.mplot3d import Axes3D
 import logging
