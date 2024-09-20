@@ -1,10 +1,13 @@
 tkinter
-matplotlib
-pyserial
-temperusb
-mpu6050-raspberrypi
-pyserial
 flask
-networkx
-matplotlib
+# Removed unused package
+# - networkx
 scipy
+numpy
+pyusb
+pyperclip
+
+# Added necessary packages
+matplotlib
+pyserial
+

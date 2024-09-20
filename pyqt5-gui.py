@@ -490,6 +490,14 @@ sudo usermod -a -G dialout {current_user}
         print(f"Selected Arduino Port: {selected_port}")
         self.setup_arduino(selected_port)
 
+    def on_get_tilt_button_clicked(self):
+        if self.arduino:
+            self.arduino.write(b'GET_TILT\n')  # Send GET_TILT command
+            response = self.arduino.readline().decode().strip()
+            if response.startswith("TILT_ANGLE:"):
+                tilt_angle = response.split(":")[1]
+                self.update_display(None, None, None, tilt_angle)  # Update the display with the tilt angle
+
 @app.route('/')
 def index():
     data = {
