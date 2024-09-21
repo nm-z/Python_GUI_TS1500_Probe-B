@@ -1,3 +1,20 @@
+"""
+Arduino Serial Commands:
+
+- GET_TILT:
+  - Description: Retrieves current tilt values for the X, Y, and Z axes.
+  - Expected Response:
+    Tilt X: <value>
+    Tilt Y: <value>
+    Tilt Z: <value>
+
+- CALIBRATE:
+  - Description: Calibrates the sensors.
+  - Expected Response: CALIBRATED
+
+**Note:** Ensure correct serial port configuration for proper communication with the Arduino.
+"""
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
@@ -557,12 +574,40 @@ class EnhancedAutoDataLoggerGUI:
             self.logger.exception("Traceback:")  # Log the traceback for debugging
 
     def calibrate_sensor(self):
-        self.arduino.write(b"CALIBRATE\n")
-        response = self.arduino.readline().decode().strip()
-        if response == "CALIBRATED":
-            self.logger.info("Sensor calibrated.")
-        else:
-            self.logger.error("Calibration failed.")
+        def calibration_process():
+            self.arduino.reset_input_buffer()  # Clear serial buffer before sending command
+            self.arduino.write(b"CALIBRATE\n")
+            
+            for remaining in range(15, 0, -1):  # Countdown from 15 to 1
+                self.logger.info(f"CALIBRATING ({remaining} seconds remaining)")
+                
+                # Check for "CALIBRATED" during the countdown
+                if self.arduino.in_waiting:
+                    line = self.arduino.readline().decode().strip()
+                    if line == "CALIBRATED":
+                        self.logger.info("Sensor calibrated.", extra={'color': 'green'})
+                        return  # Exit the calibration process early
+                
+                time.sleep(1)
+            
+            # After countdown, perform a final check for "CALIBRATED"
+            start_time = time.time()
+            timeout = 5  # Additional 5 seconds to wait for response
+            response = None
+            while time.time() - start_time < timeout:
+                if self.arduino.in_waiting:
+                    line = self.arduino.readline().decode().strip()
+                    if line == "CALIBRATED":
+                        response = "CALIBRATED"
+                        break
+                time.sleep(0.5)  # Small delay to prevent busy waiting
+            
+            if response == "CALIBRATED":
+                self.logger.info("Sensor calibrated.", extra={'color': 'green'})
+            else:
+                self.logger.error("Calibration failed.")
+
+        threading.Thread(target=calibration_process, daemon=True).start()
 
     def setup_arduino(self, port):
         if self.check_and_request_permissions(port):

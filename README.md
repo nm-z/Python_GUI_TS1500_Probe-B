@@ -2,6 +2,19 @@
 ```
 gui.py
 ```
+### Arduino Serial Commands
+
+- **GET_TILT:** Retrieves current tilt values for the X, Y, and Z axes.
+  - **Response:**
+    ```
+    Tilt X: <value>
+    Tilt Y: <value>
+    Tilt Z: <value>
+    ```
+- **CALIBRATE:** Calibrates the sensors.
+  - **Response:** `CALIBRATED`
+
+**Note:** Ensure proper serial communication settings as described in the [Software](#software) section.
 
 
 # Measurement System Overview
