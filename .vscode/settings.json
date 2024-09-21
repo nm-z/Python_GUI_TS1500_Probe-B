@@ -3,5 +3,6 @@
         "cmath": "cpp",
         "complex": "cpp",
         "*.inc": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

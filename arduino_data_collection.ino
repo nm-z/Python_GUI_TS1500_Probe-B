@@ -28,6 +28,19 @@ MPU6050 mpu;
 
 float baselineAngle = 0;
 
+// Define scale factors
+const float ACCEL_SCALE_FACTOR = 8192.0; // Scale factor for accelerometer (4g range)
+const float GYRO_SCALE_FACTOR = 65.5;    // Scale factor for gyroscope (500 degrees/s range)
+
+// Define accelerometer and gyroscope offsets
+// Leave as float to be able to assign new values during calibration
+float ACCEL_X_OFFSET = 0.15;
+float ACCEL_Y_OFFSET = -0.148;
+float ACCEL_Z_OFFSET = -2.176;
+float GYRO_X_OFFSET = 99.0;
+float GYRO_Y_OFFSET = 96.0;
+float GYRO_Z_OFFSET = -92.0;
+
 void setup() {
   Serial.begin(115200);
   Wire.begin();
@@ -49,18 +62,34 @@ void loop() {
     int16_t ax, ay, az, gx, gy, gz;
     mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
     
+    // Scale the raw readings
+    float scaledAx = ax / ACCEL_SCALE_FACTOR;
+    float scaledAy = ay / ACCEL_SCALE_FACTOR;
+    float scaledAz = az / ACCEL_SCALE_FACTOR;
+    float scaledGx = gx / GYRO_SCALE_FACTOR;
+    float scaledGy = gy / GYRO_SCALE_FACTOR;
+    float scaledGz = gz / GYRO_SCALE_FACTOR;
+    
+    // Apply offsets
+    float adjustedAx = scaledAx - ACCEL_X_OFFSET;
+    float adjustedAy = scaledAy - ACCEL_Y_OFFSET;
+    float adjustedAz = scaledAz - ACCEL_Z_OFFSET;
+    float adjustedGx = scaledGx - GYRO_X_OFFSET;
+    float adjustedGy = scaledGy - GYRO_Y_OFFSET;
+    float adjustedGz = scaledGz - GYRO_Z_OFFSET;
+    
     Serial.print("XYZ:");
-    Serial.print(ax);
+    Serial.print(adjustedAx);
     Serial.print(",");
-    Serial.print(ay);
+    Serial.print(adjustedAy);
     Serial.print(",");
-    Serial.print(az);
+    Serial.print(adjustedAz);
     Serial.print(",");
-    Serial.print(gx);
+    Serial.print(adjustedGx);
     Serial.print(",");
-    Serial.print(gy);
+    Serial.print(adjustedGy);
     Serial.print(",");
-    Serial.println(gz);
+    Serial.println(adjustedGz);
 
     lastReadingTime = millis();
   }
@@ -99,13 +128,50 @@ void loop() {
     //   Serial.println("ANGLE_SET");
     // }
     else if (command.startsWith("CALIBRATE")) {
-      int16_t ax, ay, az;
-      mpu.getAcceleration(&ax, &ay, &az);
-      
-      // Calculate the baseline angle when the sensor is flat
-      baselineAngle = atan2(ay, sqrt(ax*ax + az*az)) * 180.0 / PI;
-      
-      Serial.println("CALIBRATED");
+      performCalibration();
     }
   }
+}
+
+/**
+ * @brief Collects and averages sensor readings over a calibration period to determine offsets.
+ * 
+ * This function gathers gyroscope and accelerometer data for a specified duration,
+ * calculates the average values, and updates the offset variables to calibrate the sensor.
+ * It ensures more stable and accurate sensor readings by accounting for inherent biases.
+ */
+void performCalibration() {
+    unsigned long startTime = millis();
+    const unsigned long calibrationDuration = 10000; // 10 seconds
+    int numReadings = 0;
+    long sumGx = 0, sumGy = 0, sumGz = 0;
+    long sumAx = 0, sumAy = 0, sumAz = 0;
+
+    while (millis() - startTime < calibrationDuration) {
+        int16_t ax, ay, az, gx, gy, gz;
+        mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+        sumGx += gx;
+        sumGy += gy;
+        sumGz += gz;
+        sumAx += ax;
+        sumAy += ay;
+        sumAz += az;
+        numReadings++;
+        delay(20); // 50 readings per second
+    }
+
+    // Error handling: Ensure that at least one reading was taken
+    if (numReadings > 0) {
+        // Calculate average offsets with scale factors
+        GYRO_X_OFFSET = (sumGx / (float)numReadings) / GYRO_SCALE_FACTOR;
+        GYRO_Y_OFFSET = (sumGy / (float)numReadings) / GYRO_SCALE_FACTOR;
+        GYRO_Z_OFFSET = (sumGz / (float)numReadings) / GYRO_SCALE_FACTOR;
+        ACCEL_X_OFFSET = (sumAx / (float)numReadings) / ACCEL_SCALE_FACTOR;
+        ACCEL_Y_OFFSET = (sumAy / (float)numReadings) / ACCEL_SCALE_FACTOR;
+        ACCEL_Z_OFFSET = (sumAz / (float)numReadings) / ACCEL_SCALE_FACTOR - 1.0;
+
+        Serial.println("CALIBRATED");
+    } else {
+        Serial.println("CALIBRATION_FAILED: No readings collected.");
+    }
 }
