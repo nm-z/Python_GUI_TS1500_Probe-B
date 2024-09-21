@@ -121,6 +121,40 @@ gui.py
    - Measures acceleration and angular velocity
    - I2C interface for Arduino Due connection
 
+### MPU6050 Accelerometer and Gyroscope
+
+#### Pinout Information
+1. **MPU-6050 Connection**
+   - **VCC:** Connect to Arduino's 3.3V or 5V pin, depending on the module's voltage regulator.
+   - **GND:** Connect to Arduino's GND pin.
+   - **SCL:** Connect to Arduino's SCL pin (A5 on Arduino Uno).
+   - **SDA:** Connect to Arduino's SDA pin (A4 on Arduino Uno).
+   - **AD0:** Connect to GND to set the I2C address to 0x68. For multiple MPU-6050s, use different addresses by connecting AD0 to VCC for 0x69.
+
+### MAX6675 Connection
+2. **MAX6675 Connection**
+   - **VCC:** Connect to Arduino's 3.3V pin.
+   - **GND:** Connect to Arduino's GND pin.
+   - **SCK:** Connect to any digital pin on Arduino (e.g., Pin 6).
+   - **CS:** Connect to any digital pin on Arduino (e.g., Pin 5).
+   - **SO:** Connect to any digital pin on Arduino (e.g., Pin 4).
+
+### A4988 Driver and NEMA 17 Stepper Motor Connection
+3. **A4988 Driver and NEMA 17 Stepper Motor Connection**
+   - **A4988 Power:**
+     - **VDD:** Connect to Arduino's 5V pin.
+     - **VMOT:** Connect to an external power supply (8V to 35V).
+     - **GND:** Connect to Arduino's GND and the power supply's GND.
+   - **Motor Connection:**
+     - **1A and 1B:** Connect to one coil of the NEMA 17 Stepper Motor.
+     - **2A and 2B:** Connect to the other coil of the NEMA 17 Stepper Motor.
+   - **Control Pins:**
+     - **STEP:** Connect to any digital pin on Arduino (e.g., Pin 2).
+     - **DIR:** Connect to any digital pin on Arduino (e.g., Pin 3).
+   - **Additional:**
+     - **SLEEP:** Connect to a digital pin on Arduino to control sleep mode, or tie to VDD to keep the driver enabled.
+     - **MS1, MS2, MS3:** Leave disconnected for full-step mode or connect to digital pins on Arduino for microstepping.
+
 ## Setup
 
 1. **Connect miniVNA tiny** to a USB port on the computer.

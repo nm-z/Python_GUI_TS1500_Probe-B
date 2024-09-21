@@ -90,6 +90,7 @@ class EnhancedAutoDataLoggerGUI:
         self.arduino = None
         self.arduino_port = None
         self.arduino_connected = False  # Initialize arduino_connected
+        self.tilt_sensor_enabled = True  # Initialize tilt sensor status
         self.find_and_connect_arduino()
         
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window close event
@@ -164,6 +165,10 @@ class EnhancedAutoDataLoggerGUI:
         # Start/Stop button
         self.log_button = ttk.Button(logging_frame, text="Start Logging", command=self.toggle_logging)
         self.log_button.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
+        
+        # Add Tilt Sensor toggle button
+        self.tilt_sensor_button = ttk.Button(logging_frame, text="Disable Tilt Sensor", command=self.toggle_tilt_sensor)
+        self.tilt_sensor_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
         
         # Data frame
         data_frame = ttk.Frame(data_tab)
@@ -663,6 +668,16 @@ class EnhancedAutoDataLoggerGUI:
         # Ensure this method is properly defined to avoid AttributeError
         # Example placeholder implementation:
         pass  # Replace with actual widget creation code
+
+    def toggle_tilt_sensor(self):
+        if self.tilt_sensor_enabled:
+            self.tilt_sensor_enabled = False
+            self.tilt_sensor_button.config(text="Enable Tilt Sensor")
+            self.logger.info("Tilt Sensor disabled.")
+        else:
+            self.tilt_sensor_enabled = True
+            self.tilt_sensor_button.config(text="Disable Tilt Sensor")
+            self.logger.info("Tilt Sensor enabled.")
 
 @app.route('/')
 def index():
