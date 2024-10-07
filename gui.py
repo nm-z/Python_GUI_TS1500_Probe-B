@@ -30,6 +30,32 @@ import os
 import subprocess
 import pyperclip
 
+# Add these import statements after the existing imports
+
+try:
+    import usb
+except ImportError:
+    usb = None
+    print("Warning: pyusb not found. USB functionalities will be disabled.")
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
+    print("Warning: numpy not found. Numerical computations will be disabled.")
+
+try:
+    from scipy.spatial.transform import Rotation as R
+except ImportError:
+    R = None
+    print("Warning: scipy not found. Rotation functionalities will be disabled.")
+
+try:
+    from tkinter import messagebox
+except ImportError:
+    messagebox = None
+    print("Warning: tkinter.messagebox not found. Message box functionalities will be disabled.")
+
 # Configuration
 ENABLE_WEB_SERVER = True
 

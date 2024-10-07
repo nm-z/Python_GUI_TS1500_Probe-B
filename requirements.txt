@@ -9,3 +9,5 @@
    adafruit-circuitpython-bno055
    RpiMotorLib
    adafruit-blinka
+   scipy
+   
