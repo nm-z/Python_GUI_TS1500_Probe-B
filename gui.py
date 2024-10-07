@@ -8,14 +8,52 @@ import threading
 import serial
 from serial.tools.list_ports import comports
 from flask import Flask, jsonify, render_template
-import usb.core
-import usb.util
 import os
 import subprocess
 import pyperclip
+import time
+from temperusb import TemperHandler
+
+# Add the following try-except blocks after the existing import statements
+
+try:
+    import adafruit_max31865
+except ImportError:
+    adafruit_max31865 = None
+    print("Warning: adafruit_max31865 not found. VNA functionality will be disabled.")
+
+try:
+    import adafruit_bno055
+except ImportError:
+    adafruit_bno055 = None
+    print("Warning: adafruit_bno055 not found. Accelerometer functionality will be disabled.")
+
+try:
+    from RpiMotorLib import RpiMotorLib
+except ImportError:
+    RpiMotorLib = None
+    print("Warning: RpiMotorLib not found. Motor controls will be disabled.")
+
+try:
+    import board
+except ImportError:
+    board = None
+    print("Warning: board module not found. Board-specific functionalities will be disabled.")
+
+try:
+    import busio
+except ImportError:
+    busio = None
+    print("Warning: busio module not found. I/O functionalities will be disabled.")
+
+try:
+    import digitalio
+except ImportError:
+    digitalio = None
+    print("Warning: digitalio module not found. Digital I/O functionalities will be disabled.")
 
 # Configuration
-ENABLE_WEB_SERVER = False
+ENABLE_WEB_SERVER = True
 
 app = Flask(__name__)
 
@@ -26,23 +64,13 @@ class MockMPU6050:
     def get_gyro_data(self):
         return {'x': 0.0, 'y': 0.0, 'z': 0.0}
 
-mpu6050 = MockMPU6050
-
-# Mock Temper for testing
-class MockTemper:
-    def __init__(self, port):
-        self.port = port
-
-    def get_temperature(self):
-        return 25.0  # Return a mock temperature
-
-temper = MockTemper
+mpu6050 = MockMPU6050()
 
 class EnhancedAutoDataLoggerGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("Enhanced Automated Data Logger")
-        self.master.geometry("800x600")  # Adjusted initial size
+        self.master.geometry("1000x700")  # Adjusted initial size
         
         self.create_widgets()
         self.data = []
@@ -50,8 +78,12 @@ class EnhancedAutoDataLoggerGUI:
         self.web_port_enabled = False
         self.vna_connected = False
         self.temp_sensor_connected = False
+        self.motor = None
         
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window close event
+        
+        # Connect devices on startup
+        self.connect_devices()
     
     def create_widgets(self):
         # Create tabs
@@ -73,6 +105,10 @@ class EnhancedAutoDataLoggerGUI:
         # Device Connections tab
         device_tab = ttk.Frame(self.notebook)
         self.notebook.add(device_tab, text="Device Connections")
+        
+        # Motor Controls tab
+        motor_tab = ttk.Frame(self.notebook)
+        self.notebook.add(motor_tab, text="Motor Controls")
         
         # Logging Controls frame
         logging_frame = ttk.LabelFrame(logging_tab, text="Logging Controls")
@@ -127,40 +163,41 @@ class EnhancedAutoDataLoggerGUI:
         device_frame = ttk.LabelFrame(device_tab, text="Device Connections")
         device_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
-        ttk.Label(device_frame, text="VNA Port:").grid(row=0, column=0, sticky="w", pady=5)
-        self.vna_port = ttk.Combobox(device_frame, values=self.get_usb_ports(), state="readonly", width=15)
-        self.vna_port.grid(row=0, column=1, pady=5)
-        self.vna_port.bind("<<ComboboxSelected>>", self.on_vna_port_selected)
-        self.vna_status_label = ttk.Label(device_frame, text="Disconnected", foreground="red")
-        self.vna_status_label.grid(row=0, column=2, padx=5)
+        self.connect_button = ttk.Button(device_frame, text="Connect Devices", command=self.connect_devices)
+        self.connect_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
         
-        ttk.Label(device_frame, text="Temperature Sensor Port:").grid(row=1, column=0, sticky="w", pady=5)
-        self.temp_port = ttk.Combobox(device_frame, values=self.get_usb_ports(), state="readonly", width=15)
-        self.temp_port.grid(row=1, column=1, pady=5)
-        self.temp_port.bind("<<ComboboxSelected>>", self.on_temp_port_selected)
-        self.temp_status_label = ttk.Label(device_frame, text="Disconnected", foreground="red")
-        self.temp_status_label.grid(row=1, column=2, padx=5)
+        self.vna_status_label = ttk.Label(device_frame, text="VNA: Disconnected", foreground="red")
+        self.vna_status_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+        
+        self.temp_status_label = ttk.Label(device_frame, text="TEMPerX v3.3: Disconnected", foreground="red")
+        self.temp_status_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
         
         # Export to CSV button
-        ttk.Button(device_frame, text="Export to CSV", command=self.save_to_csv).grid(row=2, column=0, columnspan=2, padx=5, pady=5)
+        ttk.Button(device_frame, text="Export to CSV", command=self.save_to_csv).grid(row=5, column=0, columnspan=2, padx=5, pady=5)
         
         # File name entry
-        ttk.Label(device_frame, text="File Name:").grid(row=3, column=0, sticky="w")
+        ttk.Label(device_frame, text="File Name:").grid(row=6, column=0, sticky="w")
         self.file_name = ttk.Entry(device_frame, width=20)
         self.file_name.insert(0, "data.csv")
-        self.file_name.grid(row=3, column=1, padx=5, pady=5)
+        self.file_name.grid(row=6, column=1, padx=5, pady=5)
         
         # Web Port toggle button
         self.web_button = ttk.Button(device_frame, text="Enable Web Port", command=self.toggle_web_port)
-        self.web_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
-    
-    def get_usb_ports(self):
-        ports = [port.device for port in comports()]
-        temper_device = usb.core.find(idVendor=0x413d, idProduct=0x2107)
-        if temper_device:
-            ports.append("TEMPer1F")
-        return ports
-
+        self.web_button.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        
+        # Motor Controls frame
+        motor_frame = ttk.LabelFrame(motor_tab, text="Motor Controls")
+        motor_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        
+        # Motor angle input
+        ttk.Label(motor_frame, text="Set Motor Angle:").grid(row=0, column=0, sticky="w")
+        self.motor_angle_entry = ttk.Entry(motor_frame, width=10)
+        self.motor_angle_entry.grid(row=0, column=1, padx=5, pady=5)
+        
+        # Set Motor Angle button
+        self.set_motor_button = ttk.Button(motor_frame, text="Set Angle", command=self.set_motor_angle)
+        self.set_motor_button.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
+        
     def toggle_web_port(self):
         if self.web_port_enabled:
             self.web_port_enabled = False
@@ -203,6 +240,8 @@ class EnhancedAutoDataLoggerGUI:
         while self.is_logging:
             try:
                 temp = self.read_temperature()
+                if temp is None:
+                    raise ValueError("Failed to read temperature")
                 vna_data = self.read_vna()
                 accel_data = self.read_accelerometer()
                 level_data = self.read_digital_level()
@@ -212,7 +251,7 @@ class EnhancedAutoDataLoggerGUI:
                 self.data.append(entry)
 
                 self.update_display(temp, vna_data, accel_data, level_data)
-                self.update_graph(temp)
+                self.update_graphs()
 
                 interval = int(self.freq_entry.get())
                 threading.Event().wait(interval)
@@ -239,28 +278,56 @@ class EnhancedAutoDataLoggerGUI:
             print(f"Error reading from VNA: {e}")
             return "Error"
 
-    def read_temperature(self):
+    def setup_temp_sensor(self):
         try:
-            # Send a command to request temperature
-            self.temp_device.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, 
-                                           wValue=0x0200, wIndex=0x01, data_or_wLength=[0x01,0x80,0x33,0x01,0x00,0x00,0x00,0x00])
+            print("Attempting to set up TEMPerX v3.3 device...")
             
-            # Read the temperature data
-            data = self.temp_endpoint.read(8)
+            self.th = TemperHandler()
+            devices = self.th.get_devices()
             
-            # Convert the raw data to temperature in Celsius
-            temp = (data[3] & 0xFF) + (data[2] & 0xFF) * 256
-            temp = temp * 125.0 / 32000.0
-            return temp
+            print(f"TemperHandler found {len(devices)} device(s)")
+            
+            if not devices:
+                print("No TEMPer devices found by TemperHandler")
+                raise ValueError("TEMPerX v3.3 device not found")
+            
+            self.temper_device = devices[0]  # Use the first detected device
+            
+            # Try to read data to confirm the device is working
+            temperatures = self.temper_device.get_temperatures()
+            print(f"Temperatures read: {temperatures}")
+            
+            if len(temperatures) > 1:
+                print(f"Outer temperature: {temperatures[1]:.2f}°C")
+            
+            print("TEMPerX v3.3 device found and configured successfully")
+            self.temp_sensor_connected = True
+            self.temp_status_label.config(text="TEMPerX v3.3: Connected", foreground="green")
         except Exception as e:
-            print(f"Error reading temperature: {e}")
+            print(f"Error connecting to TEMPerX v3.3 device: {e}")
+            messagebox.showerror("Connection Error", f"Error connecting to TEMPerX v3.3 device: {e}")
+            self.temp_sensor_connected = False
+            self.temp_status_label.config(text="TEMPerX v3.3: Disconnected", foreground="red")
+
+    def read_temperature(self):
+        if self.temp_sensor_connected and hasattr(self, 'temper_device'):
+            try:
+                temperatures = self.temper_device.get_temperatures()
+                if len(temperatures) > 1:
+                    return temperatures[1]  # Return the outer temperature
+                return temperatures[0]  # Return the first temperature reading if outer is not available
+            except Exception as e:
+                print(f"Error reading temperature: {e}")
+                return None
+        else:
+            print("TEMPerX v3.3 device not initialized")
             return None
 
     def read_accelerometer(self):
-        return self.mpu.get_accel_data()['x']
+        return mpu6050.get_accel_data()['x']
 
     def read_digital_level(self):
-        return self.mpu.get_gyro_data()['x']
+        return mpu6050.get_gyro_data()['x']
 
     def update_display(self, temp, vna_data, accel_data, level_data):
         self.temp_display.config(text=f"{temp:.2f}C")
@@ -307,119 +374,43 @@ class EnhancedAutoDataLoggerGUI:
         app.do_teardown_appcontext()
         exit()
 
-    def on_vna_port_selected(self, event):
-        selected_port = self.vna_port.get()
-        print(f"Selected VNA Port: {selected_port}")
-        self.setup_vna(selected_port)
+    def connect_devices(self):
+        self.setup_vna()
+        self.setup_temp_sensor()
+        self.setup_motor()
 
-    def on_temp_port_selected(self, event):
-        selected_port = self.temp_port.get()
-        print(f"Selected Temperature Sensor: {selected_port}")
-        if selected_port == "TEMPer1F":
-            self.setup_temp_sensor(None)  # We don't need a port for USB device
-        else:
-            messagebox.showerror("Connection Error", "Please select the TEMPer1F device")
-
-    def check_and_request_permissions(self, port):
-        if not os.access(port, os.R_OK | os.W_OK):
-            try:
-                group = "dialout"  # This is typically the group for serial ports
-                subprocess.run(["sudo", "usermod", "-a", "-G", group, os.getlogin()], check=True)
-                subprocess.run(["sudo", "chmod", "a+rw", port], check=True)
-                print(f"Permissions granted for {port}")
-                # The user needs to log out and log back in for group changes to take effect
-                messagebox.showinfo("Permissions Updated", 
-                                    "Permissions have been updated. Please log out and log back in for changes to take effect.")
-                return True
-            except subprocess.CalledProcessError as e:
-                print(f"Failed to set permissions: {e}")
-                messagebox.showerror("Permission Error", 
-                                     f"Failed to set permissions for {port}. Try running the script with sudo.")
-                return False
-        return True
-
-    def setup_vna(self, port):
-        if self.check_and_request_permissions(port):
-            try:
-                self.vna = serial.Serial(port, 115200)
-                print(f"Connected to VNA on port: {port}")
-                self.vna_connected = True
-                self.vna_status_label.config(text="Connected", foreground="green")
-            except Exception as e:
-                print(f"Error connecting to VNA: {e}")
-                messagebox.showerror("Connection Error", f"Error connecting to VNA: {e}")
-                self.vna_connected = False
-                self.vna_status_label.config(text="Disconnected", foreground="red")
-
-    def setup_temp_sensor(self, port):
+    def setup_vna(self):
         try:
-            # Find the TEMPer1F device
-            self.temp_device = usb.core.find(idVendor=0x413d, idProduct=0x2107)
-            
-            if self.temp_device is None:
-                raise ValueError("TEMPer1F device not found")
-            
-            # Try to set the configuration without detaching the kernel driver
-            try:
-                self.temp_device.set_configuration()
-            except usb.core.USBError as e:
-                if e.errno == 13:  # Permission denied error
-                    self.show_permission_dialog()
-                    return
-            
-            # Get the endpoint
-            cfg = self.temp_device.get_active_configuration()
-            intf = cfg[(0,0)]
-            self.temp_endpoint = usb.util.find_descriptor(
-                intf,
-                custom_match = lambda e: 
-                    usb.util.endpoint_direction(e.bEndpointAddress) == 
-                    usb.util.ENDPOINT_IN
-            )
-            
-            print("Connected to TEMPer1F")
-            self.temp_sensor_connected = True
-            self.temp_status_label.config(text="Connected", foreground="green")
-        except usb.core.USBError as e:
-            print(f"USB Error connecting to TEMPer1F: {e}")
-            self.show_permission_dialog()
-            self.temp_sensor_connected = False
-            self.temp_status_label.config(text="Disconnected", foreground="red")
+            vna_port = next((port.device for port in comports() if 'USB' in port.device), None)
+            if vna_port:
+                self.vna = serial.Serial(vna_port, 115200)
+                print(f"Connected to VNA on port: {vna_port}")
+                self.vna_connected = True
+                self.vna_status_label.config(text="VNA: Connected", foreground="green")
+            else:
+                raise ValueError("VNA device not found")
         except Exception as e:
-            print(f"Error connecting to TEMPer1F: {e}")
-            messagebox.showerror("Connection Error", f"Error connecting to TEMPer1F: {e}")
-            self.temp_sensor_connected = False
-            self.temp_status_label.config(text="Disconnected", foreground="red")
+            print(f"Error connecting to VNA: {e}")
+            messagebox.showerror("Connection Error", f"Error connecting to VNA: {e}")
+            self.vna_connected = False
+            self.vna_status_label.config(text="VNA: Disconnected", foreground="red")
 
-    def show_permission_dialog(self):
-        current_user = os.getlogin()
-        permission_commands = f"""
-sudo tee /etc/udev/rules.d/99-temper.rules << EOF
-SUBSYSTEM=="usb", ATTRS{{idVendor}}=="413d", ATTRS{{idProduct}}=="2107", MODE="0666"
-EOF
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-sudo usermod -a -G dialout {current_user}
-"""
-        
-        dialog = tk.Toplevel(self.master)
-        dialog.title("Grant Permissions for TEMPer1F")
-        dialog.geometry("600x300")
-        
-        tk.Label(dialog, text="To grant permissions for the TEMPer1F device, run these commands in your terminal:").pack(pady=10)
-        
-        text_area = tk.Text(dialog, height=10, width=80)
-        text_area.pack(pady=10)
-        text_area.insert(tk.END, permission_commands.strip())
-        
-        def copy_to_clipboard():
-            pyperclip.copy(permission_commands.strip())
-            messagebox.showinfo("Copied", "Commands copied to clipboard!")
-        
-        copy_button = ttk.Button(dialog, text="Copy Commands", command=copy_to_clipboard)
-        copy_button.pack(pady=10)
-        
-        tk.Label(dialog, text="After running these commands, unplug and replug the TEMPer1F device, then restart this application.").pack(pady=10)
+    def setup_motor(self):
+        try:
+            self.motor = RpiMotorLib.BYJMotor("StepperMotor", "28BYJ")
+            print("Stepper motor setup complete")
+        except Exception as e:
+            print(f"Error setting up stepper motor: {e}")
+            messagebox.showerror("Connection Error", f"Error setting up stepper motor: {e}")
+
+    def set_motor_angle(self):
+        try:
+            angle = float(self.motor_angle_entry.get())
+            steps = int(angle * (4096 / 360))  # Convert angle to steps for 28BYJ motor
+            self.motor.motor_run(digitalio.DigitalInOut(board.D23), 0.001, steps, False, False, "half")
+            print(f"Motor set to angle: {angle}")
+        except Exception as e:
+            messagebox.showerror("Motor Error", f"Error setting motor angle: {e}")
 
 @app.route('/')
 def index():
@@ -445,4 +436,3 @@ if __name__ == "__main__":
         print("Try running the script with sudo or grant necessary permissions to the serial ports.")
     except Exception as e:
         print(f"An error occurred: {e}")
-        

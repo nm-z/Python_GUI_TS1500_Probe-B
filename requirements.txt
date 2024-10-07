@@ -1,7 +1,11 @@
-tkinter
+# tkinter (if needed - since it's a standard library module and doesn't need to be installed via pip)
 matplotlib
 pyserial
 temperusb
 mpu6050-raspberrypi
 pyserial
 flask
+adafruit-circuitpython-max31865
+adafruit-circuitpython-bno055
+RpiMotorLib
+adafruit-blinka
