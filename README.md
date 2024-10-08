@@ -66,24 +66,181 @@ gui.py
 
 ### Linux
 
+#### Arch Linux
+
+1. **Update System and Install Python 3.x and pip**
+
+    ```bash
+    sudo pacman -Syu
+    sudo pacman -S python python-pip
+    ```
+
+2. **Set Up a Virtual Environment (Recommended)**
+
+    Creating a virtual environment helps manage dependencies and avoid conflicts.
+
+    ```bash
+    python3 -m venv venv          # Create a virtual environment named 'venv'
+    source venv/bin/activate      # Activate the virtual environment
+    ```
+
+    _To deactivate the virtual environment when done:_
+
+    ```bash
+    deactivate
+    ```
+
+3. **Install Required Python Packages**
+
+    With the virtual environment activated, install the necessary dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Connect Hardware Components**
+
+    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section of this README.
+
+5. **Run the GUI Application**
+
+    Ensure the virtual environment is activated, then execute:
+
+    ```bash
+    python gui.py
+    ```
+
+#### Debian/Ubuntu
+
+1. **Update Package List and Install Python 3.x and pip**
+
+    ```bash
+    sudo apt update
+    sudo apt install python3 python3-pip
+    ```
+
+2. **Set Up a Virtual Environment (Recommended)**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3. **Install Required Python Packages**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Connect Hardware Components**
+
+    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section.
+
+5. **Run the GUI Application**
+
+    ```bash
+    python gui.py
+    ```
+
+#### Fedora
+
+1. **Update System and Install Python 3.x and pip**
+
+    ```bash
+    sudo dnf update
+    sudo dnf install python3 python3-pip
+    ```
+
+2. **Set Up a Virtual Environment (Recommended)**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3. **Install Required Python Packages**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Connect Hardware Components**
+
+    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section.
+
+5. **Run the GUI Application**
+
+    ```bash
+    python gui.py
+    ```
+
+#### openSUSE
+
+1. **Update System and Install Python 3.x and pip**
+
+    ```bash
+    sudo zypper refresh
+    sudo zypper install python3 python3-pip
+    ```
+
+2. **Set Up a Virtual Environment (Recommended)**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3. **Install Required Python Packages**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Connect Hardware Components**
+
+    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section.
+
+5. **Run the GUI Application**
+
+    ```bash
+    python gui.py
+    ```
+
+#### Other Linux Distributions
+
 1. **Install Python 3.x and pip**
-   ```bash
-   sudo apt update
-   sudo apt install python3 python3-pip
-   ```
 
-2. **Install Required Packages**
-   ```bash
-   pip3 install -r requirements.txt
-   ```
+    Use your distribution’s package manager to install Python 3 and pip. For example:
 
-3. **Connect Hardware Components**
-   - Connect the Arduino Due and other peripherals as described in the Hardware Components section.
+    - **Arch Linux:** `sudo pacman -S python python-pip`
+    - **Debian/Ubuntu:** `sudo apt install python3 python3-pip`
+    - **Fedora:** `sudo dnf install python3 python3-pip`
+    - **openSUSE:** `sudo zypper install python3 python3-pip`
+    - **Others:** Refer to your distribution’s documentation for installing Python 3 and pip.
 
-4. **Run the GUI Application**
-   ```bash
-   python3 gui.py
-   ```
+2. **Set Up a Virtual Environment (Recommended)**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3. **Install Required Python Packages**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Connect Hardware Components**
+
+    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section.
+
+5. **Run the GUI Application**
+
+    ```bash
+    python gui.py
+    ```
+
 
 ## Hardware Components
 
