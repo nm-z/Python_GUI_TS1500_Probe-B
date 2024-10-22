@@ -4,7 +4,7 @@
 ```bash
 [ -d Python_GUI_TS1500_Probe-B ] && rm -rf Python_GUI_TS1500_Probe-B; mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && [ -d .vscode ] && rm -rf .vscode; mkdir .vscode && echo '{"python.pythonPath": "./venv/bin/python"}' > .vscode/settings.json && code --add . && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
 ```
-
+**Note: it is recommended to not be in a workspace folder before running the command, no folder should be open in VS code.**
 
 ### Watch the setup process:
 https://github.com/user-attachments/assets/017a086a-29b1-4202-949c-66aee93548c9
