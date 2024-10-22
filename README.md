@@ -1,7 +1,24 @@
-**Run:**
+#### Arch Linux Instructions:
+Paste the following command in your VS code terminal: 
 ```
-gui.py
+mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+Dev (depreciated): 
 ### Arduino Serial Commands
 
 - **GET_TILT:** Retrieves current tilt values for the X, Y, and Z axes.
@@ -64,51 +81,8 @@ gui.py
    python3 gui.py
    ```
 
-### Linux
 
-#### Arch Linux
 
-1. **Update System and Install Python 3.x and pip**
-
-    ```bash
-    sudo pacman -Syu
-    sudo pacman -S python python-pip
-    ```
-
-2. **Set Up a Virtual Environment (Recommended)**
-
-    Creating a virtual environment helps manage dependencies and avoid conflicts.
-
-    ```bash
-    python3 -m venv venv          # Create a virtual environment named 'venv'
-    source venv/bin/activate      # Activate the virtual environment
-    ```
-
-    _To deactivate the virtual environment when done:_
-
-    ```bash
-    deactivate
-    ```
-
-3. **Install Required Python Packages**
-
-    With the virtual environment activated, install the necessary dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Connect Hardware Components**
-
-    - Connect the Arduino Due and any other peripherals as described in the [Hardware Components](#hardware-components) section of this README.
-
-5. **Run the GUI Application**
-
-    Ensure the virtual environment is activated, then execute:
-
-    ```bash
-    python gui.py
-    ```
 
 #### Debian/Ubuntu
 
