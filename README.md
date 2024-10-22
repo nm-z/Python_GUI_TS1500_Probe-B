@@ -2,7 +2,7 @@
 #### Paste single string command into the VS Code terminal:
 
 ```bash
-mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && code --add . && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
+[ -d Python_GUI_TS1500_Probe-B ] && rm -rf Python_GUI_TS1500_Probe-B; mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && [ -d .vscode ] && rm -rf .vscode; mkdir .vscode && echo '{"python.pythonPath": "./venv/bin/python"}' > .vscode/settings.json && code --add . && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
 ```
 
 
