@@ -1,8 +1,10 @@
 #### Arch Linux Instructions:
-Paste the following command in your VS code terminal: 
+Paste single string command into the VS Code terminal:
+
+```bash
+mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && code --add . && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
 ```
-mkdir Python_GUI_TS1500_Probe-B && cd Python_GUI_TS1500_Probe-B && git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && cd Python_GUI_TS1500_Probe-B && sudo pacman -Syu --noconfirm && sudo pacman -S python python-pip --noconfirm && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python gui.py
-```
+
 
 
 
