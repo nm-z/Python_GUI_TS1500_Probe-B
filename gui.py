@@ -15,9 +15,7 @@ Arduino Serial Commands:
 **Note:** Ensure correct serial port configuration for proper communication with the Arduino.
 """
 
-import tkinter as tk
-from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
+
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import csv
