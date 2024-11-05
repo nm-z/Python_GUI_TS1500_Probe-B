@@ -1,3 +1,5 @@
 .venv/
 .cursorignore
 create_presentation.py
+
+venv/
