@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  gui:
+    build: .
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${HOME}/.Xauthority:/home/appuser/.Xauthority
+      - ./VNA_Exports:/home/nate/Desktop/Python_GUI_TS1500_Probe-B/VNA_Exports
+      - /dev:/dev
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    privileged: true
+    network_mode: host 
