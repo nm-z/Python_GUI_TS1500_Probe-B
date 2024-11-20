@@ -2,7 +2,7 @@
 
 ## Quick Start (Ubuntu)
 
-The application runs in an Ubuntu-based Docker container. Follow these commands:
+The application runs in an Ubuntu-based Docker container. Copy codeblock below and paste directly in terminal:
 
 ```bash
 # Update system and install dependencies
@@ -26,7 +26,7 @@ These commands will:
 4. Clone a fresh copy of the repository
 5. Build and run the Docker container
 
-The application will run in an Ubuntu-based Docker container, ensuring consistent behavior across systems.
+The application will run in an Ubuntu-based Docker container. This will ensure that the application has consistent behavior across systems.
 
-> Note: We use `docker-compose` (with hyphen) as we're using the version from Ubuntu repositories. Also, we need to run it with `sudo` to ensure proper permissions.
+> Note: We use `docker-compose` (with hyphen) as we're using the version from Ubuntu's repositories. Also, we need to run it with `sudo` to ensure proper permissions.
 
