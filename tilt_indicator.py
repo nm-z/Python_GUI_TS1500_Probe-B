@@ -1,11 +1,61 @@
 import pygame  # type: ignore
 import os
+from PIL import Image, ImageTk
+
+class TiltIndicator:
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.surface = None
+        self.photo = None
+        self.resize(200, 200)  # Initial size
+        
+        # Initialize pygame
+        pygame.init()
+        
+        # Load Ubuntu Light font
+        try:
+            font_path = "/usr/share/fonts/truetype/ubuntu/Ubuntu-Light.ttf"
+            if not os.path.exists(font_path):
+                font_path = "Ubuntu-Light.ttf"  # Fallback to local directory
+            self.font = pygame.font.Font(font_path, 54)
+        except:
+            self.font = pygame.font.Font(None, 54)  # Fallback to default font
+    
+    def resize(self, width, height):
+        """Resize the pygame surface"""
+        self.surface = pygame.Surface((width, height))
+        self.width = width
+        self.height = height
+    
+    def update(self, pitch, roll):
+        """Update the attitude indicator display"""
+        if self.surface is None:
+            return
+            
+        # Draw the attitude indicator
+        draw_attitude_indicator(pitch, roll, self.surface)
+        
+        # Convert pygame surface to PhotoImage
+        data = pygame.image.tostring(self.surface, 'RGB')
+        image = Image.frombytes('RGB', (self.width, self.height), data)
+        self.photo = ImageTk.PhotoImage(image)
+        
+        # Update canvas
+        self.canvas.delete("all")
+        self.canvas.create_image(
+            self.width//2, self.height//2,  # Center the image
+            image=self.photo
+        )
+    
+    def cleanup(self):
+        """Cleanup pygame resources"""
+        pygame.quit()
 
 # Initialize pygame
 pygame.init()
 
 # Screen dimensions
-WIDTH, HEIGHT = 1000, 1000
+WIDTH, HEIGHT = 200, 200
 
 # Colors
 BLUE = (0, 153, 255)

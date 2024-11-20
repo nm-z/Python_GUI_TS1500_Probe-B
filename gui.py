@@ -41,13 +41,174 @@ from datetime import timedelta
 import pygame
 from matplotlib.widgets import RadioButtons, TextBox
 from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
+import tkinter.messagebox
+from tilt_indicator import TiltIndicator
 
 # Configuration
 ENABLE_WEB_SERVER = False
+DEBUG_FRAMES = False
 
 app = Flask(__name__)
 
 VNA_EXPORTS_FOLDER = "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/VNA_Exports"
+
+class DebugHighlightConfig:
+    def __init__(self, parent):
+        self.parent = parent
+        self.dialog = tk.Toplevel(parent.master)
+        self.dialog.title("Debug Highlight Configuration")
+        self.dialog.geometry("400x600")
+        self.dialog.configure(bg='#1c1c1c')
+        
+        # Initialize the result dictionary
+        self.dialog.result = {}
+        
+        # Create main frame
+        main_frame = ttk.Frame(self.dialog)
+        main_frame.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+        
+        # Configure grid weights
+        self.dialog.grid_columnconfigure(0, weight=1)
+        self.dialog.grid_rowconfigure(0, weight=1)
+        main_frame.grid_columnconfigure(0, weight=1)
+        
+        # Add toggle buttons
+        toggle_frame = ttk.Frame(main_frame)
+        toggle_frame.grid(row=0, column=0, sticky='ew', pady=(0, 10))
+        
+        # Configure toggle frame grid
+        toggle_frame.grid_columnconfigure((0, 1), weight=1)
+        
+        ttk.Button(toggle_frame, text="Enable All", command=self.select_all).grid(row=0, column=0, padx=5)
+        ttk.Button(toggle_frame, text="Disable All", command=self.deselect_all).grid(row=0, column=1, padx=5)
+        
+        # Create checkboxes with hierarchical structure
+        self.checkboxes = {}
+        
+        # Main sections
+        main_sections = [
+            "Navigation Bar",
+            "Test Parameters/Settings",
+            "Visualization",
+            "Data Logging & Events"
+        ]
+        
+        # Navigation Bar subsections
+        nav_subsections = [
+            "Test Controls Section",
+            "Arduino Settings Section",
+            "Temperature Settings Section",
+            "Hardware Config Section"
+        ]
+        
+        # Create main sections using grid
+        current_row = 1
+        for name in main_sections:
+            var = tk.BooleanVar(value=False)
+            self.checkboxes[name] = var
+            self.dialog.result[name] = False
+            
+            frame = ttk.Frame(main_frame)
+            frame.grid(row=current_row, column=0, sticky='w', pady=2)
+            
+            cb = ttk.Checkbutton(
+                frame,
+                text=name,
+                variable=var,
+                command=lambda n=name, v=var: self.on_checkbox_change(n, v)
+            )
+            cb.grid(row=0, column=0, sticky='w')
+            
+            # Add subsections for Navigation Bar
+            if name == "Navigation Bar":
+                subframe = ttk.Frame(main_frame)
+                subframe.grid(row=current_row + 1, column=0, sticky='w', padx=20)
+                
+                for sub_name in nav_subsections:
+                    sub_var = tk.BooleanVar(value=False)
+                    self.checkboxes[sub_name] = sub_var
+                    self.dialog.result[sub_name] = False
+                    
+                    ttk.Checkbutton(
+                        subframe,
+                        text=sub_name,
+                        variable=sub_var,
+                        command=lambda n=sub_name, v=sub_var: self.on_checkbox_change(n, v)
+                    ).grid(row=nav_subsections.index(sub_name), column=0, sticky='w', pady=2)
+                
+                current_row += len(nav_subsections)
+            
+            current_row += 1
+        
+        # Add Apply and Cancel buttons
+        button_frame = ttk.Frame(main_frame)
+        button_frame.grid(row=current_row + 1, column=0, sticky='ew', pady=(10, 0))
+        
+        button_frame.grid_columnconfigure((0, 1), weight=1)
+        
+        ttk.Button(button_frame, text="Apply", command=self.apply).grid(row=0, column=0, padx=5)
+        ttk.Button(button_frame, text="Cancel", command=self.cancel).grid(row=0, column=1, padx=5)
+    
+    def on_checkbox_change(self, name, var):
+        """Handle individual checkbox changes with immediate update"""
+        try:
+            # Update result dictionary
+            self.dialog.result[name] = var.get()
+            
+            # Debug print
+            print(f"Checkbox changed: {name} = {var.get()}")
+            
+            # Immediately apply the change
+            if hasattr(self.parent, 'apply_debug_highlights'):
+                self.parent.apply_debug_highlights(self.dialog.result)
+                
+        except Exception as e:
+            print(f"Error handling checkbox change for {name}: {e}")
+    
+    def select_all(self):
+        """Enable all checkboxes with immediate update"""
+        for var in self.checkboxes.values():
+            var.set(True)
+        # Apply changes immediately
+        if hasattr(self.parent, 'apply_debug_highlights'):
+            self.dialog.result = {widget: True for widget in self.checkboxes.keys()}
+            self.parent.apply_debug_highlights(self.dialog.result)
+    
+    def deselect_all(self):
+        """Disable all checkboxes with immediate update"""
+        for var in self.checkboxes.values():
+            var.set(False)
+        # Apply changes immediately
+        if hasattr(self.parent, 'apply_debug_highlights'):
+            self.dialog.result = {widget: False for widget in self.checkboxes.keys()}
+            self.parent.apply_debug_highlights(self.dialog.result)
+    
+    def apply(self):
+        """Apply current checkbox states"""
+        try:
+            result = {
+                widget: var.get() 
+                for widget, var in self.checkboxes.items()
+            }
+            self.dialog.result = result
+            
+            if hasattr(self.parent, 'apply_debug_highlights'):
+                self.parent.apply_debug_highlights(result)
+        except Exception as e:
+            print(f"Error applying debug configuration: {e}")
+    
+    def cancel(self):
+        """Cancel the debug configuration dialog"""
+        try:
+            # Clear any existing highlights
+            if hasattr(self.parent, 'clear_debug_highlights'):
+                self.parent.clear_debug_highlights()
+            
+            # Close the dialog
+            self.dialog.destroy()
+            
+        except Exception as e:
+            print(f"Error canceling debug config: {e}")
 
 class TextHandler(logging.Handler):
     def __init__(self, text_widget):
@@ -68,14 +229,42 @@ class TextHandler(logging.Handler):
 
 class EnhancedAutoDataLoggerGUI:
     def __init__(self, master):
-        self.master = master
-        self.master.title("Enhanced Automated Data Logger")
-        self.master.geometry("800x1200")
-        
-        # Enforce Minimum Window Size
-        self.master.minsize(800, 1000)
-        self.master.maxsize(1600, 1600)
-        
+        print("DEBUG: Starting GUI initialization")
+        try:
+            self.master = master
+            self.tk = master.tk
+            self.master.title("Enhanced Automated Data Logger")
+            
+            # Set a reasonable minimum size instead of fixed dimensions
+            self.master.minsize(800, 600)
+            
+            # Configure main window grid weights
+            self.master.grid_columnconfigure(0, weight=1)
+            self.master.grid_rowconfigure(0, weight=1)  # For main_container
+            self.master.grid_rowconfigure(1, weight=0)  # For log_widget
+            self.master.grid_rowconfigure(2, weight=0)  # For status_label
+            
+            # Create main container frame with proper grid configuration
+            self.main_container = ttk.Frame(self.master)
+            self.main_container.grid(row=0, column=0, sticky='nsew')
+            self.main_container.grid_columnconfigure(0, weight=1)
+            self.main_container.grid_rowconfigure(1, weight=1)  # Row 1 will expand
+            
+            # Initialize variables
+            self.initialize_variables()
+            
+            # Create widgets
+            self.create_logger()
+            self.create_widgets()
+            
+            # Initialize devices and connections
+            self.initialize_devices()
+            
+        except Exception as e:
+            print(f"DEBUG ERROR in __init__: {str(e)}")
+            raise
+    
+    def initialize_variables(self):
         # Initialize variables before creating widgets
         self.data = []
         self.is_logging = False
@@ -93,45 +282,40 @@ class EnhancedAutoDataLoggerGUI:
         self.gyro_bias = np.zeros(3)
         self.orientation = np.array([1, 0, 0, 0])
         self.test_sequence = []
+        self.timeframe = tk.StringVar(value='1m')
+        self.temp_unit = tk.StringVar(value='C')
         
         # Set dark mode color scheme
         self.master.configure(background='#1c1c1c')
-        ttk.Style().configure('TFrame', background='#1c1c1c')
-        ttk.Style().configure('TLabelframe', background='#1c1c1c', foreground='white')
-        ttk.Style().configure('TLabelframe.Label', background='#1c1c1c', foreground='white')
-        ttk.Style().configure('TLabel', background='#1c1c1c', foreground='white')
-        ttk.Style().configure('TButton', background='#4c4c4c', foreground='white')
-        ttk.Style().configure('TEntry', fieldbackground='#4c4c4c', foreground='white')
-        ttk.Style().configure('TCombobox', fieldbackground='#4c4c4c', foreground='white')
-        ttk.Style().configure('TNotebook', background='#1c1c1c')
-        ttk.Style().configure('TNotebook.Tab', background='#4c4c4c', foreground='white')
-        ttk.Style().configure('TRadiobutton', background='#1c1c1c', foreground='white')
-        
-        # Create widgets
-        self.create_logger()
-        self.create_widgets()
-        
-        # Log "Logger active" on startup
-        self.logger.info("Logger active", extra={'color': 'green'})
-        
-        # Initialize devices and connections
-        self.find_and_connect_arduino()
-        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self.connect_devices()
-        
-        # Initialize Tilt Indicator **After create_widgets**
-        # Ensure self.tilt_canvas is defined in create_widgets before this line
-        self.tilt_indicator = TiltIndicator(self.tilt_canvas)
-        
-        # Start updating the tilt indicator
-        self.update_tilt_indicator()
-        
-        # Start temperature simulation
-        self.simulate_temperature_data()
+        style = ttk.Style()
+        style.configure('TFrame', background='#1c1c1c')
+        style.configure('TLabelframe', background='#1c1c1c', foreground='white')
+        style.configure('TLabelframe.Label', background='#1c1c1c', foreground='white')
+        style.configure('TLabel', background='#1c1c1c', foreground='white')
+        style.configure('TButton', background='#4c4c4c', foreground='white')
+        style.configure('TEntry', fieldbackground='#4c4c4c', foreground='white')
+        style.configure('TCombobox', fieldbackground='#4c4c4c', foreground='white')
+        style.configure('TNotebook', background='#1c1c1c')
+        style.configure('TNotebook.Tab', background='#4c4c4c', foreground='white')
+        style.configure('TRadiobutton', background='#1c1c1c', foreground='white')
     
     def create_logger(self):
-        self.log_widget = ScrolledText(self.master, state='disabled', height=10, bg='#4c4c4c', fg='white', padx=10, pady=10)
-        self.log_widget.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
+        self.log_widget = ScrolledText(
+            self.main_container,
+            state='disabled',
+            height=10,
+            bg='#4c4c4c',
+            fg='white',
+            padx=10,
+            pady=10
+        )
+        self.log_widget.grid(
+            row=2,
+            column=0,
+            sticky='ew',
+            padx=10,
+            pady=10
+        )
         
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
@@ -141,6 +325,31 @@ class EnhancedAutoDataLoggerGUI:
         
         # Configure high-contrast green text tag
         self.log_widget.tag_configure('green', foreground='#00FF00')
+    
+    def initialize_devices(self):
+        print("DEBUG: Starting initialize_devices")
+        try:
+            # Initialize devices and connections
+            self.find_and_connect_arduino()
+            self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
+            self.connect_devices()
+            
+            # Initialize Tilt Indicator
+            if hasattr(self, 'tilt_canvas'):
+                print("DEBUG: Initializing tilt indicator")
+                self.tilt_indicator = TiltIndicator(self.tilt_canvas)
+                
+                # Start updating the tilt indicator
+                self.update_tilt_indicator()
+                
+                # Start temperature simulation
+                self.simulate_temperature_data()
+            else:
+                print("DEBUG: Warning - tilt_canvas not found")
+                
+        except Exception as e:
+            print(f"DEBUG ERROR in initialize_devices: {str(e)}")
+            raise
     
     def find_and_connect_arduino(self):
         ports = self.get_usb_ports()
@@ -153,188 +362,56 @@ class EnhancedAutoDataLoggerGUI:
                 break
     
     def create_widgets(self):
-        # 1. Top Frame: Navigation and Tabs (1/4)
-        top_frame = ttk.Frame(self.master, height=160)
-        top_frame.pack(side=tk.TOP, fill=tk.X, padx=20, pady=10)
-        top_frame.pack_propagate(False)
-        
-        # Create Menu Bar
-        menubar = tk.Menu(self.master)
-        self.master.config(menu=menubar)
-        
-        # File Menu
-        file_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="Export Data", command=self.save_to_csv)
-        file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self.on_closing)
-        
-        # Troubleshooting Menu
-        trouble_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Troubleshooting", menu=trouble_menu)
-        trouble_menu.add_command(label="Test Connection", command=self.find_and_connect_arduino)
-        trouble_menu.add_command(label="Calibrate Sensors", command=self.calibrate_sensor)
-        
-        # Create Notebook (Tabs)
-        self.notebook = ttk.Notebook(top_frame)
-        self.notebook.pack(fill=tk.BOTH, expand=True)
-        
-        # Create only necessary tab frames
-        self.create_testing_tab()
-        self.create_settings_tab()
-        
-        # 2. Test Parameters/Settings Frame (formerly Real-Time Parameters)
-        test_params_frame = ttk.LabelFrame(self.master, text="Test Parameters/Settings", height=200)
-        test_params_frame.pack(fill=tk.X, padx=10, pady=10)
-        test_params_frame.pack_propagate(False)
-        
-        # Create two columns in test_params_frame
-        for i in range(2):
-            test_params_frame.columnconfigure(i, weight=1)
-        
-        # Tilt Angles Section
-        tilt_frame = ttk.LabelFrame(test_params_frame, text="Tilt Angles")
-        tilt_frame.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
-        
-        # Use a monospace font and fixed width for consistent display
-        self.tilt_angles_label = ttk.Label(
-            tilt_frame,
-            text="X: +0.0° Y: +0.0° Z: +0.0°",
-            font=('Courier', 10),  # Use monospace font
-            width=30  # Fixed width
-        )
-        self.tilt_angles_label.pack(pady=2, padx=2)
-        
-        # Configure the frame to maintain size
-        tilt_frame.grid_propagate(False)
-        
-        # Status Display
-        status_frame = ttk.LabelFrame(test_params_frame, text="Test Status")
-        status_frame.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-        self.test_status_label = ttk.Label(status_frame, text="Current Phase: Idle", foreground='yellow')
-        self.test_status_label.pack(pady=2, padx=2)
-        
-        # Hardware Feedback Section
-        hardware_feedback_frame = ttk.LabelFrame(test_params_frame, text="Hardware Feedback")
-        hardware_feedback_frame.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
-        
-        # Stepper Motor Status
-        ttk.Label(hardware_feedback_frame, text="Stepper Motor Status:").grid(row=0, column=0, sticky='w', padx=5, pady=2)
-        self.stepper_status_label = ttk.Label(hardware_feedback_frame, text="Position: 0 | Speed: 60 RPM")
-        self.stepper_status_label.grid(row=0, column=1, sticky='w', padx=5, pady=2)
-        
-        # Motion-Tracking Device Output
-        ttk.Label(hardware_feedback_frame, text="Motion-Tracker Output:").grid(row=1, column=0, sticky='w', padx=5, pady=2)
-        self.motion_tracker_label = ttk.Label(hardware_feedback_frame, text="Pitch: 0° | Roll: 0°")
-        self.motion_tracker_label.grid(row=1, column=1, sticky='w', padx=5, pady=2)
-        
-        # 3. Visualization Frame (3/4)
-        visual_frame = ttk.LabelFrame(self.master, text="Visualization")
-        visual_frame.pack(fill=tk.BOTH, expand=True, padx=15, pady=10)
-        
-        # Create container frame
-        container_frame = ttk.Frame(visual_frame, height=1000)  # Increased height
-        container_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        container_frame.pack_propagate(False)  # Prevent shrinking
-        
-        # Configure grid weights
-        container_frame.grid_columnconfigure(0, weight=1)
-        container_frame.grid_columnconfigure(1, weight=1)
-        container_frame.grid_rowconfigure(0, weight=1)
-        
-        # Left frame for Pygame visualization - enforce square aspect ratio
-        left_visual_frame = ttk.Frame(container_frame)
-        left_visual_frame.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
-        
-        # Bind configure event to maintain square aspect ratio
-        def maintain_square(event):
-            width = event.width
-            height = event.height
-            size = min(width, height)
-            left_visual_frame.configure(width=size, height=size)
-            # Update canvas size
-            self.tilt_canvas.configure(width=size, height=size)
-            if hasattr(self, 'tilt_indicator'):
-                self.tilt_indicator.resize(size, size)
-        
-        left_visual_frame.bind('<Configure>', maintain_square)
-        
-        # Create the Pygame canvas
-        self.tilt_canvas = tk.Canvas(
-            left_visual_frame, 
-            bg='#1c1c1c', 
-            width=400, 
-            height=400,
-            highlightthickness=0,
-            borderwidth=0
-        )
-        self.tilt_canvas.grid(row=0, column=0, sticky='nsew')
-        
-        # Right frame for temperature graph
-        right_visual_frame = ttk.Frame(container_frame)
-        right_visual_frame.grid(row=0, column=1, sticky='nsew', padx=5, pady=5)
-        
-        # Temperature Graph
-        self.fig_temperature, self.ax_temperature = plt.subplots(figsize=(5, 3), facecolor='#4c4c4c')
-        self.ax_temperature.set_title('Temperature Over Time', color='white')
-        self.ax_temperature.set_xlabel('Time', color='white')
-        self.ax_temperature.set_ylabel('Temperature (°C)', color='white')
-        self.ax_temperature.tick_params(colors='white')
-        self.ax_temperature.grid(True, color='gray')
-        
-        # Adjust the layout to prevent label cutoff
-        self.fig_temperature.subplots_adjust(bottom=0.2)  # Add more space at the bottom
-        self.fig_temperature.tight_layout()  # Apply tight layout after adjusting
-        
-        self.temperature_canvas = FigureCanvasTkAgg(self.fig_temperature, master=right_visual_frame)
-        self.temperature_canvas.draw()
-        self.temperature_canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
-        
-        # Initialize Tilt Indicator
-        self.tilt_indicator = TiltIndicator(self.tilt_canvas)
-        
-        # Start updating the tilt indicator and temperature graph
-        self.update_tilt_indicator()
-        self.simulate_temperature_data()
-        
-        # 4. Logger Frame (4/4)
-        log_frame = ttk.LabelFrame(self.master, text="Data Logging & Events")
-        log_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
-        
-        # Logger controls in a horizontal frame
-        log_controls = ttk.Frame(log_frame)
-        log_controls.pack(fill=tk.X, padx=5, pady=2)
-        
-        # Left side controls
-        left_controls = ttk.Frame(log_controls)
-        left_controls.pack(side=tk.LEFT, fill=tk.Y, padx=5, pady=5)
-        
-        ttk.Label(left_controls, text="Log Frequency:").pack(side=tk.TOP, anchor='w', padx=5, pady=2)
-        self.freq_entry = ttk.Entry(left_controls, width=10)
-        self.freq_entry.insert(0, "1")
-        self.freq_entry.pack(side=tk.TOP, anchor='w', padx=5, pady=2)
-        
-        self.log_button = ttk.Button(left_controls, text="Start Logging", command=self.toggle_logging)
-        self.log_button.pack(side=tk.TOP, anchor='w', padx=5, pady=5)
-        
-        # **Repositioned "Logger active" Label**
-        self.logger_status_label = ttk.Label(left_controls, text="Logger active", foreground='green')
-        self.logger_status_label.pack(side=tk.TOP, anchor='w', padx=5, pady=5)
-        
-        # Right side controls
-        right_controls = ttk.Frame(log_controls)
-        right_controls.pack(side=tk.RIGHT, fill=tk.Y, padx=5, pady=5)
-        
-        ttk.Label(right_controls, text="File:").pack(side=tk.TOP, anchor='w', padx=5, pady=2)
-        self.file_name = tk.StringVar(value="data.csv")
-        file_entry = ttk.Entry(right_controls, textvariable=self.file_name, width=20)
-        file_entry.pack(side=tk.TOP, anchor='w', padx=5, pady=2)
-        
-        ttk.Button(right_controls, text="Export Logs", command=self.save_to_csv).pack(side=tk.TOP, anchor='w', padx=5, pady=5)
-        
-        # Create new log widget (the old one will be removed)
-        self.log_widget = ScrolledText(log_frame, height=5, bg='#4c4c4c', fg='white', state='disabled')
-        self.log_widget.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        print("DEBUG: Starting create_widgets")
+        try:
+            # Top Frame: Navigation and Tabs
+            print("DEBUG: Creating top frame")
+            top_frame = ttk.Frame(self.main_container)
+            top_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
+            top_frame.grid_columnconfigure(0, weight=1)
+            
+            # Create Menu Bar
+            print("DEBUG: Creating menu bar")
+            self.create_menu_bar()
+            
+            # Create Notebook (Tabs)
+            print("DEBUG: Creating notebook")
+            self.notebook = ttk.Notebook(top_frame)
+            self.notebook.grid(row=0, column=0, sticky='ew')
+            
+            # Create tabs
+            print("DEBUG: Creating tabs")
+            self.create_testing_tab()
+            self.create_settings_tab()
+            self.create_data_tab()
+            
+            # Middle Frame
+            print("DEBUG: Creating middle frame")
+            middle_frame = ttk.Frame(self.main_container)
+            middle_frame.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
+            middle_frame.grid_columnconfigure(0, weight=1)
+            middle_frame.grid_rowconfigure(1, weight=1)
+            
+            # Test Parameters Frame
+            print("DEBUG: Creating parameters frame")
+            params_frame = self.create_test_parameters_frame(middle_frame)
+            params_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
+            
+            # Visualization Frame
+            print("DEBUG: Creating visualization frame")
+            visual_frame = self.create_visualization_frame(middle_frame)
+            visual_frame.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
+            
+            # Bottom Frame: Logging
+            print("DEBUG: Creating log widget")
+            self.log_widget.grid(row=2, column=0, sticky='ew', padx=5, pady=5)
+            
+            # Create test controls
+            self.create_test_controls()
+            
+        except Exception as e:
+            print(f"DEBUG ERROR in create_widgets: {str(e)}")
+            raise
     
     def create_realtime_tab(self):
         tab = ttk.Frame(self.notebook)
@@ -342,139 +419,174 @@ class EnhancedAutoDataLoggerGUI:
         # Add real-time parameter controls here
 
     def create_testing_tab(self):
-        tab = ttk.Frame(self.notebook)
-        self.notebook.add(tab, text="Testing Controls")
-        
-        # Add Test Controls here
-        test_controls_frame = ttk.LabelFrame(tab, text="Test Controls")
-        test_controls_frame.pack(fill=tk.X, padx=5, pady=5)
-        
-        # Configure grid for balanced alignment
-        for i in range(5):  # Adjusted to accommodate an additional column for the Tilt Angle Label
-            test_controls_frame.columnconfigure(i, weight=1, pad=10)
-        
-        # Start Test Button
-        start_test_button = ttk.Button(test_controls_frame, text="Start Test", command=self.start_test)
-        start_test_button.grid(row=0, column=0, padx=5, pady=5, sticky='ew')
-        
-        # Pause Test Button
-        pause_test_button = ttk.Button(test_controls_frame, text="Pause Test", command=self.pause_test)
-        pause_test_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
-        
-        # Stop Test Button
-        stop_test_button = ttk.Button(test_controls_frame, text="Stop Test", command=self.stop_test)
-        stop_test_button.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
-        
-        # Angle Increment
-        ttk.Label(test_controls_frame, text="Angle Increment:").grid(row=1, column=0, sticky='e', padx=5, pady=5)
-        self.angle_increment_var = tk.IntVar(value=1)
-        angle_increment_spinbox = ttk.Spinbox(
-            test_controls_frame, from_=1, to=10, textvariable=self.angle_increment_var, width=5
-        )
-        angle_increment_spinbox.grid(row=1, column=1, sticky='w', padx=5, pady=5)
-        
-        # Angle Step Size
-        ttk.Label(test_controls_frame, text="Angle Step Size:").grid(row=1, column=2, sticky='e', padx=5, pady=5)
-        self.angle_step_size_var = tk.IntVar(value=10)
-        angle_step_size_spinbox = ttk.Spinbox(
-            test_controls_frame, from_=10, to=90, increment=5, textvariable=self.angle_step_size_var, width=5
-        )
-        angle_step_size_spinbox.grid(row=1, column=3, sticky='w', padx=5, pady=5)
-        
-        # Oil Leveling Time
-        ttk.Label(test_controls_frame, text="Oil Leveling Time (s):").grid(row=2, column=0, sticky='e', padx=5, pady=5)
-        self.oil_leveling_time_var = tk.IntVar(value=5)
-        oil_leveling_time_entry = ttk.Entry(
-            test_controls_frame, textvariable=self.oil_leveling_time_var, width=5
-        )
-        oil_leveling_time_entry.grid(row=2, column=1, sticky='w', padx=5, pady=5)
-        
-        # Tilt Angle Range Slider
-        ttk.Label(test_controls_frame, text="Tilt Angle Range (±°):").grid(row=2, column=2, sticky='e', padx=5, pady=5)
-        self.tilt_angle_var = tk.IntVar(value=30)
-        tilt_angle_slider = ttk.Scale(test_controls_frame, from_=1, to=90, orient=tk.HORIZONTAL,
-                                     variable=self.tilt_angle_var, command=self.update_tilt_angle_range)
-        tilt_angle_slider.grid(row=2, column=3, sticky='ew', padx=5, pady=5)
-        self.tilt_angle_label = ttk.Label(test_controls_frame, text="±30°")
-        self.tilt_angle_label.grid(row=2, column=4, sticky='w', padx=5, pady=5)
+        print("DEBUG: Starting create_testing_tab")
+        try:
+            tab = ttk.Frame(self.notebook)
+            self.notebook.add(tab, text="Testing Controls")
+            
+            # Configure grid weights
+            tab.grid_columnconfigure(0, weight=1)
+            
+            # Test Controls Frame
+            test_controls_frame = ttk.LabelFrame(tab, text="Test Controls")
+            test_controls_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
+            
+            # Configure test controls frame grid
+            test_controls_frame.grid_columnconfigure(1, weight=1)  # Make column 1 expandable
+            
+            # Start Test Button
+            ttk.Button(test_controls_frame, text="Start Test", command=self.start_test).grid(
+                row=0, column=0, padx=5, pady=5)
+            
+            # Pause Test Button
+            ttk.Button(test_controls_frame, text="Pause Test", command=self.pause_test).grid(
+                row=0, column=1, padx=5, pady=5)
+            
+            # Stop Test Button
+            ttk.Button(test_controls_frame, text="Stop Test", command=self.stop_test).grid(
+                row=0, column=2, padx=5, pady=5)
+            
+            # Add the log button
+            self.log_button = ttk.Button(test_controls_frame, text="Start Logging", command=self.toggle_logging)
+            self.log_button.grid(row=0, column=3, padx=5, pady=5)
+            
+            # Tilt Angle Range
+            ttk.Label(test_controls_frame, text="Tilt Angle Range (±°):").grid(
+                row=1, column=0, sticky='e', padx=5, pady=5)
+            
+            self.tilt_angle_var = tk.IntVar(value=30)
+            tilt_slider = ttk.Scale(test_controls_frame, from_=1, to=90, orient=tk.HORIZONTAL,
+                                   variable=self.tilt_angle_var, command=self.update_tilt_angle_range)
+            tilt_slider.grid(row=1, column=1, sticky='ew', padx=5, pady=5)
+            
+            self.tilt_angle_label = ttk.Label(test_controls_frame, text="±30°")
+            self.tilt_angle_label.grid(row=1, column=2, sticky='w', padx=5, pady=5)
+
+        except Exception as e:
+            print(f"DEBUG ERROR in create_testing_tab: {str(e)}")
+            raise
 
     def create_data_tab(self):
-        tab = ttk.Frame(self.notebook)
-        self.notebook.add(tab, text="Data Logs & Visualization")
-        # Keep existing data visualization code
-        self.fig = plt.figure(figsize=(8, 4))
-        self.ax1 = self.fig.add_subplot(121)
-        self.ax_orientation = self.fig.add_subplot(122, projection='3d')
-        self.configure_plots()
-        self.canvas_orientation = FigureCanvasTkAgg(self.fig, master=tab)
-        self.canvas_orientation.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        print("DEBUG: Starting create_data_tab")
+        try:
+            tab = ttk.Frame(self.notebook)
+            self.notebook.add(tab, text="Data Logs & Visualization")
+            
+            # Configure grid weights for the tab
+            tab.grid_columnconfigure(0, weight=1)
+            tab.grid_rowconfigure(0, weight=1)
+            
+            # Create the figure and canvas using grid instead of pack
+            self.fig = plt.figure(figsize=(8, 4))
+            self.ax1 = self.fig.add_subplot(121)
+            self.ax_orientation = self.fig.add_subplot(122, projection='3d')
+            self.configure_plots()
+            
+            self.canvas_orientation = FigureCanvasTkAgg(self.fig, master=tab)
+            self.canvas_orientation.get_tk_widget().grid(row=0, column=0, sticky='nsew', padx=5, pady=5)  # Changed from pack to grid
+
+        except Exception as e:
+            print(f"DEBUG ERROR in create_data_tab: {str(e)}")
+            raise
 
     def create_settings_tab(self):
-        tab = ttk.Frame(self.notebook)
-        self.notebook.add(tab, text="Settings")
-        
-        # Create sections with horizontal layout
-        settings_frame = ttk.Frame(tab)
-        settings_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        
-        # Arduino Settings
-        arduino_frame = ttk.LabelFrame(settings_frame, text="Arduino Settings")
-        arduino_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        
-        # Arduino Port Label
-        ttk.Label(arduino_frame, text="Arduino Port:").grid(row=0, column=0, sticky='w', padx=5, pady=(5, 2))
-        
-        # Arduino Port Combobox: Shortened width and moved below label
-        self.arduino_port_combobox = ttk.Combobox(
-            arduino_frame, values=self.get_usb_ports(),
-            state="readonly", width=15  # Shortened from 25 to 15
-        )
-        self.arduino_port_combobox.grid(row=1, column=0, sticky='w', padx=5, pady=(0, 5))  # Moved to row=1
-        
-        # Temperature Settings
-        temp_frame = ttk.LabelFrame(settings_frame, text="Temperature Monitor Settings")
-        temp_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-        
-        # Units frame
-        units_frame = ttk.LabelFrame(temp_frame, text="Temperature Units")
-        units_frame.pack(fill=tk.X, pady=5)
-        
-        self.temp_unit = tk.StringVar(value='C')
-        for unit, symbol in [('C', '°C'), ('F', '°F'), ('K', 'K')]:
-            ttk.Radiobutton(units_frame, text=symbol, variable=self.temp_unit,
-                           value=unit, command=self.update_temp_display).pack(side=tk.LEFT, padx=10)
-        
-        # Time range frame
-        time_frame = ttk.LabelFrame(temp_frame, text="Graph Time Range")
-        time_frame.pack(fill=tk.X, pady=5)
-        
-        self.timeframe = tk.StringVar(value='1m')
-        for time_val, time_text in [('1m', '1 Min'), ('5m', '5 Min'), ('1h', '1 Hour')]:
-            ttk.Radiobutton(time_frame, text=time_text, variable=self.timeframe,
-                           value=time_val, command=self.update_temp_graph).pack(side=tk.LEFT, padx=10)
-        
-        # Hardware Configurations
-        hardware_frame = ttk.LabelFrame(settings_frame, text="Hardware Configurations")
-        hardware_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
-        
-        ttk.Label(hardware_frame, text="NNTP Server:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
-        self.nntp_server_entry = ttk.Entry(hardware_frame, width=30)
-        self.nntp_server_entry.grid(row=0, column=1, sticky='w', padx=5, pady=5)
-        self.nntp_server_entry.insert(0, "nntp.example.com")  # Default value
-        
-        ttk.Label(hardware_frame, text="Log Frequency (seconds):").grid(row=1, column=0, sticky='w', padx=5, pady=5)
-        self.log_freq_entry = ttk.Entry(hardware_frame, width=10)
-        self.log_freq_entry.grid(row=1, column=1, sticky='w', padx=5, pady=5)
-        self.log_freq_entry.insert(0, "1")  # Default value
-        
-        ttk.Label(hardware_frame, text="Stepper Motor Speed (RPM):").grid(row=2, column=0, sticky='w', padx=5, pady=5)
-        self.stepper_speed_entry = ttk.Entry(hardware_frame, width=10)
-        self.stepper_speed_entry.grid(row=2, column=1, sticky='w', padx=5, pady=5)
-        self.stepper_speed_entry.insert(0, "60")  # Default value
-        
-        # Save Settings Button
-        save_settings_button = ttk.Button(hardware_frame, text="Save Settings", command=self.save_hardware_settings)
-        save_settings_button.grid(row=3, column=1, sticky='e', padx=5, pady=10)
+        print("DEBUG: Starting create_settings_tab")
+        try:
+            tab = ttk.Frame(self.notebook)
+            self.notebook.add(tab, text="Settings")
+            
+            # Store frame references as class attributes
+            self.arduino_settings_frame = ttk.LabelFrame(settings_frame, text="Arduino Settings")
+            self.arduino_settings_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+            
+            self.temp_settings_frame = ttk.LabelFrame(settings_frame, text="Temperature Monitor Settings")
+            self.temp_settings_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+            
+            self.hardware_config_frame = ttk.LabelFrame(settings_frame, text="Hardware Configurations")
+            self.hardware_config_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
+            
+            # Create sections with grid layout instead of pack
+            settings_frame = ttk.Frame(tab)
+            print("DEBUG: Creating settings frame with grid")
+            settings_frame.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)  # Changed from pack to grid
+            
+            # Configure grid weights
+            tab.grid_columnconfigure(0, weight=1)
+            tab.grid_rowconfigure(0, weight=1)
+            settings_frame.grid_columnconfigure((0, 1, 2), weight=1)
+            
+            # Arduino Settings
+            arduino_frame = ttk.LabelFrame(settings_frame, text="Arduino Settings")
+            arduino_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+            
+            # Arduino Port Label
+            ttk.Label(arduino_frame, text="Arduino Port:").grid(row=0, column=0, sticky='w', padx=5, pady=(5, 2))
+            
+            # Arduino Port Combobox
+            self.arduino_port_combobox = ttk.Combobox(
+                arduino_frame, values=self.get_usb_ports(),
+                state="readonly", width=15
+            )
+            self.arduino_port_combobox.grid(row=1, column=0, sticky='w', padx=5, pady=(0, 5))
+            
+            # Temperature Settings
+            temp_frame = ttk.LabelFrame(settings_frame, text="Temperature Monitor Settings")
+            temp_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+            
+            # Units frame - Changed from pack to grid
+            units_frame = ttk.LabelFrame(temp_frame, text="Temperature Units")
+            units_frame.grid(row=0, column=0, sticky='ew', pady=5)  # Changed from pack to grid
+            
+            # Configure units frame columns
+            units_frame.grid_columnconfigure((0, 1, 2), weight=1)
+            
+            # Radio buttons - Changed from pack to grid
+            self.temp_unit = tk.StringVar(value='C')
+            for i, (unit, symbol) in enumerate([('C', '°C'), ('F', '°F'), ('K', 'K')]):
+                ttk.Radiobutton(units_frame, text=symbol, variable=self.temp_unit,
+                               value=unit, command=self.update_temp_display).grid(
+                                   row=0, column=i, padx=10)  # Changed from pack to grid
+            
+            # Time range frame - Changed from pack to grid
+            time_frame = ttk.LabelFrame(temp_frame, text="Graph Time Range")
+            time_frame.grid(row=1, column=0, sticky='ew', pady=5)  # Changed from pack to grid
+            
+            # Configure time frame columns
+            time_frame.grid_columnconfigure((0, 1, 2), weight=1)
+            
+            # Time range radio buttons - Changed from pack to grid
+            self.timeframe = tk.StringVar(value='1m')
+            for i, (time_val, time_text) in enumerate([('1m', '1 Min'), ('5m', '5 Min'), ('1h', '1 Hour')]):
+                ttk.Radiobutton(time_frame, text=time_text, variable=self.timeframe,
+                               value=time_val, command=self.update_temp_graph).grid(
+                                   row=0, column=i, padx=10)  # Changed from pack to grid
+            
+            # Hardware Configurations
+            hardware_frame = ttk.LabelFrame(settings_frame, text="Hardware Configurations")
+            hardware_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
+            
+            ttk.Label(hardware_frame, text="NNTP Server:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+            self.nntp_server_entry = ttk.Entry(hardware_frame, width=30)
+            self.nntp_server_entry.grid(row=0, column=1, sticky='w', padx=5, pady=5)
+            self.nntp_server_entry.insert(0, "nntp.example.com")
+            
+            ttk.Label(hardware_frame, text="Log Frequency (seconds):").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+            self.log_freq_entry = ttk.Entry(hardware_frame, width=10)
+            self.log_freq_entry.grid(row=1, column=1, sticky='w', padx=5, pady=5)
+            self.log_freq_entry.insert(0, "1")
+            
+            ttk.Label(hardware_frame, text="Stepper Motor Speed (RPM):").grid(row=2, column=0, sticky='w', padx=5, pady=5)
+            self.stepper_speed_entry = ttk.Entry(hardware_frame, width=10)
+            self.stepper_speed_entry.grid(row=2, column=1, sticky='w', padx=5, pady=5)
+            self.stepper_speed_entry.insert(0, "60")
+            
+            # Save Settings Button
+            save_settings_button = ttk.Button(hardware_frame, text="Save Settings", command=self.save_hardware_settings)
+            save_settings_button.grid(row=3, column=1, sticky='e', padx=5, pady=10)
+
+        except Exception as e:
+            print(f"DEBUG ERROR in create_settings_tab: {str(e)}")
+            raise
 
     # Add these new methods for test control
     def start_test(self):
@@ -483,15 +595,20 @@ class EnhancedAutoDataLoggerGUI:
             self.update_test_status("Running")
             self.log_button.config(text="Stop Logging")
             self.logger.info("Test started", extra={'color': 'green'})
+            # Apply tilt angle range and fill increment steps as needed
+            tilt_range = self.tilt_angle_var.get()
+            fill_steps = self.fill_increment_var.get()
+            self.logger.info(f"Tilt Angle Range: ±{tilt_range}°", extra={'color': 'green'})
+            self.logger.info(f"Fill Increment Steps: {fill_steps}", extra={'color': 'green'})
             threading.Thread(target=self.log_data, daemon=True).start()
-
+    
     def pause_test(self):
         if self.is_logging:
             self.is_logging = False
             self.update_test_status("Paused")
             self.log_button.config(text="Start Logging")
             self.logger.info("Test paused", extra={'color': 'green'})
-
+    
     def stop_test(self):
         if self.is_logging:
             self.is_logging = False
@@ -778,15 +895,29 @@ class EnhancedAutoDataLoggerGUI:
             self.logger.error(f"Export Error: Error exporting data: {e}", extra={'color': 'red'})
 
     def on_closing(self):
-        if hasattr(self, 'tilt_indicator'):
-            self.tilt_indicator.cleanup()
-        self.is_logging = False
-        if self.arduino:
-            self.arduino.close()
-        self.master.destroy()
-        self.master.quit()
-        app.do_teardown_appcontext()
-        exit()
+        """Handle window closing"""
+        try:
+            # Clean up Pygame resources
+            self.cleanup_pygame_resources()
+            
+            # Stop logging
+            self.is_logging = False
+            
+            # Close Arduino connection
+            if hasattr(self, 'arduino') and self.arduino:
+                self.arduino.close()
+            
+            # Clean up Flask
+            app.do_teardown_appcontext()
+            
+            # Destroy the window
+            self.master.destroy()
+            self.master.quit()
+            
+        except Exception as e:
+            print(f"Error during cleanup: {e}")
+        finally:
+            exit()
 
     def on_arduino_port_selected(self, event):
         selected_port = self.arduino_port_combobox.get()
@@ -794,8 +925,9 @@ class EnhancedAutoDataLoggerGUI:
         self.setup_arduino(selected_port.split(' ')[0])
 
     def connect_devices(self):
+        # Create status label using grid instead of pack
         self.status_label = ttk.Label(self.master, text="")
-        self.status_label.pack(side=tk.BOTTOM, pady=10)
+        self.status_label.grid(row=3, column=0, sticky='ew', pady=10)  # Row 3 since main_container and log_widget use rows 0-2
         
         self.update_status("Connecting to Arduino...")
         self.master.after(1000, self.connect_arduino)
@@ -1051,12 +1183,30 @@ class EnhancedAutoDataLoggerGUI:
         self.ax1.draw()
 
     def update_temperature(self, temp_c):
+        """Update temperature with proper error handling"""
         try:
+            if not hasattr(self, 'temperature_history'):
+                self.temperature_history = []
+            
             self.last_temp = temp_c
-            self.temperature_history.append((datetime.now(), temp_c))
-            self.update_temp_display()
+            current_time = datetime.now()
+            
+            # Add new temperature reading
+            self.temperature_history.append((current_time, temp_c))
+            
+            # Keep only last 100 readings
+            if len(self.temperature_history) > 100:
+                self.temperature_history = self.temperature_history[-100:]
+            
+            # Update display only if we have data and the window exists
+            if self.temperature_history and hasattr(self, 'master') and self.master.winfo_exists():
+                self.update_temp_display()
+            
         except Exception as e:
-            print(f"Error updating temperature: {e}")
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error updating temperature: {e}", extra={'color': 'red'})
+            else:
+                print(f"Error updating temperature: {e}")
 
     def apply_custom_timeframe(self):
         try:
@@ -1102,16 +1252,35 @@ class EnhancedAutoDataLoggerGUI:
             self.logger.error(f"Invalid custom time value: {str(e)}", extra={'color': 'red'})
 
     def simulate_temperature_data(self):
+        """Simulate temperature data with proper error handling"""
         try:
-            # Simulate temperature data for testing (always positive, smaller range)
+            if not hasattr(self, 'master') or not self.master.winfo_exists():
+                return
+            
             current_time = datetime.now()
-            # Base temperature of 21°C with ±0.5°C variation converted to always positive
-            temp = 21.0 + 0.5 * math.sin(current_time.timestamp() / 60)  # Increased frequency for smoother wave
+            temp = 21.0 + 0.5 * math.sin(current_time.timestamp() / 60)
+            
+            if not hasattr(self, 'temperature_history'):
+                self.temperature_history = []
+            
+            # Add new temperature reading
+            self.temperature_history.append((current_time, temp))
+            
+            # Keep only last 100 readings
+            if len(self.temperature_history) > 100:
+                self.temperature_history = self.temperature_history[-100:]
+            
             self.update_temperature(temp)
+            
         except Exception as e:
-            print(f"Error in temperature simulation: {e}")
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error in temperature simulation: {e}", extra={'color': 'red'})
+            else:
+                print(f"Error in temperature simulation: {e}")
         finally:
-            self.master.after(1000, self.simulate_temperature_data)
+            # Schedule next update only if window exists
+            if hasattr(self, 'master') and self.master.winfo_exists():
+                self.master.after(1000, self.simulate_temperature_data)
 
     def save_hardware_settings(self):
         nntp_server = self.nntp_server_entry.get()
@@ -1134,39 +1303,44 @@ class EnhancedAutoDataLoggerGUI:
         self.logger.info(f"Test Status: {status}", extra={'color': 'green'})
 
     def create_test_controls(self):
-        test_controls_frame = ttk.LabelFrame(self.master, text="Test Controls")
-        test_controls_frame.pack(fill=tk.X, padx=5, pady=5)
+        # Store frame reference as class attribute
+        self.test_controls_frame = ttk.LabelFrame(self.master, text="Test Controls")
+        self.test_controls_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
         
         # Start Test Button
-        start_button = ttk.Button(test_controls_frame, text="Start Test", command=self.start_test)
-        start_button.pack(side=tk.LEFT, padx=5, pady=5)
+        start_button = ttk.Button(self.test_controls_frame, text="Start Test", command=self.start_test)
+        start_button.grid(row=0, column=0, padx=5, pady=5)
         
         # Pause Test Button
-        pause_button = ttk.Button(test_controls_frame, text="Pause Test", command=self.pause_test)
-        pause_button.pack(side=tk.LEFT, padx=5, pady=5)
+        pause_button = ttk.Button(self.test_controls_frame, text="Pause Test", command=self.pause_test)
+        pause_button.grid(row=0, column=1, padx=5, pady=5)
         
         # Stop Test Button
-        stop_button = ttk.Button(test_controls_frame, text="Stop Test", command=self.stop_test)
-        stop_button.pack(side=tk.LEFT, padx=5, pady=5)
+        stop_button = ttk.Button(self.test_controls_frame, text="Stop Test", command=self.stop_test)
+        stop_button.grid(row=0, column=2, padx=5, pady=5)
+        
+        # Add the log button
+        self.log_button = ttk.Button(self.test_controls_frame, text="Start Logging", command=self.toggle_logging)
+        self.log_button.grid(row=0, column=3, padx=5, pady=5)
         
         # Tilt Angle Range Slider
-        ttk.Label(test_controls_frame, text="Tilt Angle Range (± degrees):").pack(side=tk.LEFT, padx=5)
+        ttk.Label(self.test_controls_frame, text="Tilt Angle Range (± degrees):").grid(row=1, column=0, padx=5)
         self.tilt_angle_range = tk.IntVar(value=30)
-        tilt_slider = ttk.Scale(test_controls_frame, from_=1, to=90, orient=tk.HORIZONTAL,
+        tilt_slider = ttk.Scale(self.test_controls_frame, from_=1, to=90, orient=tk.HORIZONTAL,
                                     variable=self.tilt_angle_range)
-        tilt_slider.pack(side=tk.LEFT, padx=5)
-        self.tilt_angle_label = ttk.Label(test_controls_frame, text="±30°")
-        self.tilt_angle_label.pack(side=tk.LEFT, padx=5)
+        tilt_slider.grid(row=1, column=1, padx=5)
+        self.tilt_angle_label = ttk.Label(self.test_controls_frame, text="±30°")
+        self.tilt_angle_label.grid(row=1, column=2, padx=5)
         self.tilt_angle_range.trace('w', self.update_tilt_angle_label)
         
         # Fill Increment Steps Slider
-        ttk.Label(test_controls_frame, text="Fill Increment Steps:").pack(side=tk.LEFT, padx=5)
+        ttk.Label(self.test_controls_frame, text="Fill Increment Steps:").grid(row=2, column=0, padx=5)
         self.fill_increment_steps = tk.IntVar(value=10)
-        fill_slider = ttk.Scale(test_controls_frame, from_=1, to=100, orient=tk.HORIZONTAL,
+        fill_slider = ttk.Scale(self.test_controls_frame, from_=1, to=100, orient=tk.HORIZONTAL,
                                     variable=self.fill_increment_steps)
-        fill_slider.pack(side=tk.LEFT, padx=5)
-        self.fill_increment_label = ttk.Label(test_controls_frame, text="10")
-        self.fill_increment_label.pack(side=tk.LEFT, padx=5)
+        fill_slider.grid(row=2, column=1, padx=5)
+        self.fill_increment_label = ttk.Label(self.test_controls_frame, text="10")
+        self.fill_increment_label.grid(row=2, column=2, padx=5)
         self.fill_increment_steps.trace('w', self.update_fill_increment_label)
     
     def update_tilt_angle_label(self, *args):
@@ -1223,45 +1397,340 @@ class EnhancedAutoDataLoggerGUI:
         text = f"X:{x_text:>7} Y:{y_text:>7} Z:{z_text:>7}"
         self.tilt_angles_label.config(text=text)
 
-
-class TiltIndicator:
-    def __init__(self, canvas):
-        self.canvas = canvas
-        self.width = 400
-        self.height = 400
-        self.setup_pygame()
-        
-    def setup_pygame(self):
-        self.canvas.update()
-        os.environ['SDL_WINDOWID'] = str(self.canvas.winfo_id())
-        
-        if not pygame.get_init():
-            pygame.init()
-        pygame.display.init()
-        
-        # Set up the display with exact size match
-        self.surface = pygame.display.set_mode(
-            (self.width, self.height),
-            pygame.NOFRAME | pygame.SCALED | pygame.HWSURFACE | pygame.DOUBLEBUF
-        )
-        
-        pygame.event.set_blocked(None)
-        self.canvas.update()
-        
-    def update(self, pitch, roll):
+    def apply_debug_highlights(self, highlight_config):
+        """Apply debug highlights based on configuration"""
         try:
-            # Just call the original draw_attitude_indicator without modifications
-            from tilt_indicator import draw_attitude_indicator
-            draw_attitude_indicator(pitch, roll, self.surface)
-            pygame.display.flip()
+            self.clear_debug_highlights()
+            
+            # Map configuration names to actual frames
+            frames = {
+                # Main sections
+                "Navigation Bar": self.notebook,
+                "Test Parameters/Settings": self.params_frame,
+                "Visualization": self.visual_frame,
+                "Data Logging & Events": self.log_widget,
+                
+                # Navigation Bar subsections
+                "Test Controls Section": self.test_controls_frame,
+                "Arduino Settings Section": self.arduino_settings_frame,
+                "Temperature Settings Section": self.temp_settings_frame,
+                "Hardware Config Section": self.hardware_config_frame
+            }
+            
+            # Add debug info
+            print("DEBUG: Available frames for highlighting:")
+            for name, widget in frames.items():
+                print(f"{name}: {'Available' if widget else 'Not available'}")
+            
+            # Get the root window's position
+            root_x = self.master.winfo_x()
+            root_y = self.master.winfo_y()
+            
+            for name, widget in frames.items():
+                if (name in highlight_config and 
+                    highlight_config[name] and 
+                    widget and 
+                    hasattr(widget, 'winfo_exists') and 
+                    widget.winfo_exists()):
+                    try:
+                        # Get widget coordinates relative to root window
+                        x = widget.winfo_rootx() - root_x
+                        y = widget.winfo_rooty() - root_y
+                        width = widget.winfo_width()
+                        height = widget.winfo_height()
+                        
+                        if width <= 1 or height <= 1:
+                            print(f"Skipping {name} - invalid dimensions: {width}x{height}")
+                            continue
+                        
+                        # Create outline for each edge
+                        for outline in [
+                            (x, y, width, 2),  # Top
+                            (x, y + height - 2, width, 2),  # Bottom
+                            (x, y, 2, height),  # Left
+                            (x + width - 2, y, 2, height)  # Right
+                        ]:
+                            outline_canvas = tk.Canvas(
+                                self.master,
+                                width=outline[2],
+                                height=outline[3],
+                                bg='#90EE90',  # Light green
+                                highlightthickness=0,
+                                borderwidth=0
+                            )
+                            outline_canvas.place(x=outline[0], y=outline[1])
+                            outline_canvas._is_debug_outline = True
+                            
+                            # Add hover effect
+                            outline_canvas.bind('<Enter>', lambda e: e.widget.configure(bg='#00FF00'))
+                            outline_canvas.bind('<Leave>', lambda e: e.widget.configure(bg='#90EE90'))
+                            
+                    except Exception as e:
+                        print(f"Error highlighting {name}: {e}")
+                        
         except Exception as e:
-            print(f"Error updating tilt indicator: {e}")
-    
-    def cleanup(self):
+            print(f"Error applying highlights: {e}")
+
+    def clear_debug_highlights(self):
+        """Remove all existing debug highlight frames"""
+        for widget in self.master.winfo_children():
+            if isinstance(widget, tk.Canvas) and hasattr(widget, '_is_debug_outline'):
+                widget.destroy()
+
+    def show_debug_config(self):
+        """Show debug configuration dialog"""
         try:
-            pygame.quit()
-        except Exception:
-            pass
+            # Clear any existing highlights
+            self.clear_debug_highlights()
+            
+            # Print debug info about available frames
+            print("\nDEBUG: Frame Availability Check")
+            frames_to_check = [
+                'notebook', 'params_frame', 'visual_frame', 'log_widget',
+                'test_controls_frame', 'arduino_settings_frame', 
+                'temp_settings_frame', 'hardware_config_frame'
+            ]
+            
+            for frame_name in frames_to_check:
+                has_frame = hasattr(self, frame_name)
+                frame = getattr(self, frame_name, None)
+                exists = frame and hasattr(frame, 'winfo_exists') and frame.winfo_exists()
+                print(f"{frame_name}: {'Available and exists' if exists else 'Not available or not existing'}")
+            
+            # Create or show existing config dialog
+            if not hasattr(self, '_debug_config') or not self._debug_config.dialog.winfo_exists():
+                self._debug_config = DebugHighlightConfig(self)
+            else:
+                self._debug_config.dialog.lift()
+                self._debug_config.dialog.focus_set()
+        except Exception as e:
+            print(f"Error showing debug config: {e}")
+
+    def create_visualization_frame(self, parent):
+        print("DEBUG: Starting create_visualization_frame")
+        try:
+            # Store frame reference as class attribute
+            self.visual_frame = ttk.LabelFrame(parent, text="Visualization")
+            self.visual_frame.grid_columnconfigure(0, weight=1)
+            self.visual_frame.grid_columnconfigure(1, weight=1)
+            self.visual_frame.grid_rowconfigure(0, weight=1)
+            
+            # Create left frame for tilt indicator
+            left_frame = ttk.Frame(self.visual_frame)
+            left_frame.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
+            left_frame.grid_columnconfigure(0, weight=1)
+            left_frame.grid_rowconfigure(0, weight=1)
+            
+            # Create canvas for tilt indicator
+            self.tilt_canvas = tk.Canvas(
+                left_frame,
+                width=200,
+                height=200,
+                bg='black'
+            )
+            self.tilt_canvas.grid(row=0, column=0, sticky='nsew')
+            
+            # Create right frame for temperature graph
+            right_frame = ttk.Frame(self.visual_frame)
+            right_frame.grid(row=0, column=1, sticky='nsew', padx=5, pady=5)
+            right_frame.grid_columnconfigure(0, weight=1)
+            right_frame.grid_rowconfigure(0, weight=1)
+            
+            # Create temperature graph
+            self.fig, self.ax = plt.subplots(figsize=(6, 4))
+            self.canvas = FigureCanvasTkAgg(self.fig, right_frame)
+            self.canvas.get_tk_widget().grid(row=0, column=0, sticky='nsew')
+            
+            return self.visual_frame
+            
+        except Exception as e:
+            print(f"DEBUG ERROR in create_visualization_frame: {str(e)}")
+            raise
+
+    def on_canvas_resize(self, event):
+        """Handle canvas resize events"""
+        # Update canvas size
+        size = min(event.width, event.height)
+        if hasattr(self, 'tilt_indicator'):
+            self.tilt_indicator.resize(size, size)
+
+    def create_menu_bar(self):
+        """Create the application menu bar"""
+        try:
+            # Create Menu Bar
+            menubar = tk.Menu(self.master)
+            self.master.config(menu=menubar)
+            
+            # File Menu
+            file_menu = tk.Menu(menubar, tearoff=0, bg='#1c1c1c', fg='white')
+            menubar.add_cascade(label="File", menu=file_menu)
+            file_menu.add_command(label="Export Data", command=self.save_to_csv)
+            file_menu.add_separator()
+            file_menu.add_command(label="Exit", command=self.on_closing)
+            
+            # Troubleshooting Menu
+            trouble_menu = tk.Menu(menubar, tearoff=0, bg='#1c1c1c', fg='white')
+            menubar.add_cascade(label="Troubleshooting", menu=trouble_menu)
+            trouble_menu.add_command(label="Test Connection", command=self.find_and_connect_arduino)
+            trouble_menu.add_command(label="Calibrate Sensors", command=self.calibrate_sensor)
+            trouble_menu.add_separator()
+            trouble_menu.add_command(label="Configure Debug Highlights", command=self.show_debug_config)
+            
+            # Help Menu
+            help_menu = tk.Menu(menubar, tearoff=0, bg='#1c1c1c', fg='white')
+            menubar.add_cascade(label="Help", menu=help_menu)
+            help_menu.add_command(label="About", command=self.show_about)
+            
+        except Exception as e:
+            self.logger.error(f"Error creating menu bar: {e}", extra={'color': 'red'})
+
+    def create_test_parameters_frame(self, parent):
+        print("DEBUG: Starting create_test_parameters_frame")
+        try:
+            # Store frame reference as class attribute
+            self.params_frame = ttk.LabelFrame(parent, text="Test Parameters/Settings")
+            self.params_frame.grid_columnconfigure(0, weight=1)
+            
+            # Tilt Angles Frame
+            self.tilt_frame = ttk.LabelFrame(params_frame, text="Tilt Angles")
+            self.tilt_frame.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+            
+            # Add tilt angles display - Change from pack to grid
+            self.tilt_angles_label = ttk.Label(
+                self.tilt_frame,
+                text="X: +0.0° Y: +0.0° Z: +0.0°",
+                font=('Courier', 10)
+            )
+            self.tilt_angles_label.grid(row=0, column=0, pady=2, padx=2)  # Changed from pack to grid
+            
+            # Status Display Frame
+            self.status_frame = ttk.LabelFrame(params_frame, text="Test Status")
+            self.status_frame.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+            self.test_status_label = ttk.Label(self.status_frame, text="Current Phase: Idle")
+            self.test_status_label.grid(row=0, column=0, pady=2, padx=2)  # Changed from pack to grid
+            
+            # Hardware Feedback Frame
+            self.hardware_feedback_frame = ttk.LabelFrame(params_frame, text="Hardware Feedback")
+            self.hardware_feedback_frame.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+            
+            # Add hardware feedback content
+            feedback_grid = ttk.Frame(self.hardware_feedback_frame)
+            feedback_grid.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)  # Changed from pack to grid
+            
+            # Configure feedback_grid columns
+            feedback_grid.grid_columnconfigure(1, weight=1)
+            
+            # Stepper Motor Status
+            ttk.Label(feedback_grid, text="Stepper Motor Status:").grid(row=0, column=0, sticky='w', padx=5, pady=2)
+            self.stepper_status_label = ttk.Label(feedback_grid, text="Position: 0 | Speed: 60 RPM")
+            self.stepper_status_label.grid(row=0, column=1, sticky='w', padx=5, pady=2)
+            
+            # Motion-Tracking Device Output
+            ttk.Label(feedback_grid, text="Motion-Tracker Output:").grid(row=1, column=0, sticky='w', padx=5, pady=2)
+            self.motion_tracker_label = ttk.Label(feedback_grid, text="Pitch: 0° | Roll: 0°")
+            self.motion_tracker_label.grid(row=1, column=1, sticky='w', padx=5, pady=2)
+            
+            return params_frame
+            
+        except Exception as e:
+            print(f"DEBUG ERROR in create_test_parameters_frame: {str(e)}")
+            raise
+
+    def show_about(self):
+        """Show the about dialog"""
+        try:
+            about_window = tk.Toplevel(self.master)
+            about_window.title("About")
+            about_window.geometry("400x300")
+            about_window.configure(bg='#1c1c1c')
+            
+            # Make the window modal
+            about_window.transient(self.master)
+            about_window.grab_set()
+            
+            # Create main frame for about window
+            about_frame = ttk.Frame(about_window)
+            about_frame.grid(row=0, column=0, sticky='nsew', padx=20, pady=20)
+            
+            # Configure grid weights
+            about_frame.grid_columnconfigure(0, weight=1)
+            about_window.grid_columnconfigure(0, weight=1)
+            about_window.grid_rowconfigure(0, weight=1)
+            
+            # Add content using grid
+            ttk.Label(
+                about_frame,
+                text="Enhanced Automated Data Logger",
+                font=('Helvetica', 14, 'bold')
+            ).grid(row=0, column=0, pady=20)
+            
+            ttk.Label(
+                about_frame,
+                text="Version 1.0\n\n" +
+                     "A comprehensive data logging and visualization tool\n" +
+                     "for automated testing and monitoring.",
+                justify=tk.CENTER
+            ).grid(row=1, column=0, pady=10)
+            
+            # Close button
+            ttk.Button(
+                about_frame,
+                text="Close",
+                command=about_window.destroy
+            ).grid(row=2, column=0, pady=20)
+            
+        except Exception as e:
+            self.logger.error(f"Error showing about dialog: {e}", extra={'color': 'red'})
+
+    def handle_error(self, error_msg, title="Error"):
+        """Generic error handler for displaying error messages"""
+        try:
+            # Log the error
+            self.logger.error(error_msg, extra={'color': 'red'})
+            
+            # Show error dialog
+            tk.messagebox.showerror(title, error_msg)
+            
+        except Exception as e:
+            # If even the error handler fails, print to console as last resort
+            print(f"Critical error: {e}")
+            print(f"Original error: {error_msg}")
+
+    def check_geometry_managers(self, widget):
+        """Debug helper to check geometry managers of a widget and its children"""
+        try:
+            print(f"DEBUG: Checking widget {widget}")
+            
+            # Check the widget's geometry manager
+            try:
+                pack_info = widget.pack_info()
+                print(f"DEBUG: Widget uses pack: {pack_info}")
+            except:
+                try:
+                    grid_info = widget.grid_info()
+                    print(f"DEBUG: Widget uses grid: {grid_info}")
+                except:
+                    print("DEBUG: Widget uses neither pack nor grid")
+            
+            # Check all children
+            for child in widget.winfo_children():
+                self.check_geometry_managers(child)
+                
+        except Exception as e:
+            print(f"DEBUG: Error checking geometry managers: {e}")
+
+    def cleanup_pygame_resources(self):
+        """Clean up Pygame resources properly"""
+        try:
+            if hasattr(self, 'tilt_indicator'):
+                self.tilt_indicator.cleanup()
+            
+            # Force garbage collection to clean up Pygame surfaces
+            import gc
+            gc.collect()
+            
+        except Exception as e:
+            print(f"Error cleaning up Pygame resources: {e}")
 
 @app.route('/')
 def index():

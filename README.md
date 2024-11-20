@@ -7,7 +7,7 @@ The application runs in an Ubuntu-based Docker container. Copy codeblock below a
 ```bash
 # Update system and install dependencies
 sudo apt update && sudo apt upgrade -y && \
-sudo apt install -y x11-xserver-utils docker.io docker-compose git && \
+sudo apt install -y x11-xserver-utils docker.io docker-compose git python3-setuptools && \
 sudo systemctl start docker && \
 sudo systemctl enable docker && \
 
