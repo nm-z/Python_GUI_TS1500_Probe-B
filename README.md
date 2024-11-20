@@ -11,9 +11,9 @@ sudo apt install -y x11-xserver-utils docker.io docker-compose git python3-setup
 sudo systemctl start docker && \
 sudo systemctl enable docker && \
 
-# Clone and run the application
+# Clone and run the application (Beta branch)
 rm -rf Python_GUI_TS1500_Probe-B && \
-git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
+git clone -b Beta https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
 cd Python_GUI_TS1500_Probe-B && \
 xhost +local:docker && \
 sudo docker-compose up --build
