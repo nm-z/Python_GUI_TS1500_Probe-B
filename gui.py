@@ -495,6 +495,15 @@ class EnhancedAutoDataLoggerGUI:
             tab = ttk.Frame(self.notebook)
             self.notebook.add(tab, text="Settings")
             
+            # Create main settings frame first
+            settings_frame = ttk.Frame(tab)
+            settings_frame.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            
+            # Configure grid weights
+            tab.grid_columnconfigure(0, weight=1)
+            tab.grid_rowconfigure(0, weight=1)
+            settings_frame.grid_columnconfigure((0, 1, 2), weight=1)
+            
             # Store frame references as class attributes
             self.arduino_settings_frame = ttk.LabelFrame(settings_frame, text="Arduino Settings")
             self.arduino_settings_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
@@ -505,83 +514,64 @@ class EnhancedAutoDataLoggerGUI:
             self.hardware_config_frame = ttk.LabelFrame(settings_frame, text="Hardware Configurations")
             self.hardware_config_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
             
-            # Create sections with grid layout instead of pack
-            settings_frame = ttk.Frame(tab)
-            print("DEBUG: Creating settings frame with grid")
-            settings_frame.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)  # Changed from pack to grid
-            
-            # Configure grid weights
-            tab.grid_columnconfigure(0, weight=1)
-            tab.grid_rowconfigure(0, weight=1)
-            settings_frame.grid_columnconfigure((0, 1, 2), weight=1)
-            
             # Arduino Settings
-            arduino_frame = ttk.LabelFrame(settings_frame, text="Arduino Settings")
-            arduino_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-            
             # Arduino Port Label
-            ttk.Label(arduino_frame, text="Arduino Port:").grid(row=0, column=0, sticky='w', padx=5, pady=(5, 2))
+            ttk.Label(self.arduino_settings_frame, text="Arduino Port:").grid(row=0, column=0, sticky='w', padx=5, pady=(5, 2))
             
             # Arduino Port Combobox
             self.arduino_port_combobox = ttk.Combobox(
-                arduino_frame, values=self.get_usb_ports(),
+                self.arduino_settings_frame, values=self.get_usb_ports(),
                 state="readonly", width=15
             )
             self.arduino_port_combobox.grid(row=1, column=0, sticky='w', padx=5, pady=(0, 5))
             
             # Temperature Settings
-            temp_frame = ttk.LabelFrame(settings_frame, text="Temperature Monitor Settings")
-            temp_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-            
-            # Units frame - Changed from pack to grid
-            units_frame = ttk.LabelFrame(temp_frame, text="Temperature Units")
-            units_frame.grid(row=0, column=0, sticky='ew', pady=5)  # Changed from pack to grid
+            # Units frame
+            units_frame = ttk.LabelFrame(self.temp_settings_frame, text="Temperature Units")
+            units_frame.grid(row=0, column=0, sticky='ew', pady=5)
             
             # Configure units frame columns
             units_frame.grid_columnconfigure((0, 1, 2), weight=1)
             
-            # Radio buttons - Changed from pack to grid
+            # Radio buttons
             self.temp_unit = tk.StringVar(value='C')
             for i, (unit, symbol) in enumerate([('C', '°C'), ('F', '°F'), ('K', 'K')]):
                 ttk.Radiobutton(units_frame, text=symbol, variable=self.temp_unit,
                                value=unit, command=self.update_temp_display).grid(
-                                   row=0, column=i, padx=10)  # Changed from pack to grid
+                                   row=0, column=i, padx=10)
             
-            # Time range frame - Changed from pack to grid
-            time_frame = ttk.LabelFrame(temp_frame, text="Graph Time Range")
-            time_frame.grid(row=1, column=0, sticky='ew', pady=5)  # Changed from pack to grid
+            # Time range frame
+            time_frame = ttk.LabelFrame(self.temp_settings_frame, text="Graph Time Range")
+            time_frame.grid(row=1, column=0, sticky='ew', pady=5)
             
             # Configure time frame columns
             time_frame.grid_columnconfigure((0, 1, 2), weight=1)
             
-            # Time range radio buttons - Changed from pack to grid
+            # Time range radio buttons
             self.timeframe = tk.StringVar(value='1m')
             for i, (time_val, time_text) in enumerate([('1m', '1 Min'), ('5m', '5 Min'), ('1h', '1 Hour')]):
                 ttk.Radiobutton(time_frame, text=time_text, variable=self.timeframe,
                                value=time_val, command=self.update_temp_graph).grid(
-                                   row=0, column=i, padx=10)  # Changed from pack to grid
+                                   row=0, column=i, padx=10)
             
             # Hardware Configurations
-            hardware_frame = ttk.LabelFrame(settings_frame, text="Hardware Configurations")
-            hardware_frame.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
-            
-            ttk.Label(hardware_frame, text="NNTP Server:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
-            self.nntp_server_entry = ttk.Entry(hardware_frame, width=30)
+            ttk.Label(self.hardware_config_frame, text="NNTP Server:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+            self.nntp_server_entry = ttk.Entry(self.hardware_config_frame, width=30)
             self.nntp_server_entry.grid(row=0, column=1, sticky='w', padx=5, pady=5)
             self.nntp_server_entry.insert(0, "nntp.example.com")
             
-            ttk.Label(hardware_frame, text="Log Frequency (seconds):").grid(row=1, column=0, sticky='w', padx=5, pady=5)
-            self.log_freq_entry = ttk.Entry(hardware_frame, width=10)
+            ttk.Label(self.hardware_config_frame, text="Log Frequency (seconds):").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+            self.log_freq_entry = ttk.Entry(self.hardware_config_frame, width=10)
             self.log_freq_entry.grid(row=1, column=1, sticky='w', padx=5, pady=5)
             self.log_freq_entry.insert(0, "1")
             
-            ttk.Label(hardware_frame, text="Stepper Motor Speed (RPM):").grid(row=2, column=0, sticky='w', padx=5, pady=5)
-            self.stepper_speed_entry = ttk.Entry(hardware_frame, width=10)
+            ttk.Label(self.hardware_config_frame, text="Stepper Motor Speed (RPM):").grid(row=2, column=0, sticky='w', padx=5, pady=5)
+            self.stepper_speed_entry = ttk.Entry(self.hardware_config_frame, width=10)
             self.stepper_speed_entry.grid(row=2, column=1, sticky='w', padx=5, pady=5)
             self.stepper_speed_entry.insert(0, "60")
             
             # Save Settings Button
-            save_settings_button = ttk.Button(hardware_frame, text="Save Settings", command=self.save_hardware_settings)
+            save_settings_button = ttk.Button(self.hardware_config_frame, text="Save Settings", command=self.save_hardware_settings)
             save_settings_button.grid(row=3, column=1, sticky='e', padx=5, pady=10)
 
         except Exception as e:
@@ -1587,35 +1577,35 @@ class EnhancedAutoDataLoggerGUI:
     def create_test_parameters_frame(self, parent):
         print("DEBUG: Starting create_test_parameters_frame")
         try:
-            # Store frame reference as class attribute
+            # Create and store the params_frame as class attribute
             self.params_frame = ttk.LabelFrame(parent, text="Test Parameters/Settings")
             self.params_frame.grid_columnconfigure(0, weight=1)
             
             # Tilt Angles Frame
-            self.tilt_frame = ttk.LabelFrame(params_frame, text="Tilt Angles")
+            self.tilt_frame = ttk.LabelFrame(self.params_frame, text="Tilt Angles")
             self.tilt_frame.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
             
-            # Add tilt angles display - Change from pack to grid
+            # Add tilt angles display
             self.tilt_angles_label = ttk.Label(
                 self.tilt_frame,
                 text="X: +0.0° Y: +0.0° Z: +0.0°",
                 font=('Courier', 10)
             )
-            self.tilt_angles_label.grid(row=0, column=0, pady=2, padx=2)  # Changed from pack to grid
+            self.tilt_angles_label.grid(row=0, column=0, pady=2, padx=2)
             
             # Status Display Frame
-            self.status_frame = ttk.LabelFrame(params_frame, text="Test Status")
+            self.status_frame = ttk.LabelFrame(self.params_frame, text="Test Status")
             self.status_frame.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
             self.test_status_label = ttk.Label(self.status_frame, text="Current Phase: Idle")
-            self.test_status_label.grid(row=0, column=0, pady=2, padx=2)  # Changed from pack to grid
+            self.test_status_label.grid(row=0, column=0, pady=2, padx=2)
             
             # Hardware Feedback Frame
-            self.hardware_feedback_frame = ttk.LabelFrame(params_frame, text="Hardware Feedback")
+            self.hardware_feedback_frame = ttk.LabelFrame(self.params_frame, text="Hardware Feedback")
             self.hardware_feedback_frame.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
             
             # Add hardware feedback content
             feedback_grid = ttk.Frame(self.hardware_feedback_frame)
-            feedback_grid.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)  # Changed from pack to grid
+            feedback_grid.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
             
             # Configure feedback_grid columns
             feedback_grid.grid_columnconfigure(1, weight=1)
@@ -1630,7 +1620,7 @@ class EnhancedAutoDataLoggerGUI:
             self.motion_tracker_label = ttk.Label(feedback_grid, text="Pitch: 0° | Roll: 0°")
             self.motion_tracker_label.grid(row=1, column=1, sticky='w', padx=5, pady=2)
             
-            return params_frame
+            return self.params_frame
             
         except Exception as e:
             print(f"DEBUG ERROR in create_test_parameters_frame: {str(e)}")
