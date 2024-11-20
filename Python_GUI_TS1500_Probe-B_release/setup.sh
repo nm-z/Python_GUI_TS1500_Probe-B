@@ -1,3 +1,18 @@
+#!/bin/bash
+
+# Update and install required packages
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
+
+# Start Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Allow Docker to access X server
+xhost +local:docker
+
+# Create docker-compose.yml
+cat > docker-compose.yml << 'EOYAML'
 version: '3'
 
 services:
@@ -19,3 +34,7 @@ services:
 
 volumes:
   vna_exports:
+EOYAML
+
+# Build and run the container
+sudo docker-compose up --build

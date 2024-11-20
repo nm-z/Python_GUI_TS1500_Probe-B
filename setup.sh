@@ -1,3 +1,18 @@
+#!/bin/bash
+
+# Update and install required packages
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y x11-xserver-utils docker.io docker-compose
+
+# Start Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Allow Docker to access X server
+xhost +local:docker
+
+# Create docker-compose.yml
+cat > docker-compose.yml << 'EOL'
 version: '3'
 
 services:
@@ -19,3 +34,7 @@ services:
 
 volumes:
   vna_exports:
+EOL
+
+# Build and run the container
+sudo docker-compose up --build 

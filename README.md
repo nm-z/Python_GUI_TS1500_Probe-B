@@ -12,6 +12,7 @@ sudo systemctl start docker && \
 sudo systemctl enable docker && \
 
 # Clone and run the application (Beta branch)
+cd ~ && \
 rm -rf Python_GUI_TS1500_Probe-B && \
 git clone -b Beta https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
 cd Python_GUI_TS1500_Probe-B && \
