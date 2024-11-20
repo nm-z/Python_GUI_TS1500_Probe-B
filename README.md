@@ -2,26 +2,16 @@
 
 ## Quick Start (Ubuntu)
 
-The application runs in an Ubuntu-based Docker container. Choose the command for your system:
+The application runs in an Ubuntu-based Docker container. Follow these commands:
 
-## For Ubuntu:
 ```bash
+# Update system and install dependencies
 sudo apt update && sudo apt upgrade -y && \
 sudo apt install -y x11-xserver-utils docker.io docker-compose git && \
 sudo systemctl start docker && \
 sudo systemctl enable docker && \
-rm -rf Python_GUI_TS1500_Probe-B && \
-git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
-cd Python_GUI_TS1500_Probe-B && \
-xhost +local:docker && \
-sudo docker-compose up --build
-```
 
-## For Arch Linux:
-```bash
-sudo pacman -Syu --noconfirm && \
-sudo pacman -S xorg-xhost docker docker-compose --noconfirm && \
-sudo systemctl start docker && \
+# Clone and run the application
 rm -rf Python_GUI_TS1500_Probe-B && \
 git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
 cd Python_GUI_TS1500_Probe-B && \
@@ -31,11 +21,12 @@ sudo docker-compose up --build
 
 These commands will:
 1. Update your system
-2. Install necessary packages
+2. Install necessary packages (including docker-compose from Ubuntu repositories)
 3. Start and enable Docker service
-4. Remove any existing copy of the repository
-5. Clone a fresh copy of the repository
-6. Build and run the Docker container
+4. Clone a fresh copy of the repository
+5. Build and run the Docker container
 
 The application will run in an Ubuntu-based Docker container, ensuring consistent behavior across systems.
+
+> Note: We use `docker-compose` (with hyphen) as we're using the version from Ubuntu repositories. Also, we need to run it with `sudo` to ensure proper permissions.
 
