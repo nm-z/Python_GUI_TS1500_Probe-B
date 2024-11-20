@@ -9,9 +9,19 @@ cd "$RELEASE_DIR" || { echo "Failed to enter directory $RELEASE_DIR"; exit 1; }
 cat > setup.sh << 'EOL'
 #!/bin/bash
 
-# Update and install required packages
-sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
+# Detect package manager
+if command -v apt &> /dev/null; then
+    # Ubuntu/Debian
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y x11-xserver-utils docker.io docker-compose
+elif command -v pacman &> /dev/null; then
+    # Arch Linux
+    sudo pacman -Syu --noconfirm
+    sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
+else
+    echo "Unsupported distribution. Please install Docker and x11-xserver-utils manually."
+    exit 1
+fi
 
 # Start Docker
 sudo systemctl start docker
@@ -59,7 +69,7 @@ cat > README.md << 'EOL'
 This release contains a setup script that will automatically install and run the Python GUI TS1500 Probe-B application using Docker.
 
 ## Requirements
-- Arch Linux or compatible Linux distribution
+- Arch Linux/Ubuntu or compatible Linux distribution
 - Internet connection
 - USB port for Arduino connection
 
