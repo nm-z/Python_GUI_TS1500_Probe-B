@@ -1,12 +1,10 @@
-<<<<<<< HEAD
 # Quick Start
-=======
+
 ## Quick Start (Ubuntu)
->>>>>>> 35b94c30397c48755e97199d7ea43fefe0e1ae28
 
 The application runs in an Ubuntu-based Docker container. Choose the command for your system:
 
-## For Ubuntu/Debian:
+## For Ubuntu:
 ```bash
 sudo apt update && sudo apt upgrade -y && \
 sudo apt install -y x11-xserver-utils docker.io docker-compose git && \
