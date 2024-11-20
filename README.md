@@ -2,10 +2,11 @@
 
 ## Quick Start (Ubuntu)
 
-The application runs in an Ubuntu-based Docker container. Copy codeblock below and paste directly in terminal:
+The application runs in an Ubuntu-based Docker container. Before running, ensure X11 forwarding is properly set up:
 
 ```bash
 # Update system and install dependencies
+cd ~ && \
 sudo apt update && sudo apt upgrade -y && \
 sudo apt install -y x11-xserver-utils docker.io docker-compose git && \
 sudo systemctl start docker && \

@@ -1103,15 +1103,29 @@ class EnhancedAutoDataLoggerGUI:
 
     def simulate_temperature_data(self):
         try:
+            # Initialize temperature_history if it doesn't exist
+            if not hasattr(self, 'temperature_history'):
+                self.temperature_history = []
+            
             # Simulate temperature data for testing (always positive, smaller range)
             current_time = datetime.now()
             # Base temperature of 21°C with ±0.5°C variation converted to always positive
             temp = 21.0 + 0.5 * math.sin(current_time.timestamp() / 60)  # Increased frequency for smoother wave
+            
+            # Store the temperature data
+            self.temperature_history.append((current_time, temp))
+            
+            # Keep only last hour of data
+            cutoff_time = current_time - timedelta(hours=1)
+            self.temperature_history = [(t, temp) for t, temp in self.temperature_history if t > cutoff_time]
+            
             self.update_temperature(temp)
         except Exception as e:
-            print(f"Error in temperature simulation: {e}")
+            self.logger.error(f"Error in temperature simulation: {e}", extra={'color': 'red'})
         finally:
-            self.master.after(1000, self.simulate_temperature_data)
+            # Schedule next update
+            if hasattr(self, 'master') and self.master:
+                self.master.after(1000, self.simulate_temperature_data)
 
     def save_hardware_settings(self):
         nntp_server = self.nntp_server_entry.get()
