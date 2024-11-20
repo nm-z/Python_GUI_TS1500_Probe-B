@@ -4,6 +4,5 @@ scipy
 pyserial
 flask
 pyusb
-tkinter
 pillow
    
