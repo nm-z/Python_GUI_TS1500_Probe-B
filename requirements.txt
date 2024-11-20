@@ -5,4 +5,5 @@ pyserial
 flask
 pyusb
 pillow
+pygame
    
