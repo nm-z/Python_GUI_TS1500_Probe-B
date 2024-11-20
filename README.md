@@ -1,4 +1,4 @@
-## Quick Start (Arch Linux)
+## Quick Start (Ubuntu)
 
 Run this single command in your terminal:
 
