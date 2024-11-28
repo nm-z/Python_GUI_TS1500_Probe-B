@@ -62,6 +62,50 @@ The application will run in an Ubuntu-based Docker container. This will ensure t
 
 > Note: We use `docker-compose` (with hyphen) as we're using the version from Ubuntu's repositories. Also, we need to run it with `sudo` to ensure proper permissions.
 
+## Interacting with the Project
+
+After successfully running the Docker composition and returning to your home directory, here are the steps to interact with the code and potentially run the GUI:
+
+### Viewing and Managing Code
+
+```bash
+# View project contents
+cd ~/Python_GUI_TS1500_Probe-B
+ls  # List the contents of the directory
+cat README.md  # Read the project readme
+
+# Open in text editor (choose one)
+code .  # If using VS Code
+nano .  # If using nano
+gedit .  # If using gedit
+```
+
+### Managing Docker Containers
+
+```bash
+# Run the GUI again
+cd ~/Python_GUI_TS1500_Probe-B
+xhost +local:docker  # Ensure X11 forwarding is enabled
+sudo docker-compose up
+
+# Start existing containers without rebuilding
+sudo docker-compose start
+
+# Stop containers
+sudo docker-compose down
+
+# Check running containers
+sudo docker ps
+```
+
+These commands allow you to:
+1. Navigate to the project directory
+2. View and edit the source code
+3. Start and stop the Docker containers
+4. Monitor running containers
+
+> Note: Always ensure you're in the project directory (`~/Python_GUI_TS1500_Probe-B`) when running Docker commands.
+
 ## Troubleshooting
 
 If you encounter any issues during installation or setup, try these solutions:
