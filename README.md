@@ -8,7 +8,7 @@ The application runs in an Ubuntu-based Docker container. Before running, ensure
 # Update system and install dependencies
 cd ~ && \
 sudo apt update && sudo apt upgrade -y && \
-sudo apt install -y x11-xserver-utils docker.io docker-compose git python3-distutils && \
+sudo apt install -y x11-xserver-utils docker.io docker-compose git python3.8 python3.8-distutils && \
 sudo systemctl start docker && \
 sudo systemctl enable docker && \
 
