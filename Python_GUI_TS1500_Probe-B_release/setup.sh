@@ -1,8 +1,18 @@
 #!/bin/bash
 
-# Update and install required packages
-sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
+# Detect package manager
+if command -v apt &> /dev/null; then
+    # Ubuntu/Debian
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y x11-xserver-utils docker.io docker-compose
+elif command -v pacman &> /dev/null; then
+    # Arch Linux
+    sudo pacman -Syu --noconfirm
+    sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
+else
+    echo "Unsupported distribution. Please install Docker and x11-xserver-utils manually."
+    exit 1
+fi
 
 # Start Docker
 sudo systemctl start docker

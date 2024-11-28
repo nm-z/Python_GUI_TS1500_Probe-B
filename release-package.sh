@@ -1,39 +1,36 @@
 #!/bin/bash
 
-# Create release directory
-RELEASE_DIR="Python_GUI_TS1500_Probe-B_release"
-mkdir -p "$RELEASE_DIR"
-cd "$RELEASE_DIR" || { echo "Failed to enter directory $RELEASE_DIR"; exit 1; }
+# Create temporary directory for binary creation
+TEMP_DIR=$(mktemp -d)
+BINARY_DIR="$TEMP_DIR/bin"
+mkdir -p "$BINARY_DIR"
 
-# Create setup script
-cat > setup.sh << 'EOL'
+# Create the binary script
+cat > "$BINARY_DIR/ts1500-probe" << 'EOL'
 #!/bin/bash
 
-# Detect package manager
-if command -v apt &> /dev/null; then
-    # Ubuntu/Debian
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install -y x11-xserver-utils docker.io docker-compose
-elif command -v pacman &> /dev/null; then
-    # Arch Linux
-    sudo pacman -Syu --noconfirm
-    sudo pacman -S --noconfirm x11-xserver-utils docker docker-compose
-else
-    echo "Unsupported distribution. Please install Docker and x11-xserver-utils manually."
+# Check if running on Ubuntu
+if ! grep -q "Ubuntu" /etc/os-release; then
+    echo "This binary is designed for Ubuntu systems only."
     exit 1
 fi
 
-# Start Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+# Install Docker if not present
+if ! command -v docker &> /dev/null; then
+    echo "Installing Docker..."
+    sudo apt update
+    sudo apt install -y docker.io docker-compose
+    sudo systemctl start docker
+    sudo systemctl enable docker
+fi
 
-# Allow Docker to access X server
-xhost +local:docker
+# Create application directory if it doesn't exist
+APP_DIR="/opt/ts1500-probe"
+sudo mkdir -p "$APP_DIR"
 
-# Create docker-compose.yml
-cat > docker-compose.yml << 'EOYAML'
+# Create or update docker-compose.yml
+sudo tee "$APP_DIR/docker-compose.yml" > /dev/null << 'EOYAML'
 version: '3'
-
 services:
   gui:
     build:
@@ -50,51 +47,41 @@ services:
       - /dev/ttyACM0:/dev/ttyACM0
     privileged: true
     network_mode: host
-
 volumes:
   vna_exports:
 EOYAML
 
-# Build and run the container
-sudo docker-compose up --build
+# Allow Docker to access X server
+xhost +local:docker
+
+# Run the application
+cd "$APP_DIR" && sudo docker-compose up --build
 EOL
 
-# Make setup script executable
-chmod +x setup.sh
+# Make the binary executable
+chmod +x "$BINARY_DIR/ts1500-probe"
 
-# Create README
-cat > README.md << 'EOL'
-# Python GUI TS1500 Probe-B Quick Setup
-
-This release contains a setup script that will automatically install and run the Python GUI TS1500 Probe-B application using Docker.
-
-## Requirements
-- Arch Linux/Ubuntu or compatible Linux distribution
-- Internet connection
-- USB port for Arduino connection
-
-## Installation
-
-1. Extract the release package:
-EOL
-
-cd ..
-
-# Create release package
-tar -czf Python_GUI_TS1500_Probe-B_release.tar.gz "$RELEASE_DIR"
-
-# Create release notes file
+# Create release notes
 cat > release_notes.md << 'EOL'
-# Release v1.0.0
+# Release v1.0.2
 
-Implemented startup script for Ubuntu, Code now pulls code from the repo through Docker. 
-Dependencies are now handled by by apt-get in the Dockerfile. 
-Python Dependencies are now handled by requirements.txt and virtualenv in Dockerfile.
-Application-Specific Dependencies are now handled by application code and additional scripts.
-As for vna.js, it still needs to be ran alongside the application. Keyboard events are still sent to the application through docker. 
-vna.js components could be ran directly through docker, but I have not tested this yet.
-Arduino Pinouts will need to be consistent to be able to be ran on different systems. This will allow pinouts to be hard coded to prevent errors.
+## Ubuntu Binary Release
+This release contains a single executable binary for Ubuntu systems.
 
+### Usage:
+1. Download the `ts1500-probe` binary
+2. Make it executable: `chmod +x ts1500-probe`
+3. Run it: `./ts1500-probe`
+
+The binary will automatically:
+- Install Docker if needed
+- Set up the required environment
+- Pull and run the application
+
+Requirements:
+- Ubuntu 20.04 or newer
+- Internet connection for first run
+- USB access for probe connection
 EOL
 
 # Optional: Install GitHub CLI if needed
@@ -103,9 +90,19 @@ if ! command -v gh &> /dev/null; then
     sudo pacman -S --noconfirm github-cli
 fi
 
-# Create GitHub release with notes
-gh release create v1.0.0 Python_GUI_TS1500_Probe-B_release.tar.gz --title "v1.0.0" --notes-file release_notes.md --prerelease
+# Delete existing local tag if it exists
+git tag -d v1.0.2 2>/dev/null || true
 
+# Delete existing remote tag if it exists
+gh release delete v1.0.2 --yes 2>/dev/null || true
+git push --delete origin v1.0.2 2>/dev/null || true
 
+# Create GitHub release with the binary
+gh release create v1.0.2 \
+    "$BINARY_DIR/ts1500-probe" \
+    --title "v1.0.2" \
+    --notes-file release_notes.md \
+    --prerelease
 
-
+# Cleanup
+rm -rf "$TEMP_DIR"

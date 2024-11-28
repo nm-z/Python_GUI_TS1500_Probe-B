@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}Installing TS1500 Probe...${NC}"
+
+# Ensure running with sudo
+if [ $EUID != 0 ]; then
+    echo "This script needs sudo privileges. Please enter your password:"
+    exec sudo "$0" "$@"
+    exit $?
+fi
+
+# Install required packages
+echo -e "${BLUE}Installing dependencies...${NC}"
+apt update
+apt install -y docker.io docker-compose x11-xserver-utils
+
+# Start Docker
+systemctl start docker
+systemctl enable docker
+
+# Allow Docker to access X server
+xhost +local:docker
+
+# Create app directory
+APP_DIR="/opt/ts1500-probe"
+mkdir -p "$APP_DIR"
+cd "$APP_DIR"
+
+# Create docker-compose.yml
+cat > docker-compose.yml << 'EOL'
+version: '3'
+services:
+  gui:
+    build:
+      context: https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git#Beta
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${HOME}/.Xauthority:/home/appuser/.Xauthority
+      - vna_exports:/home/nate/Desktop/Python_GUI_TS1500_Probe-B/VNA_Exports
+      - /dev:/dev
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    privileged: true
+    network_mode: host
+volumes:
+  vna_exports:
+EOL
+
+# Create launcher script
+cat > /usr/local/bin/ts1500-probe << 'EOL'
+#!/bin/bash
+cd /opt/ts1500-probe
+docker-compose up --build
+EOL
+
+chmod +x /usr/local/bin/ts1500-probe
+
+# Create desktop shortcut with pkexec
+cat > /usr/share/applications/ts1500-probe.desktop << 'EOL'
+[Desktop Entry]
+Name=TS1500 Probe
+Comment=Launch TS1500 Probe Application
+Exec=pkexec /usr/local/bin/ts1500-probe
+Icon=utilities-terminal
+Type=Application
+Categories=Science;
+Terminal=true
+EOL
+
+# Set proper permissions
+chmod 644 /usr/share/applications/ts1500-probe.desktop
+
+echo -e "${GREEN}Installation complete!${NC}"
+echo -e "${BLUE}You can now run TS1500 Probe by:${NC}"
+echo "1. Typing 'ts1500-probe' in terminal"
+echo "2. Using the TS1500 Probe shortcut in your applications menu" 
