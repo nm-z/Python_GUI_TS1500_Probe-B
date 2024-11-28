@@ -5,20 +5,51 @@
 The application runs in an Ubuntu-based Docker container. Before running, ensure X11 forwarding is properly set up:
 
 ```bash
-# Update system and install dependencies
-cd ~ && \
-sudo apt update && sudo apt upgrade -y && \
-sudo apt install -y x11-xserver-utils docker.io docker-compose git python3.8 python3.8-distutils && \
-sudo systemctl start docker && \
-sudo systemctl enable docker && \
+# Add Python 3.8 repository
+sudo add-apt-repository ppa:deadsnakes/ppa -y
 
-# Clone and run the application
-rm -rf Python_GUI_TS1500_Probe-B && \
-git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git && \
-cd Python_GUI_TS1500_Probe-B && \
-xhost +local:docker && \
+# Update package lists
+sudo apt-get update
+
+# Install Python development tools and dependencies
+sudo apt-get install -y python3-dev python3-distutils python3-apt
+
+# Clean up potential lock issues
+sudo apt-get clean
+sudo rm -f /var/lib/apt/lists/lock
+sudo rm -f /var/cache/apt/archives/lock
+sudo rm -f /var/lib/dpkg/lock*
+
+# Reinstall python3-apt
+sudo apt-get update
+sudo apt-get install --reinstall python3-apt
+
+# Install Python 3.8 and other required packages
+sudo apt-get install -y python3.8 python3.8-distutils
+
+# Upgrade and install additional packages
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y x11-xserver-utils docker.io docker-compose git
+
+# Start and enable Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Clone the repository
+rm -rf Python_GUI_TS1500_Probe-B
+git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git
+cd Python_GUI_TS1500_Probe-B
+
+# Allow X11 access for Docker
+xhost +local:docker
+
+# Build and run the Docker composition
 sudo docker-compose up --build
 ```
+
+
+
+
 
 These commands will:
 1. Update your system
@@ -167,6 +198,61 @@ docker run hello-world
 ```
 
 If you continue to experience issues, please check the system logs or reach out for additional support.
+
+### APT and Package Management Issues
+
+If you encounter errors with APT updates or package installations:
+
+1. **APT Module Errors**:
+If you see `ModuleNotFoundError: No module named 'apt_pkg'`, try these steps:
+```bash
+# Reinstall python3-apt package
+sudo apt-get update
+sudo apt-get install --reinstall python3-apt
+
+# If that doesn't work, try forcing package configuration
+sudo apt-get clean
+sudo apt-get update
+sudo apt-get install -f
+```
+
+2. **Package Installation Verification**:
+```bash
+# Check if required packages are installed
+dpkg -l | grep -E "docker|git|python3.8|x11-xserver-utils"
+
+# Verify Docker installation
+sudo systemctl status docker
+
+# Check Python version
+python3 --version
+```
+
+3. **Clean APT Cache and Fix Broken Packages**:
+```bash
+# Clean APT cache
+sudo apt-get clean
+sudo apt-get autoclean
+
+# Fix broken packages
+sudo apt-get -f install
+
+# Update package lists
+sudo apt-get update
+```
+
+4. **Repository Issues**:
+If you're having problems with package repositories:
+```bash
+# Backup current sources
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+
+# Update package lists
+sudo apt-get update
+
+# If you see errors, try
+sudo apt-get update --fix-missing
+```
 
 
 
