@@ -2,17 +2,17 @@ import sys
 import os
 import logging
 import serial.tools.list_ports
-from PyQt6.QtWidgets import QMainWindow, QApplication
-from hardware.arduino import ArduinoController
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSplitter,
     QToolBar, QFileDialog, QMessageBox, QDialog, QLabel,
     QToolButton, QMenu, QComboBox, QSpinBox, QDoubleSpinBox, QDialogButtonBox,
     QGroupBox, QGridLayout, QTabWidget, QProgressBar, QListWidget, QPushButton,
-    QLineEdit, QScrollArea, QDateTimeEdit, QCheckBox, QFormLayout, QProgressDialog
+    QLineEdit, QScrollArea, QDateTimeEdit, QCheckBox, QFormLayout, QProgressDialog,
+    QSizePolicy
 )
-from PyQt6.QtCore import Qt, QSize, QTimer, pyqtSignal
-from PyQt6.QtGui import QIcon, QFont, QAction
+from hardware.arduino import ArduinoController
+from PyQt6.QtCore import Qt, QSize, QTimer, pyqtSignal, QThread
+from PyQt6.QtGui import QIcon, QFont, QAction, QColor, QPalette
 import platform
 import subprocess
 from .components import RealTimePlots, LogViewer, StatusIndicators, TiltIndicator
@@ -68,7 +68,7 @@ class TestParametersDialog(QDialog):
         self.start_angle = QDoubleSpinBox()
         self.start_angle.setRange(-90, 90)
         self.start_angle.setValue(0)
-        form_layout.addRow("Start Angle (��):", self.start_angle)
+        form_layout.addRow("Start Angle ():", self.start_angle)
         
         self.end_angle = QDoubleSpinBox()
         self.end_angle.setRange(-90, 90)
@@ -119,31 +119,419 @@ class BackupManagementDialog(QDialog):
         layout.addWidget(QLabel("Backup Management Settings Go Here"))
         self.setLayout(layout)
 
+class ArduinoWorker(QThread):
+    """Worker thread for Arduino operations"""
+    status_update = pyqtSignal(dict)
+    error = pyqtSignal(str)
+
+    def __init__(self, port='/dev/ttyACM0'):
+        super().__init__()
+        self.port = port
+        self._running = True
+        self._connected = False
+        self.arduino = None
+
+    def run(self):
+        while self._running:
+            try:
+                if os.path.exists(self.port):
+                    if not self._connected:
+                        self.connect_arduino()
+                else:
+                    if self._connected:
+                        self.disconnect_arduino()
+                self.msleep(1000)  # Check every second instead of constant polling
+            except Exception as e:
+                self.error.emit(str(e))
+                self.msleep(1000)
+
+    def connect_arduino(self):
+        try:
+            # Create Arduino controller
+            self.arduino = ArduinoController()
+            if self.arduino.connect(self.port):
+                self._connected = True
+                response = self.arduino.send_command("TEST")
+                status = {
+                    'connected': True,
+                    'components': {
+                        'temperature': 'Thermocouple' not in str(response),
+                        'tilt': 'MPU6050' not in str(response),
+                        'motor': 'STEPPER' not in str(response)
+                    }
+                }
+                self.status_update.emit(status)
+        except Exception as e:
+            self.error.emit(str(e))
+            self._connected = False
+
+    def disconnect_arduino(self):
+        if self.arduino:
+            self.arduino.disconnect()
+        self._connected = False
+        self.status_update.emit({'connected': False})
+
+    def stop(self):
+        self._running = False
+        self.disconnect_arduino()
+        self.wait()
+
 class MainWindow(QMainWindow):
     def __init__(self, controller):
         """Initialize MainWindow"""
         super().__init__()
-        print("Starting MainWindow initialization...")
-        
         self.controller = controller
+        self.icons = {
+            'start': QIcon("icons/start.png"),
+            'stop': QIcon("icons/stop.png"),
+            'pause': QIcon("icons/pause.png"),
+            'save': QIcon("icons/save.png"),
+            'export': QIcon("icons/export.png"),
+            'open': QIcon("icons/open.png"),
+            'reset': QIcon("icons/reset.png"),
+            'params': QIcon("icons/params.png"),
+            'plots': QIcon("icons/plots.png"),
+            'hardware': QIcon("icons/hardware.png"),
+            'help': QIcon("icons/help.png"),
+            'issue': QIcon("icons/issue.png"),
+            'sync': QIcon("icons/sync.png"),
+            'tilt': QIcon("icons/tilt.png"),
+            'upload': QIcon("icons/upload.png")
+        }
         self.test_parameters = {}
         self.test_start_time = None
         self.is_paused = False
         
-        print("Initializing components...")
-        # Initialize components
+        # Cache for status to prevent redundant updates
+        self._status_cache = {}
+        
+        # Set up UI with efficient layouts
+        self.setup_ui()
+        
+        # Initialize Arduino worker thread
+        self.arduino_worker = ArduinoWorker()
+        self.arduino_worker.status_update.connect(self.handle_arduino_status)
+        self.arduino_worker.error.connect(self.handle_arduino_error)
+        self.arduino_worker.start()
+
+    def setup_ui(self):
+        """Set up the UI with efficient layouts"""
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        main_layout = QHBoxLayout(central_widget)
+        
+        # Left side - Control buttons
+        button_panel = QWidget()
+        button_panel.setFixedWidth(120)
+        button_layout = QVBoxLayout(button_panel)
+        
+        # Create buttons
+        self.start_button = QPushButton(self.icons['start'], "Start", self)
+        self.stop_button = QPushButton(self.icons['stop'], "Stop", self)
+        self.pause_button = QPushButton(self.icons['pause'], "Pause", self)
+        self.config_button = QPushButton(self.icons['params'], "Configure", self)
+        self.hardware_button = QPushButton(self.icons['hardware'], "Hardware", self)
+        
+        # Add icons
+        self.start_button.setIcon(self.icons.get('start', QIcon()))
+        self.stop_button.setIcon(self.icons.get('stop', QIcon()))
+        self.pause_button.setIcon(self.icons.get('pause', QIcon()))
+        self.config_button.setIcon(self.icons.get('params', QIcon()))
+        self.hardware_button.setIcon(self.icons.get('hardware', QIcon()))
+        
+        # Add buttons to layout
+        button_layout.addWidget(self.start_button)
+        button_layout.addWidget(self.stop_button)
+        button_layout.addWidget(self.pause_button)
+        button_layout.addSpacing(20)
+        button_layout.addWidget(self.config_button)
+        button_layout.addWidget(self.hardware_button)
+        button_layout.addStretch()
+        
+        # Right side - Plots
+        plot_panel = QWidget()
+        plot_layout = QVBoxLayout(plot_panel)
         self.real_time_plots = RealTimePlots()
+        plot_layout.addWidget(self.real_time_plots)
         
-        # Set up icons first
-        print("Setting up icons...")
+        # Add both panels to main layout
+        main_layout.addWidget(button_panel)
+        main_layout.addWidget(plot_panel, stretch=1)
+        
+        # Set up the rest
         self.setup_icons()
+        self.create_toolbar()
+        self.setup_status_bar()
         
-        print("Starting UI initialization...")
-        # Initialize the UI
-        self.init_ui()
+        # Initialize button states
+        self.stop_button.setEnabled(False)
+        self.pause_button.setEnabled(False)
+
+    def create_toolbar(self):
+        """Create the main toolbar"""
+        toolbar = self.addToolBar("Main Toolbar")
+        toolbar.setMovable(False)
+        toolbar.setIconSize(QSize(24, 24))
+        toolbar.setStyleSheet("""
+            QToolBar {
+                background: #2b2b2b;
+                border-bottom: 1px solid #3d3d3d;
+                padding: 2px;
+            }
+            QToolButton {
+                background: transparent;
+                border: 1px solid transparent;
+                border-radius: 3px;
+                padding: 4px;
+                margin: 1px;
+            }
+            QToolButton:hover {
+                background: #3d3d3d;
+                border: 1px solid #4d4d4d;
+            }
+            QToolButton:pressed {
+                background: #404040;
+            }
+        """)
+
+        # File Menu
+        file_button = QToolButton()
+        file_button.setIcon(self.icons['components'])  # Using components icon for file menu
+        file_button.setText("File")
+        file_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        file_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         
-        # Connect signals
-        self.connect_signals()
+        file_menu = QMenu()
+        
+        new_test_action = QAction(self.icons['start'], "New Test", self)
+        new_test_action.setStatusTip("Create a new test")
+        new_test_action.triggered.connect(self.new_test)
+        file_menu.addAction(new_test_action)
+        
+        load_config_action = QAction(self.icons['open'], "Load Config", self)
+        load_config_action.setStatusTip("Load configuration from file")
+        load_config_action.triggered.connect(self.load_config)
+        file_menu.addAction(load_config_action)
+        
+        save_config_action = QAction(self.icons['save'], "Save Config", self)
+        save_config_action.setStatusTip("Save configuration to file")
+        save_config_action.triggered.connect(self.save_config)
+        file_menu.addAction(save_config_action)
+        
+        file_menu.addSeparator()
+        
+        exit_action = QAction(self.icons['stop'], "Exit", self)
+        exit_action.setStatusTip("Exit application")
+        exit_action.triggered.connect(self.close)
+        file_menu.addAction(exit_action)
+        
+        file_button.setMenu(file_menu)
+        toolbar.addWidget(file_button)
+        
+        # Settings Menu
+        settings_button = QToolButton()
+        settings_button.setIcon(self.icons['params'])
+        settings_button.setText("Settings")
+        settings_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        settings_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
+        
+        settings_menu = QMenu()
+        
+        hardware_config_action = QAction(self.icons['hardware'], "Hardware Config", self)
+        hardware_config_action.setStatusTip("Configure hardware settings")
+        hardware_config_action.triggered.connect(self.configure_hardware)
+        settings_menu.addAction(hardware_config_action)
+        
+        test_params_action = QAction(self.icons['params'], "Test Parameters", self)
+        test_params_action.setStatusTip("Configure test parameters")
+        test_params_action.triggered.connect(self.configure_test)
+        settings_menu.addAction(test_params_action)
+        
+        settings_button.setMenu(settings_menu)
+        toolbar.addWidget(settings_button)
+        
+        # Tools Menu
+        tools_button = QToolButton()
+        tools_button.setIcon(self.icons['sync'])  # Using sync icon for tools
+        tools_button.setText("Tools")
+        tools_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        tools_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
+        
+        tools_menu = QMenu()
+        
+        backup_action = QAction(self.icons['backup'], "Backup", self)
+        backup_action.setStatusTip("Manage backups")
+        backup_action.triggered.connect(self.manage_backups)
+        tools_menu.addAction(backup_action)
+        
+        upload_action = QAction(self.icons['upload'], "Upload Firmware", self)
+        upload_action.setStatusTip("Upload firmware to device")
+        upload_action.triggered.connect(self.upload_firmware)
+        tools_menu.addAction(upload_action)
+        
+        tools_button.setMenu(tools_menu)
+        toolbar.addWidget(tools_button)
+        
+        # Help Menu
+        help_button = QToolButton()
+        help_button.setIcon(self.icons['help'])
+        help_button.setText("Help")
+        help_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        help_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
+        
+        help_menu = QMenu()
+        
+        components_action = QAction(self.icons['components'], "Components", self)
+        components_action.setStatusTip("View components overview")
+        components_action.triggered.connect(self.show_components)
+        help_menu.addAction(components_action)
+        
+        issue_action = QAction(self.icons['issue'], "Report Issue", self)
+        issue_action.setStatusTip("Report an issue")
+        issue_action.triggered.connect(self.report_issue)
+        help_menu.addAction(issue_action)
+        
+        help_button.setMenu(help_menu)
+        toolbar.addWidget(help_button)
+
+    def setup_controls(self):
+        """Set up additional control widgets"""
+        # This can be implemented later if needed
+        pass
+
+    def export_data(self):
+        """Export test data"""
+        try:
+            file_path, selected_filter = QFileDialog.getSaveFileName(
+                self, "Export Data", "", 
+                "CSV Files (*.csv);;Excel Files (*.xlsx)"
+            )
+            if file_path:
+                # Determine export format
+                export_format = 'csv' if selected_filter == 'CSV Files (*.csv)' else 'excel'
+                
+                # Get export options
+                dialog = ExportOptionsDialog(self)
+                if dialog.exec():
+                    options = dialog.get_options()
+                    
+                    # Show progress dialog
+                    progress = QProgressDialog("Exporting data...", "Cancel", 0, 100, self)
+                    progress.setWindowModality(Qt.WindowModal)
+                    
+                    def update_progress(value):
+                        progress.setValue(value)
+                    
+                    # Connect progress signal
+                    self.controller.export_progress_signal.connect(update_progress)
+                    
+                    # Export data
+                    self.controller.export_data(file_path, export_format, options)
+                    print("Data exported successfully")
+                    
+        except Exception as e:
+            print(f"Failed to export data: {str(e)}")
+
+    def setup_status_bar(self):
+        """Set up an efficient status bar"""
+        self.status_labels = {}
+        status_widget = QWidget()
+        status_layout = QHBoxLayout(status_widget)
+        status_layout.setContentsMargins(0, 0, 0, 0)
+        status_layout.setSpacing(2)
+        
+        for name in ['arduino', 'tilt', 'temperature', 'motor']:
+            label = QLabel(f"{name.title()}: Not Connected")
+            label.setAutoFillBackground(True)  # Enable background color changes
+            self.set_label_color(label, "red")  # Initial red color
+            status_layout.addWidget(label)
+            if name != 'motor':
+                separator = QLabel("|")
+                separator.setStyleSheet("color: gray;")
+                status_layout.addWidget(separator)
+            self.status_labels[name] = label
+        
+        status_widget.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        self.statusBar().addPermanentWidget(status_widget)
+        
+        # Set up periodic check for Arduino connection
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.check_arduino_status)
+        self.timer.start(1000)  # Check every 1 second
+
+    def set_label_color(self, label, color_name):
+        """Helper function to set label color."""
+        palette = label.palette()
+        palette.setColor(QPalette.ColorRole.Window, QColor(color_name))
+        label.setPalette(palette)
+        label.setStyleSheet(f"background-color: {color_name};")
+
+    def find_arduino_port(self):
+        """Finds the Arduino port."""
+        ports = serial.tools.list_ports.comports()
+        for port in ports:
+            if "Arduino" in port.description:  # Or use other criteria like VID/PID
+                return port.device
+        return None
+
+    def check_arduino_status(self):
+        """Checks and updates Arduino status."""
+        port = self.find_arduino_port()
+        if port:
+            self.update_status('arduino', True, port)  # Pass port for display
+        else:
+            self.update_status('arduino', False)
+
+    def update_status(self, component, connected, port=None):  # Add port parameter
+        """Update status efficiently."""
+    def handle_arduino_status(self, status):
+        """Handle Arduino status updates from worker thread"""
+        if status.get('connected'):
+            self.update_status('arduino', True)
+            components = status.get('components', {})
+            for component, connected in components.items():
+                self.update_status(component, connected)
+        else:
+            for component in self.status_labels:
+                self.update_status(component, False)
+
+    def handle_arduino_error(self, error):
+        """Handle Arduino errors from worker thread"""
+        self.update_status('arduino', False, error)
+
+    def update_status(self, component, connected, message=None):
+        """Update status efficiently, avoiding redundant updates"""
+        if component not in self.status_labels:
+            return
+            
+        # Create cache key
+        cache_key = (component, connected, message)
+        if self._status_cache.get(component) == cache_key:
+            return  # Skip if status hasn't changed
+            
+        label = self.status_labels[component]
+        name = component.title()
+        
+        if connected:
+            new_text = f"{name}: Connected"
+            new_style = "color: #00ff00;"
+        else:
+            new_text = f"{name}: {message}" if message else f"{name}: Not Connected"
+            new_style = "color: red;"
+            
+        # Update only if changed
+        if label.text() != new_text:
+            label.setText(new_text)
+        if label.styleSheet() != new_style:
+            label.setStyleSheet(new_style)
+            
+        # Update cache
+        self._status_cache[component] = cache_key
+
+    def closeEvent(self, event):
+        """Clean up threads before closing"""
+        self.arduino_worker.stop()
+        super().closeEvent(event)
 
     def setup_icons(self):
         """Set up icons for the application"""
@@ -280,8 +668,16 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(tabs)
         splitter.addWidget(right_panel)
         
-        # Set splitter sizes (40% left, 60% right)
-        splitter.setSizes([400, 600])
+        # Set initial splitter sizes
+        splitter.setSizes([300, 700])
+        
+        # Allow resizing by setting stretch factors
+        splitter.setStretchFactor(0, 0)  # Left panel can be resized
+        splitter.setStretchFactor(1, 1)  # Right panel will take up remaining space
+        
+        # Enable resizing by making the splitter handle movable
+        splitter.setHandleWidth(10)  # Make the handle wider for easier grabbing
+        splitter.handle(1).setEnabled(True)  # Enable the handle between the two widgets
         
         # Initialize status bar
         self.init_status_bar()
@@ -303,133 +699,6 @@ class MainWindow(QMainWindow):
         self.update_timer = QTimer()
         self.update_timer.timeout.connect(self.update_execution_time)
         self.test_start_time = None
-
-    def create_toolbar(self):
-        """Create the main toolbar"""
-        toolbar = self.addToolBar("Main Toolbar")
-        toolbar.setMovable(False)
-        toolbar.setIconSize(QSize(24, 24))
-        toolbar.setStyleSheet("""
-            QToolBar {
-                background: #2b2b2b;
-                border-bottom: 1px solid #3d3d3d;
-                padding: 2px;
-            }
-            QToolButton {
-                background: transparent;
-                border: 1px solid transparent;
-                border-radius: 3px;
-                padding: 4px;
-                margin: 1px;
-            }
-            QToolButton:hover {
-                background: #3d3d3d;
-                border: 1px solid #4d4d4d;
-            }
-            QToolButton:pressed {
-                background: #404040;
-            }
-        """)
-
-        # File Menu
-        file_button = QToolButton()
-        file_button.setIcon(self.icons['components'])  # Using components icon for file menu
-        file_button.setText("File")
-        file_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        file_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        
-        file_menu = QMenu()
-        
-        new_test_action = QAction(self.icons['start'], "New Test", self)
-        new_test_action.setStatusTip("Create a new test")
-        new_test_action.triggered.connect(self.new_test)
-        file_menu.addAction(new_test_action)
-        
-        load_config_action = QAction(self.icons['open'], "Load Config", self)
-        load_config_action.setStatusTip("Load configuration from file")
-        load_config_action.triggered.connect(self.load_config)
-        file_menu.addAction(load_config_action)
-        
-        save_config_action = QAction(self.icons['save'], "Save Config", self)
-        save_config_action.setStatusTip("Save configuration to file")
-        save_config_action.triggered.connect(self.save_config)
-        file_menu.addAction(save_config_action)
-        
-        file_menu.addSeparator()
-        
-        exit_action = QAction(self.icons['stop'], "Exit", self)
-        exit_action.setStatusTip("Exit application")
-        exit_action.triggered.connect(self.close)
-        file_menu.addAction(exit_action)
-        
-        file_button.setMenu(file_menu)
-        toolbar.addWidget(file_button)
-        
-        # Settings Menu
-        settings_button = QToolButton()
-        settings_button.setIcon(self.icons['params'])
-        settings_button.setText("Settings")
-        settings_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        settings_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        
-        settings_menu = QMenu()
-        
-        hardware_config_action = QAction(self.icons['hardware'], "Hardware Config", self)
-        hardware_config_action.setStatusTip("Configure hardware settings")
-        hardware_config_action.triggered.connect(self.configure_hardware)
-        settings_menu.addAction(hardware_config_action)
-        
-        test_params_action = QAction(self.icons['params'], "Test Parameters", self)
-        test_params_action.setStatusTip("Configure test parameters")
-        test_params_action.triggered.connect(self.configure_test)
-        settings_menu.addAction(test_params_action)
-        
-        settings_button.setMenu(settings_menu)
-        toolbar.addWidget(settings_button)
-        
-        # Tools Menu
-        tools_button = QToolButton()
-        tools_button.setIcon(self.icons['sync'])  # Using sync icon for tools
-        tools_button.setText("Tools")
-        tools_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        tools_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        
-        tools_menu = QMenu()
-        
-        backup_action = QAction(self.icons['backup'], "Backup", self)
-        backup_action.setStatusTip("Manage backups")
-        backup_action.triggered.connect(self.manage_backups)
-        tools_menu.addAction(backup_action)
-        
-        upload_action = QAction(self.icons['upload'], "Upload Firmware", self)
-        upload_action.setStatusTip("Upload firmware to device")
-        upload_action.triggered.connect(self.upload_firmware)
-        tools_menu.addAction(upload_action)
-        
-        tools_button.setMenu(tools_menu)
-        toolbar.addWidget(tools_button)
-        
-        # Help Menu
-        help_button = QToolButton()
-        help_button.setIcon(self.icons['help'])
-        help_button.setText("Help")
-        help_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        help_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        
-        help_menu = QMenu()
-        
-        components_action = QAction(self.icons['components'], "Components", self)
-        components_action.setStatusTip("View components overview")
-        components_action.triggered.connect(self.show_components)
-        help_menu.addAction(components_action)
-        
-        issue_action = QAction(self.icons['issue'], "Report Issue", self)
-        issue_action.setStatusTip("Report an issue")
-        issue_action.triggered.connect(self.report_issue)
-        help_menu.addAction(issue_action)
-        
-        help_button.setMenu(help_menu)
-        toolbar.addWidget(help_button)
 
     def start_test(self):
         """Start the test"""
@@ -627,31 +896,36 @@ class MainWindow(QMainWindow):
                         # Verify connection with test commands
                         if self.controller.verify_connection():
                             print(f"Successfully connected and verified Arduino on {settings['serial_port']}")
-                            self.update_arduino_status(True)
+                            self.update_status_indicator('arduino', True)
                             self.statusBar().showMessage("Hardware connected and verified", 3000)
                             return True
                         else:
                             error_msg = f"Connected but failed to verify Arduino on {settings['serial_port']}"
                             print(error_msg)
                             self.controller.disconnect_hardware()
+                            self.update_status_indicator('arduino', False)
                             self.statusBar().showMessage(error_msg, 3000)
                             return False
                     else:
                         error_msg = "Failed to connect to hardware"
                         print(error_msg)
+                        self.update_status_indicator('arduino', False)
                         self.statusBar().showMessage(error_msg, 3000)
                         return False
                         
                 # Connect to VNA if IP is provided
                 if settings['vna_ip']:
                     if self.controller.connect_vna(settings['vna_ip'], settings['vna_port']):
+                        self.update_status_indicator('vna', True)
                         self.statusBar().showMessage("VNA connected successfully", 3000)
                     else:
+                        self.update_status_indicator('vna', False)
                         self.statusBar().showMessage("Failed to connect to VNA", 3000)
                         
         except Exception as e:
             error_msg = f"Failed to configure hardware: {str(e)}"
             print(error_msg)
+            self.update_status_indicator('arduino', False)
             self.statusBar().showMessage(error_msg, 3000)
             return False
 
@@ -805,39 +1079,6 @@ class MainWindow(QMainWindow):
                 
         except Exception as e:
             print(f"Failed to save configuration: {str(e)}")
-
-    def export_data(self):
-        """Export test data"""
-        try:
-            file_path, selected_filter = QFileDialog.getSaveFileName(
-                self, "Export Data", "", 
-                "CSV Files (*.csv);;Excel Files (*.xlsx)"
-            )
-            if file_path:
-                # Determine export format
-                export_format = 'csv' if selected_filter == 'CSV Files (*.csv)' else 'excel'
-                
-                # Get export options
-                dialog = ExportOptionsDialog(self)
-                if dialog.exec():
-                    options = dialog.get_options()
-                    
-                    # Show progress dialog
-                    progress = QProgressDialog("Exporting data...", "Cancel", 0, 100, self)
-                    progress.setWindowModality(Qt.WindowModal)
-                    
-                    def update_progress(value):
-                        progress.setValue(value)
-                    
-                    # Connect progress signal
-                    self.controller.export_progress_signal.connect(update_progress)
-                    
-                    # Export data
-                    self.controller.export_data(file_path, export_format, options)
-                    print("Data exported successfully")
-                    
-        except Exception as e:
-            print(f"Failed to export data: {str(e)}")
 
     def update_ui_from_config(self, config):
         """Update UI elements from configuration"""
@@ -1048,14 +1289,15 @@ class MainWindow(QMainWindow):
             self.error_list.addItem(status['error'])
             self.error_list.scrollToBottom()
 
-    def update_arduino_status(self, connected):
-        """Update Arduino connection status"""
+    def update_arduino_status(self, connected, message=None):
+        """Update Arduino status display"""
         if connected:
-            self.arduino_status.setText("Arduino: Connected")
-            self.arduino_status.setStyleSheet("color: #00ff00;")  # Green
+            self.arduino_status_label.setText("Arduino: Connected")
+            self.arduino_status_label.setStyleSheet("color: #00ff00;")  # Bright green
         else:
-            self.arduino_status.setText("Arduino: Not Connected")
-            self.arduino_status.setStyleSheet("color: #ff4444;")  # Red
+            status_text = "Arduino: " + (message or "Not Connected")
+            self.arduino_status_label.setText(status_text)
+            self.arduino_status_label.setStyleSheet("color: red;")
 
     def update_vna_status(self, connected):
         """Update VNA connection status"""
@@ -1136,51 +1378,53 @@ class MainWindow(QMainWindow):
     def connect_to_hardware(self):
         """Attempt to connect to Arduino hardware"""
         try:
-            # Default to /dev/ttyACM0 for Arduino Due
             port = '/dev/ttyACM0'
-            print(f"Attempting to connect to Arduino on {port}")
+            status = self.controller.connect_hardware(port)
             
-            # Try to connect
-            if self.controller.connect_hardware(port):
-                # Start a timer to check connection status after a short delay
-                QTimer.singleShot(1000, self.verify_connection)
-                self.statusBar().showMessage(f"Connecting to Arduino on {port}...", 3000)
-                return True
+            if isinstance(status, dict):
+                if status.get('connected'):
+                    self.update_status('arduino', True)
+                    
+                    # Update component status based on warnings
+                    warnings = status.get('warnings', [])
+                    
+                    # Check each component
+                    self.update_status('temperature', 'Thermocouple' not in str(warnings))
+                    self.update_status('tilt', 'MPU6050' not in str(warnings))
+                    self.update_status('motor', 'STEPPER' not in str(warnings))
+                else:
+                    self.update_status('arduino', False, status.get('error', 'Connection Failed'))
             else:
-                error_msg = "Failed to connect to Arduino"
-                print(error_msg)
-                self.statusBar().showMessage(error_msg, 3000)
-                return False
-                
+                self.update_status('arduino', bool(status))
         except Exception as e:
-            error_msg = f"Error connecting to hardware: {str(e)}"
-            print(error_msg)
-            self.statusBar().showMessage(error_msg, 3000)
-            return False
+            print(f"Error connecting to Arduino: {e}")
+            self.update_status('arduino', False, f"Error: {str(e)}")
 
-    def verify_connection(self):
-        """Verify Arduino connection status"""
+    def check_arduino_connection(self):
+        """Check if Arduino is connected"""
         try:
-            if self.controller.verify_connection():
-                print("Successfully connected and verified Arduino")
-                self.update_arduino_status(True)
-                self.statusBar().showMessage("Connected to Arduino", 3000)
+            if os.path.exists('/dev/ttyACM0'):
+                if not self.controller.is_connected():
+                    self.connect_to_hardware()
             else:
-                print("Failed to verify Arduino connection")
-                self.controller.disconnect_hardware()
-                self.update_arduino_status(False)
-                self.statusBar().showMessage("Failed to verify Arduino connection", 3000)
+                if self.controller.is_connected():
+                    self.controller.disconnect_hardware()
+                    for component in ['arduino', 'tilt', 'temperature', 'motor']:
+                        self.update_status(component, False)
         except Exception as e:
-            print(f"Error verifying connection: {str(e)}")
-            self.controller.disconnect_hardware()
-            self.update_arduino_status(False)
-            self.statusBar().showMessage(f"Connection verification error: {str(e)}", 3000)
+            print(f"Error checking Arduino connection: {e}")
+            self.update_status('arduino', False, f"Error: {str(e)}")
 
     def update_tilt_visualization(self, angle):
         """Update tilt visualization with new angle"""
         if hasattr(self, 'tilt_indicator'):
             self.tilt_indicator.set_angle(angle)
             self.angle_label.setText(f"{angle:.1f}°")
+
+    def load_data(self):
+        """Loads vna and temperature data."""
+        self.vna_data = self.controller.load_data_file('vna_data.csv')
+        self.temperature_data = self.controller.load_data_file('temperature_data.csv')
 
 class HardwareConfigDialog(QDialog):
     def __init__(self, controller, parent=None):

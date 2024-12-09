@@ -12,6 +12,7 @@ import os
 import time
 import serial.tools.list_ports
 import subprocess
+import pandas as pd
 
 class HardwareError(Exception):
     """Exception raised for hardware-related errors."""
@@ -111,23 +112,54 @@ class MainController(QObject):
             # Create Arduino controller without port
             self.arduino = ArduinoController()
             
-            # Try to connect in a non-blocking way
+            # Try to connect
             if self.arduino.connect(port):
-                self._is_connected = True
-                self.update_status()
-                return True
-            else:
+                # Check the response from TEST command
+                response = self.arduino.send_command("TEST")
+                
+                if response and isinstance(response, dict):
+                    status = {
+                        'connected': True,
+                        'warnings': [],
+                        'error': None
+                    }
+                    
+                    # Check for thermocouple
+                    if "Thermocouple not connected" in str(response):
+                        status['warnings'].append("Warning: Thermocouple not connected")
+                    
+                    # Check other components
+                    for component, state in response.items():
+                        if state != "OK" and "Thermocouple" not in component:
+                            status['warnings'].append(f"Warning: {component} reports {state}")
+                    
+                    self._is_connected = True
+                    self.update_status()
+                    return status
+                
+                # If we got here, connection worked but test failed
+                self.arduino.disconnect()
                 self.arduino = None
                 self._is_connected = False
                 self.update_status()
-                return False
+                return {
+                    'connected': False,
+                    'error': "Failed component verification",
+                    'warnings': []
+                }
                 
         except Exception as e:
-            self.logger.error(f"Failed to connect to hardware: {e}")
+            if self.arduino:
+                self.arduino.disconnect()
             self.arduino = None
             self._is_connected = False
             self.update_status()
-            return False
+            self.logger.error(f"Failed to connect to hardware: {e}")
+            return {
+                'connected': False,
+                'error': str(e),
+                'warnings': []
+            }
 
     def verify_connection(self):
         """Verify Arduino connection by sending test commands"""
@@ -158,11 +190,31 @@ class MainController(QObject):
 
     def update_status(self):
         """Update system status"""
-        status = {
-            'ready': self._is_connected,
-            'connected': self._is_connected,
-        }
-        self.status_updated_signal.emit(status)
+        try:
+            if self.arduino and self._is_connected:
+                response = self.arduino.send_command("STATUS")
+                status = {
+                    'ready': True,
+                    'connected': True,
+                    'angle': response.get('angle', 0) if isinstance(response, dict) else 0,
+                    'homed': response.get('homed', False) if isinstance(response, dict) else False
+                }
+            else:
+                status = {
+                    'ready': False,
+                    'connected': False,
+                    'angle': 0,
+                    'homed': False
+                }
+            self.status_updated_signal.emit(status)
+        except Exception as e:
+            self.logger.error(f"Error updating status: {e}")
+            self.status_updated_signal.emit({
+                'ready': False,
+                'connected': False,
+                'angle': 0,
+                'homed': False
+            })
 
     def update_test_parameters(self, parameters):
         """Update test parameters and validate them"""
@@ -219,3 +271,24 @@ class MainController(QObject):
             self.logger.error(f"Error stopping test: {e}")
             self.test_error_signal.emit("Stop Error", str(e))
             return False
+
+    def load_data_file(self, file_path):
+        """Loads data from a file with error handling."""
+        try:
+            if not os.path.exists(file_path):
+                gui_logger.error(f"File not found: {file_path}")
+                return None
+            
+            data = pd.read_csv(file_path)
+            
+            if data.empty:
+                gui_logger.warning(f"The file {file_path} is empty.")
+                return None
+            
+            return data
+        except pd.errors.ParserError:
+            gui_logger.error(f"Error parsing file: {file_path}. Ensure it's a valid CSV.")
+            return None
+        except Exception as e:
+            gui_logger.error(f"An unexpected error occurred while reading {file_path}: {e}")
+            return None

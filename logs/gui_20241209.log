@@ -424,3 +424,283 @@ AttributeError: 'MainController' object has no attribute 'update_test_parameters
 2024-12-09 13:01:41,958 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
 2024-12-09 13:01:53,034 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
 2024-12-09 13:01:53,034 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
+2024-12-09 13:04:16,065 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:04:16,065 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:04:16,069 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:04:16,069 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:04:16,070 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:04:16,070 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:04:16,107 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:04:16,107 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:04:16,111 - gui - INFO - Entering main event loop...
+2024-12-09 13:04:16,111 - gui - INFO - Entering main event loop...
+2024-12-09 13:07:54,722 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:07:54,722 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:07:54,726 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:07:54,726 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:07:54,727 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:07:54,727 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:07:54,766 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:07:54,766 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:07:54,769 - gui - INFO - Entering main event loop...
+2024-12-09 13:07:54,769 - gui - INFO - Entering main event loop...
+2024-12-09 13:09:48,205 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:09:48,205 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:09:48,209 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:09:48,209 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:09:48,210 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:09:48,210 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:09:48,247 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:09:48,247 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:09:48,251 - gui - INFO - Entering main event loop...
+2024-12-09 13:09:48,251 - gui - INFO - Entering main event loop...
+2024-12-09 13:12:03,959 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:12:03,959 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:12:03,964 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:12:03,964 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:12:03,965 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:12:03,965 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:12:04,005 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:12:04,005 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:12:04,008 - gui - INFO - Entering main event loop...
+2024-12-09 13:12:04,008 - gui - INFO - Entering main event loop...
+2024-12-09 13:13:19,714 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:13:19,714 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:13:19,720 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:13:19,720 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:13:19,721 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:13:19,721 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:13:19,757 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:13:19,757 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:13:19,762 - gui - INFO - Entering main event loop...
+2024-12-09 13:13:19,762 - gui - INFO - Entering main event loop...
+2024-12-09 13:14:59,080 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:14:59,080 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:14:59,085 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:14:59,085 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:14:59,085 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:14:59,085 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:14:59,122 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:14:59,122 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:14:59,125 - gui - INFO - Entering main event loop...
+2024-12-09 13:14:59,125 - gui - INFO - Entering main event loop...
+2024-12-09 13:17:29,836 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:17:29,836 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:17:29,840 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:17:29,840 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:17:29,841 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:17:29,841 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:17:29,853 - gui - ERROR - An error occurred: name 'QSizePolicy' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in setup_ui
+    self.real_time_plots.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                                       ^^^^^^^^^^^
+NameError: name 'QSizePolicy' is not defined
+2024-12-09 13:17:29,853 - gui - ERROR - An error occurred: name 'QSizePolicy' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in setup_ui
+    self.real_time_plots.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                                       ^^^^^^^^^^^
+NameError: name 'QSizePolicy' is not defined
+2024-12-09 13:17:58,646 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:17:58,646 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:17:58,651 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:17:58,651 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:17:58,652 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:17:58,652 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:17:58,663 - gui - ERROR - An error occurred: name 'QSizePolicy' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in setup_ui
+    self.real_time_plots.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                                       ^^^^^^^^^^^
+NameError: name 'QSizePolicy' is not defined
+2024-12-09 13:17:58,663 - gui - ERROR - An error occurred: name 'QSizePolicy' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in setup_ui
+    self.real_time_plots.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                                       ^^^^^^^^^^^
+NameError: name 'QSizePolicy' is not defined
+2024-12-09 13:18:45,245 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:18:45,245 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:18:45,250 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:18:45,250 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:18:45,251 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:18:45,251 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:18:45,276 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'setup_toolbar'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 226, in setup_ui
+    self.setup_toolbar()
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'setup_toolbar'. Did you mean: 'create_toolbar'?
+2024-12-09 13:18:45,276 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'setup_toolbar'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 226, in setup_ui
+    self.setup_toolbar()
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'setup_toolbar'. Did you mean: 'create_toolbar'?
+2024-12-09 13:22:58,536 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:22:58,536 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:22:58,540 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:22:58,540 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:22:58,541 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:22:58,541 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:22:58,565 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:22:58,565 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:22:58,569 - gui - INFO - Entering main event loop...
+2024-12-09 13:22:58,569 - gui - INFO - Entering main event loop...
+2024-12-09 13:24:21,291 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:24:21,291 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:24:21,296 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:24:21,296 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:24:21,297 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:24:21,297 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:24:21,323 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:24:21,323 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:24:21,326 - gui - INFO - Entering main event loop...
+2024-12-09 13:24:21,326 - gui - INFO - Entering main event loop...
+2024-12-09 13:26:18,857 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:26:18,857 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:26:18,861 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:26:18,861 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:26:18,862 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:26:18,862 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:26:18,865 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'icons'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 219, in setup_ui
+    self.start_button.setIcon(self.icons.get('start', QIcon()))
+                              ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'icons'
+2024-12-09 13:26:18,865 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'icons'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 192, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 219, in setup_ui
+    self.start_button.setIcon(self.icons.get('start', QIcon()))
+                              ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'icons'
+2024-12-09 13:30:17,833 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:30:17,833 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:30:17,838 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:30:17,838 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:30:17,838 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:30:17,838 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:30:17,865 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:30:17,865 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:30:17,869 - gui - INFO - Entering main event loop...
+2024-12-09 13:30:17,869 - gui - INFO - Entering main event loop...
+2024-12-09 13:34:45,739 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:34:45,739 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:34:45,745 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:34:45,745 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:34:45,746 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:34:45,746 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:34:45,771 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:34:45,771 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:34:45,776 - gui - INFO - Entering main event loop...
+2024-12-09 13:34:45,776 - gui - INFO - Entering main event loop...
+2024-12-09 13:35:07,917 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:35:07,917 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:35:07,922 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:35:07,922 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:35:07,923 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:35:07,923 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:35:07,948 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:35:07,948 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:35:07,952 - gui - INFO - Entering main event loop...
+2024-12-09 13:35:07,952 - gui - INFO - Entering main event loop...
+2024-12-09 13:39:04,594 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:39:04,594 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:39:04,598 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:39:04,598 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:39:04,599 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:39:04,599 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:39:04,625 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:39:04,625 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:39:04,629 - gui - INFO - Entering main event loop...
+2024-12-09 13:39:04,629 - gui - INFO - Entering main event loop...
+2024-12-09 13:40:09,299 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:40:09,299 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:40:09,304 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:40:09,304 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:40:09,305 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:40:09,305 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:40:09,324 - gui - ERROR - An error occurred: name 'QPalette' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 264, in setup_ui
+    self.setup_status_bar()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 446, in setup_status_bar
+    self.set_label_color(label, "red")  # Initial red color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 465, in set_label_color
+    palette.setColor(QPalette.ColorRole.Window, QColor(color_name))
+                     ^^^^^^^^
+NameError: name 'QPalette' is not defined. Did you mean: 'palette'?
+2024-12-09 13:40:09,324 - gui - ERROR - An error occurred: name 'QPalette' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 209, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 264, in setup_ui
+    self.setup_status_bar()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 446, in setup_status_bar
+    self.set_label_color(label, "red")  # Initial red color
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 465, in set_label_color
+    palette.setColor(QPalette.ColorRole.Window, QColor(color_name))
+                     ^^^^^^^^
+NameError: name 'QPalette' is not defined. Did you mean: 'palette'?
+2024-12-09 13:40:48,619 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:40:48,619 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:40:48,623 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:40:48,623 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:40:48,624 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:40:48,624 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:40:48,648 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:40:48,648 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:40:48,652 - gui - INFO - Entering main event loop...
+2024-12-09 13:40:48,652 - gui - INFO - Entering main event loop...

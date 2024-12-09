@@ -69,9 +69,6 @@ def main():
         gui_logger.info("Entering main event loop...")
         sys.exit(app.exec())
     
-    except PermissionError as e:
-        gui_logger.error(f"Permission error: {e}", exc_info=True)
-        print("Try running the script with sudo or grant necessary permissions to the serial ports.")
     except Exception as e:
         gui_logger.error(f"An error occurred: {e}", exc_info=True)
         print(f"An error occurred: {e}")
