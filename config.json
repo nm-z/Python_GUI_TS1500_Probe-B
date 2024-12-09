@@ -1,0 +1,24 @@
+{
+    "logging": {
+        "level": "INFO",
+        "file": "app.log"
+    },
+    "hardware": {
+        "port": null,
+        "baudrate": 115200,
+        "timeout": 1.0
+    },
+    "web_server": {
+        "enabled": false,
+        "host": "0.0.0.0",
+        "port": 5000
+    },
+    "test": {
+        "default_angle_range": [
+            -15,
+            15
+        ],
+        "default_step_size": 1,
+        "default_dwell_time": 5
+    }
+}

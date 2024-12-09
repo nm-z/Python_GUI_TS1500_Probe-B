@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=TS1500 Probe
+Comment=GUI Application for TS1500 Probe
+Exec=bash -c "xhost +local:docker && docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ts1500-probe"
+Terminal=true
+Type=Application
+Categories=Development;Engineering;
+Icon=utilities-terminal 

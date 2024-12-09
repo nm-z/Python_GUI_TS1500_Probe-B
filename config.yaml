@@ -1,0 +1,49 @@
+appearance:
+  theme: dark
+data:
+  backup:
+    auto_cleanup: true
+    enabled: true
+    max_backups: 10
+  logging_interval: 1.0
+  max_history_hours: 1
+hardware:
+  arduino:
+    baud_rate: 9600
+    steps_per_degree: 10
+    timeout: 1.0
+  stepper_motor:
+    acceleration: 500
+    max_speed: 1000
+    microsteps: 16
+    steps_per_revolution: 200
+logging:
+  backup_count: 5
+  file: logs/application.log
+  level: CRITICAL
+  max_size: 10485760
+test:
+  fill_level:
+    commands:
+    - delay: 1.0
+      steps: 100
+    test_interval: 5
+  general:
+    oil_leveling_time: 5.0
+    test_interval: 1.0
+  tilt_angle:
+    increment: 1
+    step_delay: 0.5
+    test_phases:
+    - angle: 30
+      axis: +X
+    - angle: -30
+      axis: -X
+    - angle: 30
+      axis: +Y
+    - angle: -30
+      axis: -Y
+web_server:
+  enabled: false
+  host: 0.0.0.0
+  port: 5000

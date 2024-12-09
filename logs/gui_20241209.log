@@ -1,0 +1,354 @@
+2024-12-09 09:35:56,205 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:35:56,205 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:35:56,210 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:35:56,210 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:35:56,210 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:35:56,210 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:35:56,211 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/vna_data
+2024-12-09 09:35:56,211 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/vna_data
+2024-12-09 09:35:56,211 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/temperature_data
+2024-12-09 09:35:56,211 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/temperature_data
+2024-12-09 09:35:56,212 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/logs
+2024-12-09 09:35:56,212 - gui - INFO - Created directory: /home/nate/Desktop/Python_GUI_TS1500_Probe-B/data/logs
+2024-12-09 09:35:56,212 - gui - INFO - Created VNA data file
+2024-12-09 09:35:56,212 - gui - INFO - Created VNA data file
+2024-12-09 09:35:56,212 - gui - INFO - Created temperature data file
+2024-12-09 09:35:56,212 - gui - INFO - Created temperature data file
+2024-12-09 09:35:56,240 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'update_test_progress'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 145, in __init__
+    self.controller.test_progress_signal.connect(self.update_test_progress)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'update_test_progress'. Did you mean: 'update_progress'?
+2024-12-09 09:35:56,240 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'update_test_progress'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 145, in __init__
+    self.controller.test_progress_signal.connect(self.update_test_progress)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'update_test_progress'. Did you mean: 'update_progress'?
+2024-12-09 09:36:47,240 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:36:47,240 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:36:47,244 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:36:47,244 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:36:47,245 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:36:47,245 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:36:47,273 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'error_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 150, in __init__
+    self.controller.error_signal.connect(self.show_error)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'error_signal'. Did you mean: 'test_error_signal'?
+2024-12-09 09:36:47,273 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'error_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 150, in __init__
+    self.controller.error_signal.connect(self.show_error)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'error_signal'. Did you mean: 'test_error_signal'?
+2024-12-09 09:39:35,270 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:39:35,270 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:39:35,274 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:39:35,274 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:39:35,275 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:39:35,275 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:39:35,307 - gui - INFO - Entering main event loop...
+2024-12-09 09:39:35,307 - gui - INFO - Entering main event loop...
+2024-12-09 09:41:19,401 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:41:19,401 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:41:19,405 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:41:19,405 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:41:19,406 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:41:19,406 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:41:19,433 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 09:41:19,433 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 09:43:57,919 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:43:57,919 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:43:57,924 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:43:57,924 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:43:57,924 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:43:57,924 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:43:57,937 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'set_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 50, in main
+    window.set_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'set_test_parameters'. Did you mean: 'show_test_parameters'?
+2024-12-09 09:43:57,937 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'set_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 50, in main
+    window.set_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'set_test_parameters'. Did you mean: 'show_test_parameters'?
+2024-12-09 09:44:25,548 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:44:25,548 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:44:25,552 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:44:25,552 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:44:25,553 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:44:25,553 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:44:25,566 - gui - INFO - Entering main event loop...
+2024-12-09 09:44:25,566 - gui - INFO - Entering main event loop...
+2024-12-09 09:45:09,889 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:45:09,889 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:45:09,894 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:45:09,894 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:45:09,895 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:45:09,895 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:45:09,907 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'update_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 57, in main
+    controller.update_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'update_test_parameters'
+2024-12-09 09:45:09,907 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'update_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 57, in main
+    controller.update_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'update_test_parameters'
+2024-12-09 09:58:11,855 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:58:11,855 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:58:11,859 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:58:11,859 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:58:11,860 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:58:11,860 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:58:11,872 - gui - INFO - Test parameters updated successfully
+2024-12-09 09:58:11,872 - gui - INFO - Test parameters updated successfully
+2024-12-09 09:58:11,874 - gui - INFO - Entering main event loop...
+2024-12-09 09:58:11,874 - gui - INFO - Entering main event loop...
+2024-12-09 09:59:10,491 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:59:10,491 - gui - INFO - Configuration loaded successfully
+2024-12-09 09:59:10,496 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:59:10,496 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 09:59:10,496 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:59:10,496 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 09:59:10,509 - gui - INFO - Test parameters updated successfully
+2024-12-09 09:59:10,509 - gui - INFO - Test parameters updated successfully
+2024-12-09 09:59:10,510 - gui - INFO - Entering main event loop...
+2024-12-09 09:59:10,510 - gui - INFO - Entering main event loop...
+2024-12-09 10:00:19,825 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:00:19,825 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:00:19,829 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:00:19,829 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:00:19,830 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:00:19,830 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:00:19,842 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:00:19,842 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:00:19,844 - gui - INFO - Entering main event loop...
+2024-12-09 10:00:19,844 - gui - INFO - Entering main event loop...
+2024-12-09 10:00:22,918 - gui - ERROR - Error while closing application: disconnect() failed between 'diagnostic_progress_signal' and all its connections
+2024-12-09 10:00:22,918 - gui - ERROR - Error while closing application: disconnect() failed between 'diagnostic_progress_signal' and all its connections
+2024-12-09 10:01:05,637 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:05,637 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:05,642 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:05,642 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:05,643 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:05,643 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:05,656 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:01:05,656 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:01:05,657 - gui - INFO - Entering main event loop...
+2024-12-09 10:01:05,657 - gui - INFO - Entering main event loop...
+2024-12-09 10:01:07,289 - gui - ERROR - Error while closing application: disconnect() failed between 'diagnostic_progress_signal' and all its connections
+2024-12-09 10:01:07,289 - gui - ERROR - Error while closing application: disconnect() failed between 'diagnostic_progress_signal' and all its connections
+2024-12-09 10:01:24,528 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:24,528 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:24,532 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:24,532 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:24,533 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:24,533 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:24,561 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 10:01:24,561 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 10:01:33,262 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:33,262 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:01:33,267 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:33,267 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:01:33,267 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:33,267 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:01:33,293 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 10:01:33,293 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'time_sync_label'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 297, in init_ui
+    status_bar.addPermanentWidget(self.time_sync_label)
+                                  ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'time_sync_label'
+2024-12-09 10:02:25,354 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:02:25,354 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:02:25,358 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:02:25,358 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:02:25,359 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:02:25,359 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:02:25,380 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'icons'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 145, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 156, in init_ui
+    self.create_toolbar()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 350, in create_toolbar
+    file_button.setIcon(self.icons['components'])  # Using components icon for file menu
+                        ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'icons'
+2024-12-09 10:02:25,380 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'icons'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 145, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 156, in init_ui
+    self.create_toolbar()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 350, in create_toolbar
+    file_button.setIcon(self.icons['components'])  # Using components icon for file menu
+                        ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'icons'
+2024-12-09 10:04:35,922 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:35,922 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:35,926 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:35,926 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:35,927 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:35,927 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:35,965 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:04:35,965 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:04:41,716 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:41,716 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:41,721 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:41,721 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:41,723 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:41,723 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:41,759 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:04:41,759 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:04:49,147 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:49,147 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:04:49,152 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:49,152 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:04:49,153 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:49,153 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:04:49,189 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:04:49,189 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 148, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 613, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?

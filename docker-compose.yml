@@ -1,13 +1,21 @@
-version: '3'
+version: '3.8'
 
 services:
-  gui:
+  app:
     build: .
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
       - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix  # For GUI display
     environment:
-      - DISPLAY=:0
-      - QT_X11_NO_MITSHM=1
-    privileged: true
-    network_mode: host 
+      - DISPLAY=${DISPLAY}  # For GUI display
+      - PYTHONPATH=/app
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0  # For Arduino communication
+    privileged: true  # Required for hardware access
+    network_mode: host  # Required for X11 forwarding
+
+volumes:
+  ts1500_logs:
+    name: ts1500_logs
+  ts1500_config:
+    name: ts1500_config 

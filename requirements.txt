@@ -1,9 +1,27 @@
-matplotlib
-numpy
-scipy
-pyserial
-flask
-pyusb
-pillow
-pygame
+# GUI Dependencies
+PyQt6>=6.4.0
+pygame>=2.5.0
+
+# Hardware Communication
+pyserial>=3.5
+
+# Data Processing
+numpy>=1.23.0
+scipy>=1.7.0
+matplotlib>=3.6.0
+pandas>=1.5.0
+
+# Time Synchronization
+ntplib>=0.4.0
+
+# Web Server
+flask>=2.0.0
+
+# Utilities
+pillow>=8.3.0  # For image processing
+pyusb>=1.2.0   # For USB device communication
+pyyaml>=6.0  # For configuration files
+keyboard>=0.13.5  # For keyboard automation
+python-dateutil>=2.8.2
+pytz>=2022.1
    
