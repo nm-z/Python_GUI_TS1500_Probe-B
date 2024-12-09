@@ -133,3 +133,40 @@ class MainController(QObject):
             'connected': self._is_connected,
         }
         self.status_updated_signal.emit(status)
+
+    def update_test_parameters(self, parameters):
+        """Update test parameters and validate them"""
+        try:
+            # Validate parameters
+            required_params = ['start_angle', 'end_angle', 'step_size', 'dwell_time', 'num_runs']
+            for param in required_params:
+                if param not in parameters:
+                    self.logger.error(f"Missing required parameter: {param}")
+                    return False
+            
+            # Validate numeric values
+            if not (isinstance(parameters['start_angle'], (int, float)) and 
+                   isinstance(parameters['end_angle'], (int, float)) and
+                   isinstance(parameters['step_size'], (int, float)) and
+                   isinstance(parameters['dwell_time'], (int, float)) and
+                   isinstance(parameters['num_runs'], int)):
+                self.logger.error("Invalid parameter types")
+                return False
+            
+            # Validate ranges
+            if not (0 <= parameters['start_angle'] <= 90 and
+                   0 <= parameters['end_angle'] <= 90 and
+                   0 < parameters['step_size'] <= 90 and
+                   parameters['dwell_time'] > 0 and
+                   parameters['num_runs'] > 0):
+                self.logger.error("Parameters out of valid range")
+                return False
+            
+            # Update parameters
+            self.test_parameters.update(parameters)
+            self.logger.info("Test parameters updated successfully")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error updating test parameters: {e}")
+            return False

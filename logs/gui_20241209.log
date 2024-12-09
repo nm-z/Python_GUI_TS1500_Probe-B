@@ -352,3 +352,31 @@ Traceback (most recent call last):
     self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'MainController' object has no attribute 'data_collected_signal'. Did you mean: 'test_completed_signal'?
+2024-12-09 10:08:32,656 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:08:32,656 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:08:32,660 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:08:32,660 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:08:32,661 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:08:32,661 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:08:32,698 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'update_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 57, in main
+    controller.update_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'update_test_parameters'
+2024-12-09 10:08:32,698 - gui - ERROR - An error occurred: 'MainController' object has no attribute 'update_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 57, in main
+    controller.update_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'update_test_parameters'
+2024-12-09 10:09:24,385 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:09:24,385 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:09:24,389 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:09:24,389 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:09:24,390 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:09:24,390 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:09:24,427 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:09:24,427 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:09:24,430 - gui - INFO - Entering main event loop...
+2024-12-09 10:09:24,430 - gui - INFO - Entering main event loop...
