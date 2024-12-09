@@ -1,21 +1,16 @@
-version: '3.8'
-
 services:
-  app:
+  gui:
     build: .
-    volumes:
-      - .:/app
-      - /tmp/.X11-unix:/tmp/.X11-unix  # For GUI display
     environment:
-      - DISPLAY=${DISPLAY}  # For GUI display
-      - PYTHONPATH=/app
+      - DISPLAY=${DISPLAY}
+      - QT_QPA_PLATFORM=xcb
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - .:/app
+      - /dev:/dev
     devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0  # For Arduino communication
-    privileged: true  # Required for hardware access
-    network_mode: host  # Required for X11 forwarding
-
-volumes:
-  ts1500_logs:
-    name: ts1500_logs
-  ts1500_config:
-    name: ts1500_config 
+      - /dev/ttyACM0:/dev/ttyACM0
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
