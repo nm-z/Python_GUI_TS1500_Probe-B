@@ -1,16 +1,21 @@
 services:
   gui:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ts1500-gui
     environment:
       - DISPLAY=${DISPLAY}
       - QT_QPA_PLATFORM=xcb
       - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+      - DEBUG=1
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - .:/app
+      - ./:/app:rw
       - /dev:/dev
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
     privileged: true
     network_mode: host
-    restart: unless-stopped
+    restart: "no"

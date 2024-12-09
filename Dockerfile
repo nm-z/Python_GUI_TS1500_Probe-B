@@ -1,31 +1,36 @@
-# Use Ubuntu LTS as base image with specific digest
-FROM ubuntu:22.04@sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
+# Use Ubuntu as base image
+FROM ubuntu:22.04
 
-# Prevent interactive prompts during package installation
+# Avoid timezone prompt during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Python and system dependencies
 RUN apt-get update && apt-get install -y \
-    python3.9 \
+    python3 \
     python3-pip \
-    python3.9-dev \
-    libgl1-mesa-glx \
-    libxcb-xinerama0 \
-    libxcb-icccm4 \
-    libxcb-image0 \
-    libxcb-keysyms1 \
-    libxcb-randr0 \
-    libxcb-render-util0 \
-    libxcb-shape0 \
-    libxcb-xfixes0 \
-    libxcb-xkb1 \
-    xvfb \
+    python3-dev \
     build-essential \
+    xvfb \
+    libgl1-mesa-dev \
+    libx11-dev \
+    libxcb1-dev \
+    libxkbcommon-x11-dev \
+    libdbus-1-3 \
+    qt6-base-dev \
+    cmake \
+    ninja-build \
+    pkg-config \
+    # Pillow dependencies
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    zlib1g-dev \
+    libffi-dev \
+    libjpeg8-dev \
     && rm -rf /var/lib/apt/lists/*
-
-# Set Python 3.9 as default
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
-    && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 # Set working directory
 WORKDIR /app
@@ -34,8 +39,9 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Upgrade pip and install dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir wheel setuptools && \
+    pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code
 COPY . .
@@ -48,9 +54,22 @@ USER appuser
 ENV DISPLAY=:99
 ENV QT_QPA_PLATFORM=xcb
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
-# Create entrypoint script
-RUN echo '#!/bin/bash\nXvfb :99 -screen 0 1024x768x16 &\nsleep 1\npython main.py' > /app/entrypoint.sh \
+# Create entrypoint script with debugging
+RUN echo '#!/bin/bash\n\
+echo "Current directory: $PWD"\n\
+echo "Directory contents:"\n\
+ls -la\n\
+echo "Python path:"\n\
+echo $PYTHONPATH\n\
+echo "Python version:"\n\
+python3 --version\n\
+echo "Starting Xvfb..."\n\
+Xvfb :99 -screen 0 1024x768x16 &\n\
+sleep 1\n\
+echo "Starting main.py..."\n\
+cd /app && python3 main.py\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 # Set the entrypoint
