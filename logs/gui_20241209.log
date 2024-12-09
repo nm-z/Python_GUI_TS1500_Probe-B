@@ -410,3 +410,17 @@ AttributeError: 'MainController' object has no attribute 'update_test_parameters
 2024-12-09 10:17:29,883 - gui - INFO - Test parameters updated successfully
 2024-12-09 10:17:29,887 - gui - INFO - Entering main event loop...
 2024-12-09 10:17:29,887 - gui - INFO - Entering main event loop...
+2024-12-09 13:00:18,623 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:00:18,623 - gui - INFO - Configuration loaded successfully
+2024-12-09 13:00:18,632 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:00:18,632 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 13:00:18,633 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:00:18,633 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 13:00:18,685 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:00:18,685 - gui - INFO - Test parameters updated successfully
+2024-12-09 13:00:18,689 - gui - INFO - Entering main event loop...
+2024-12-09 13:00:18,689 - gui - INFO - Entering main event loop...
+2024-12-09 13:01:41,958 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
+2024-12-09 13:01:41,958 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
+2024-12-09 13:01:53,034 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given
+2024-12-09 13:01:53,034 - gui - ERROR - Failed to connect to hardware: ArduinoController.__init__() takes 1 positional argument but 2 were given

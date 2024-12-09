@@ -108,12 +108,42 @@ class MainController(QObject):
     def connect_hardware(self, port):
         """Connect to Arduino hardware"""
         try:
-            self.arduino = ArduinoController(port)
-            self._is_connected = True
-            self.update_status()
-            return True
+            # Create Arduino controller without port
+            self.arduino = ArduinoController()
+            
+            # Try to connect in a non-blocking way
+            if self.arduino.connect(port):
+                self._is_connected = True
+                self.update_status()
+                return True
+            else:
+                self.arduino = None
+                self._is_connected = False
+                self.update_status()
+                return False
+                
         except Exception as e:
             self.logger.error(f"Failed to connect to hardware: {e}")
+            self.arduino = None
+            self._is_connected = False
+            self.update_status()
+            return False
+
+    def verify_connection(self):
+        """Verify Arduino connection by sending test commands"""
+        try:
+            if not self.arduino:
+                return False
+            
+            # Send test command
+            response = self.arduino.send_command("TEST")
+            if response and isinstance(response, dict):
+                # Check if all components are OK
+                return all(status == "OK" for status in response.values())
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error verifying connection: {e}")
             return False
 
     def disconnect_hardware(self):
@@ -169,4 +199,23 @@ class MainController(QObject):
             
         except Exception as e:
             self.logger.error(f"Error updating test parameters: {e}")
+            return False
+
+    def stop_test(self):
+        """Stop the current test"""
+        try:
+            if self.is_running:
+                self.is_running = False
+                self.is_paused = False
+                if self.arduino:
+                    self.arduino.send_command("STOP")
+                if self.test_thread and self.test_thread.is_alive():
+                    self.test_thread.join(timeout=1.0)
+                self.test_stopped_signal.emit()
+                self.logger.info("Test stopped")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"Error stopping test: {e}")
+            self.test_error_signal.emit("Stop Error", str(e))
             return False

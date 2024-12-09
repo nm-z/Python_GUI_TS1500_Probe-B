@@ -68,7 +68,7 @@ class TestParametersDialog(QDialog):
         self.start_angle = QDoubleSpinBox()
         self.start_angle.setRange(-90, 90)
         self.start_angle.setValue(0)
-        form_layout.addRow("Start Angle (°):", self.start_angle)
+        form_layout.addRow("Start Angle (��):", self.start_angle)
         
         self.end_angle = QDoubleSpinBox()
         self.end_angle.setRange(-90, 90)
@@ -1136,35 +1136,45 @@ class MainWindow(QMainWindow):
     def connect_to_hardware(self):
         """Attempt to connect to Arduino hardware"""
         try:
-            ports = self.controller.get_available_ports()
-            if not ports:
-                print("No serial ports found")
-                return
+            # Default to /dev/ttyACM0 for Arduino Due
+            port = '/dev/ttyACM0'
+            print(f"Attempting to connect to Arduino on {port}")
             
-            # Try each port until we find the Arduino
-            for port in ports:
-                print(f"Trying port: {port}")
-                if self.controller.connect_to_arduino(port):
-                    # Send test commands to verify connection
-                    if self.controller.verify_connection():
-                        print(f"Successfully connected and verified Arduino on {port}")
-                        self.update_arduino_status(True)
-                        self.statusBar().showMessage(f"Connected to Arduino on {port}", 3000)
-                        return True
-                    else:
-                        print(f"Connected but failed to verify Arduino on {port}")
-                        self.controller.disconnect_hardware()
-            
-            error_msg = "Could not establish valid communication with Arduino on any port"
-            print(error_msg)
-            self.statusBar().showMessage(error_msg, 3000)
-            return False
-            
+            # Try to connect
+            if self.controller.connect_hardware(port):
+                # Start a timer to check connection status after a short delay
+                QTimer.singleShot(1000, self.verify_connection)
+                self.statusBar().showMessage(f"Connecting to Arduino on {port}...", 3000)
+                return True
+            else:
+                error_msg = "Failed to connect to Arduino"
+                print(error_msg)
+                self.statusBar().showMessage(error_msg, 3000)
+                return False
+                
         except Exception as e:
             error_msg = f"Error connecting to hardware: {str(e)}"
             print(error_msg)
             self.statusBar().showMessage(error_msg, 3000)
             return False
+
+    def verify_connection(self):
+        """Verify Arduino connection status"""
+        try:
+            if self.controller.verify_connection():
+                print("Successfully connected and verified Arduino")
+                self.update_arduino_status(True)
+                self.statusBar().showMessage("Connected to Arduino", 3000)
+            else:
+                print("Failed to verify Arduino connection")
+                self.controller.disconnect_hardware()
+                self.update_arduino_status(False)
+                self.statusBar().showMessage("Failed to verify Arduino connection", 3000)
+        except Exception as e:
+            print(f"Error verifying connection: {str(e)}")
+            self.controller.disconnect_hardware()
+            self.update_arduino_status(False)
+            self.statusBar().showMessage(f"Connection verification error: {str(e)}", 3000)
 
     def update_tilt_visualization(self, angle):
         """Update tilt visualization with new angle"""
