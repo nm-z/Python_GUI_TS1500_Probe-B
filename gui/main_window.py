@@ -138,9 +138,6 @@ class MainWindow(QMainWindow):
         print("Setting up icons...")
         self.setup_icons()
         
-        # Initialize status bar
-        self.init_status_bar()
-        
         print("Starting UI initialization...")
         # Initialize the UI
         self.init_ui()
@@ -286,44 +283,9 @@ class MainWindow(QMainWindow):
         # Set splitter sizes (40% left, 60% right)
         splitter.setSizes([400, 600])
         
-        # Create status bar
-        status_bar = self.statusBar()
-        status_bar.setStyleSheet(f"""
-            QStatusBar {{
-                background: {Styles.COLORS['background']};
-                color: {Styles.COLORS['foreground']};
-                border-top: 1px solid {Styles.COLORS['border']};
-            }}
-            QLabel {{
-                padding: 3px;
-                border-right: 1px solid {Styles.COLORS['border']};
-            }}
-        """)
-
-        # Add permanent widgets to status bar
-        self.status_ready = QLabel("Ready")
-        self.status_ready.setStyleSheet(f"color: {Styles.COLORS['success']};")
-        status_bar.addPermanentWidget(self.status_ready)
-
-        self.arduino_status = QLabel("Arduino: Not Connected")
-        self.arduino_status.setStyleSheet(f"color: {Styles.COLORS['error']};")
-        status_bar.addPermanentWidget(self.arduino_status)
-
-        self.tilt_status_label = QLabel("Tilt Sensor: Not Connected")
-        self.temp_status_label = QLabel("Temperature: Not Connected")
-        self.motor_status_label = QLabel("Motor: Not Connected")
+        # Initialize status bar
+        self.init_status_bar()
         
-        # Add widgets to status bar
-        status_bar.addPermanentWidget(self.time_sync_label)
-        status_bar.addPermanentWidget(QLabel(" | "))  # Separator
-        status_bar.addPermanentWidget(self.arduino_status)
-        status_bar.addPermanentWidget(QLabel(" | "))  # Separator
-        status_bar.addPermanentWidget(self.tilt_status_label)
-        status_bar.addPermanentWidget(QLabel(" | "))
-        status_bar.addPermanentWidget(self.temp_status_label)
-        status_bar.addPermanentWidget(QLabel(" | "))
-        status_bar.addPermanentWidget(self.motor_status_label)
-
         # Apply base style
         self.setStyleSheet(Styles.BASE_STYLE)
 
@@ -1023,23 +985,45 @@ class MainWindow(QMainWindow):
         """Initialize the status bar with multiple sections"""
         status_bar = self.statusBar()
         
-        # Create permanent widgets for different sections
+        # Set status bar style
+        status_bar.setStyleSheet(f"""
+            QStatusBar {{
+                background: {Styles.COLORS['background']};
+                color: {Styles.COLORS['foreground']};
+                border-top: 1px solid {Styles.COLORS['border']};
+            }}
+            QLabel {{
+                padding: 3px;
+                border-right: 1px solid {Styles.COLORS['border']};
+            }}
+        """)
+        
+        # Initialize status labels
         self.time_sync_label = QLabel("Time Sync: Not Synced")
         self.arduino_status = QLabel("Arduino: Not Connected")
         self.tilt_status_label = QLabel("Tilt Sensor: Not Connected")
         self.temp_status_label = QLabel("Temperature: Not Connected")
         self.motor_status_label = QLabel("Motor: Not Connected")
         
-        # Add permanent widgets to status bar
-        status_bar.addPermanentWidget(self.time_sync_label)
-        status_bar.addPermanentWidget(QLabel(" | "))  # Separator
-        status_bar.addPermanentWidget(self.arduino_status)
-        status_bar.addPermanentWidget(QLabel(" | "))  # Separator
-        status_bar.addPermanentWidget(self.tilt_status_label)
-        status_bar.addPermanentWidget(QLabel(" | "))
-        status_bar.addPermanentWidget(self.temp_status_label)
-        status_bar.addPermanentWidget(QLabel(" | "))
-        status_bar.addPermanentWidget(self.motor_status_label)
+        # Set initial error style for disconnected state
+        self.arduino_status.setStyleSheet(f"color: {Styles.COLORS['error']};")
+        
+        # Create a single list of status widgets to ensure no duplicates
+        status_widgets = [
+            self.time_sync_label,
+            QLabel(" | "),  # Separator
+            self.arduino_status,
+            QLabel(" | "),  # Separator
+            self.tilt_status_label,
+            QLabel(" | "),  # Separator
+            self.temp_status_label,
+            QLabel(" | "),  # Separator
+            self.motor_status_label
+        ]
+        
+        # Add widgets to status bar in sequence
+        for widget in status_widgets:
+            status_bar.addPermanentWidget(widget)
 
     def update_status_indicators(self, status):
         """Update status indicators with proper colors"""

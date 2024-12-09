@@ -380,3 +380,33 @@ AttributeError: 'MainController' object has no attribute 'update_test_parameters
 2024-12-09 10:09:24,427 - gui - INFO - Test parameters updated successfully
 2024-12-09 10:09:24,430 - gui - INFO - Entering main event loop...
 2024-12-09 10:09:24,430 - gui - INFO - Entering main event loop...
+2024-12-09 10:13:25,195 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:13:25,195 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:13:25,199 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:13:25,199 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:13:25,200 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:13:25,200 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:13:25,238 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:13:25,238 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:13:25,241 - gui - INFO - Entering main event loop...
+2024-12-09 10:13:25,241 - gui - INFO - Entering main event loop...
+2024-12-09 10:15:22,790 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:15:22,790 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:15:22,794 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:15:22,794 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:15:22,795 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:15:22,795 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:15:22,832 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:15:22,832 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:15:22,836 - gui - INFO - Entering main event loop...
+2024-12-09 10:15:22,836 - gui - INFO - Entering main event loop...
+2024-12-09 10:17:29,838 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:17:29,838 - gui - INFO - Configuration loaded successfully
+2024-12-09 10:17:29,842 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:17:29,842 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-09 10:17:29,843 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:17:29,843 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-09 10:17:29,883 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:17:29,883 - gui - INFO - Test parameters updated successfully
+2024-12-09 10:17:29,887 - gui - INFO - Entering main event loop...
+2024-12-09 10:17:29,887 - gui - INFO - Entering main event loop...
