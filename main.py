@@ -11,8 +11,13 @@ from gui.styles import Styles
 
 def setup_environment():
     """Set up the application environment"""
-    # Set the Qt platform plugin to "xcb"
-    os.environ["QT_QPA_PLATFORM"] = "xcb"
+    # Set the Qt platform plugin path
+    qt_plugin_path = "/usr/lib/qt6/plugins"
+    if os.path.exists(qt_plugin_path):
+        os.environ["QT_PLUGIN_PATH"] = qt_plugin_path
+    
+    # Try XCB platform first, fallback to Wayland
+    os.environ["QT_QPA_PLATFORM"] = "xcb;wayland"
     
     # Configure logging levels for external libraries
     logging.getLogger('PIL').setLevel(logging.INFO)
@@ -24,7 +29,7 @@ def main():
         # Set up environment
         setup_environment()
         
-        # Initialize Qt application
+        # Initialize Qt application with platform plugin
         app = QApplication(sys.argv)
         
         # Load configuration

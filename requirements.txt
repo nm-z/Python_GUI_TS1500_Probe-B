@@ -1,13 +1,13 @@
 # GUI Dependencies
-PyQt6==6.5.2
+PyQt6>=6.5.0
 pyserial==3.5
-pyqtgraph==0.13.3
+pyqtgraph>=0.13.3
 
 # Data Processing & Scientific Libraries
-numpy==1.22.4  # Compatible version for all dependencies
-matplotlib==3.5.2  # Using older version compatible with numpy
-pandas==1.4.3  # Compatible with numpy 1.22.4
-scipy==1.8.1  # Compatible with numpy 1.22.4
+numpy>=1.26.0  # Updated for Python 3.12 compatibility
+matplotlib>=3.8.0  # Updated for numpy 1.26
+pandas>=2.1.0  # Updated for numpy 1.26
+scipy>=1.11.0  # Updated for numpy 1.26
 
 # Time Synchronization
 ntplib==0.4.0
@@ -16,7 +16,7 @@ ntplib==0.4.0
 flask==2.0.0
 
 # Utilities
-pillow==8.3.0
+pillow>=10.0.0
 pyusb==1.2.0
 PyYAML==6.0.1
 keyboard==0.13.5
