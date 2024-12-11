@@ -1,48 +1,121 @@
 import logging
-import sys
 import os
 from datetime import datetime
 
-# Create logs directory if it doesn't exist
-logs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
-if not os.path.exists(logs_dir):
-    os.makedirs(logs_dir)
+class ColoredFormatter(logging.Formatter):
+    """Custom formatter with colored output"""
+    
+    COLORS = {
+        'DEBUG': '\033[0;36m',     # Cyan
+        'INFO': '\033[0;32m',      # Green
+        'WARNING': '\033[0;33m',   # Yellow
+        'ERROR': '\033[0;31m',     # Red
+        'CRITICAL': '\033[0;35m',  # Magenta
+        'RESET': '\033[0m'         # Reset
+    }
+    
+    def format(self, record):
+        # Add color to the level name
+        record.levelname = f"{self.COLORS.get(record.levelname, self.COLORS['RESET'])}{record.levelname}{self.COLORS['RESET']}"
+        return super().format(record)
 
-# Create a formatter that includes timestamp and level
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+def setup_logger(name, log_file=None, level=logging.INFO):
+    """Set up logger with file and console handlers
+    
+    Args:
+        name (str): Logger name
+        log_file (str, optional): Path to log file
+        level: Logging level
+        
+    Returns:
+        logging.Logger: Configured logger
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    # Remove any existing handlers
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+    
+    # Create formatters
+    console_formatter = ColoredFormatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    file_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    # Create console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(console_formatter)
+    logger.addHandler(console_handler)
+    
+    # Create file handler if log file specified
+    if log_file:
+        # Ensure log directory exists
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setFormatter(file_formatter)
+        logger.addHandler(file_handler)
+    
+    return logger
 
-# Create file handler
-log_file = os.path.join(logs_dir, f'gui_{datetime.now().strftime("%Y%m%d")}.log')
-file_handler = logging.FileHandler(log_file)
-file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.DEBUG)
+# Create log directory
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
 
-# Create console handler with a higher log level
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setFormatter(formatter)
-console_handler.setLevel(logging.DEBUG)  # Show all logs in console
+# Create application loggers
+timestamp = datetime.now().strftime('%Y%m%d')
+gui_logger = setup_logger("gui", os.path.join(log_dir, f"gui_{timestamp}.log"))
+hardware_logger = setup_logger("hardware", os.path.join(log_dir, f"hardware_{timestamp}.log"))
 
-# Create GUI logger
-gui_logger = logging.getLogger('gui')
-gui_logger.setLevel(logging.DEBUG)  # Capture all levels
-gui_logger.addHandler(file_handler)
-gui_logger.addHandler(console_handler)
+# Set logging levels for external libraries
+logging.getLogger('PIL').setLevel(logging.WARNING)
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
-# Create Hardware logger
-hardware_logger = logging.getLogger('hardware')
-hardware_logger.setLevel(logging.DEBUG)  # Capture all levels
-hardware_logger.addHandler(file_handler)
-hardware_logger.addHandler(console_handler)
-
-# Also log to root logger for other modules
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.DEBUG)
-root_logger.addHandler(file_handler)
-root_logger.addHandler(console_handler)
+def log_test_results(results, run_number):
+    """Log test results to a results file
+    
+    Args:
+        results (dict): Test results data
+        run_number (int): Test run number
+    """
+    results_dir = "data/results"
+    os.makedirs(results_dir, exist_ok=True)
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    results_file = os.path.join(results_dir, f"results_{timestamp}_run{run_number}.txt")
+    
+    try:
+        with open(results_file, 'w') as f:
+            f.write(f"Test Results - Run {run_number}\n")
+            f.write(f"Timestamp: {timestamp}\n")
+            f.write(f"Total Execution Time: {results['execution_time']}\n")
+            f.write(f"Configuration:\n")
+            f.write(f"  Tilt Increment: {results['config']['tilt_increment']}°\n")
+            f.write(f"  Minimum Tilt: {results['config']['min_tilt']}°\n")
+            f.write(f"  Maximum Tilt: {results['config']['max_tilt']}°\n")
+            f.write(f"  Oil Level Time: {results['config']['oil_level_time']}s\n")
+            f.write(f"\nData Files:\n")
+            f.write(f"  VNA Data: {results['data_files']['vna']}\n")
+            f.write(f"  Temperature Data: {results['data_files']['temperature']}\n")
+            f.write(f"\nAngles Tested:\n")
+            for angle in results['angles_tested']:
+                f.write(f"  {angle}°\n")
+                
+        gui_logger.info(f"Test results saved to {results_file}")
+        return results_file
+        
+    except Exception as e:
+        gui_logger.error(f"Error saving test results: {str(e)}")
+        return None
 
 def log_hardware_event(component, level, message, **kwargs):
-    """
-    Log a hardware-related event with additional context.
+    """Log a hardware-related event with additional context
     
     Args:
         component (str): Hardware component name (e.g., 'arduino', 'vna')
@@ -51,10 +124,10 @@ def log_hardware_event(component, level, message, **kwargs):
         **kwargs: Additional context (command, response, parameters)
     """
     level_num = getattr(logging, level.upper())
-    hardware_logger.log(level_num, f"[{component}] {message}")
+    
+    # Format the message with context if provided
     if kwargs:
-        hardware_logger.log(level_num, f"Context: {kwargs}")
-
-# Ensure matplotlib and other verbose loggers don't spam
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('PIL').setLevel(logging.WARNING) 
+        context_str = ', '.join(f"{k}={v}" for k, v in kwargs.items())
+        message = f"{message} [{context_str}]"
+    
+    hardware_logger.log(level_num, f"[{component}] {message}")

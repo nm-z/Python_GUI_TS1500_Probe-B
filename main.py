@@ -47,12 +47,11 @@ def main():
         
         # Initialize with default test parameters through the controller
         test_parameters = {
-            'start_angle': 0,
-            'end_angle': 45,
-            'step_size': 1,
-            'dwell_time': 5,
-            'num_runs': 1,
-            'tilt_direction': 'Level'
+            'tilt_increment': 1.0,  # Default 1 degree, up to 3 degrees fallback
+            'min_tilt': -30.0,     # -30 degrees
+            'max_tilt': 30.0,      # +30 degrees
+            'oil_level_time': 15,  # 15 seconds for oil stabilization
+            'tilt_accuracy': 0.1   # 0.1 degrees accuracy, up to 3 degrees fallback
         }
         controller.update_test_parameters(test_parameters)
         

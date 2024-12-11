@@ -1,126 +1,85 @@
-[[Phase I Opt Test Stand Parts List with Hyperlinks]]
+# Todo List
 
----
-# Docker:
-```python
-project/
-│
-├── Dockerfile
-├── docker-compose.yml (optional, for orchestration)
-├── requirements.txt
-├── app/
-│   ├── main.py
-│   ├── gui.py
-│   ├── routine.py
-│   ├── logger.py
-│   └── settings.json
-```
-- **`main.py`**: Entry point of the application.
-- **`gui.py`**: Handles GUI components.
-- **`routine.py`**: Contains routine execution functions.
-- **`logger.py`**: Manages logging configuration.
-- **`settings.json`**: User configuration file.
-- **`requirements.txt`**: Lists Python dependencies.
-### Dockerfile:
-```dockerfile
-# Use an official Python base image
-FROM python:3.10-slim
+## High Priority
 
-# Set the working directory in the container
-WORKDIR /app
+### Hardware Integration
+- [ ] Implement actual VNA communication
+- [ ] Implement real stepper motor control
+- [ ] Implement temperature sensor reading
+- [ ] Test and verify emergency stop functionality
+- [ ] Validate step motor precision (±0.0002° per step)
 
-# Copy the application code into the container
-COPY app/ /app
+### GUI Improvements
+- [ ] Add input validation for all configuration fields
+- [ ] Implement auto-snapping for draggable dividers
+- [ ] Add visual feedback during long operations
+- [ ] Improve error message formatting in logger
+- [ ] Add tooltips for all controls
 
-# Install Python dependencies
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+### Data Management
+- [ ] Implement automatic file path verification
+- [ ] Add data backup scheduling
+- [ ] Implement data export functionality
+- [ ] Add run number tracking system
+- [ ] Create comprehensive logging system
 
-# Expose any required ports (if GUI is accessed remotely via VNC or similar)
-EXPOSE 8080
+## Medium Priority
 
-# Set the command to run the application
-CMD ["python", "main.py"]
-```
-###### **To run**:
-```bash
-docker run -it --rm \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    my-python-gui-app
-```
-###### To Edit code:
-- Make changes directly to the source files on your local system
+### Configuration
+- [ ] Add configuration templates
+- [ ] Implement configuration validation
+- [ ] Add configuration import/export
+- [ ] Create configuration presets
+- [ ] Add configuration version control
 
+### Testing
+- [ ] Create automated test suite
+- [ ] Add unit tests for core functionality
+- [ ] Implement integration tests
+- [ ] Add hardware simulation mode
+- [ ] Create test report generation
 
+### Documentation
+- [ ] Create user manual
+- [ ] Add inline code documentation
+- [ ] Create API documentation
+- [ ] Add troubleshooting guide
+- [ ] Create development guide
 
----
-# Structure:
-### **Pre-Routine**:
-##### **Set routine**:
-	Routine will do actions on HW with user set timings
-	Function will use .json set through GUI by user
-		Inputs:
-			Function will start once .json loaded 
-				and
-			Function will start once run button clicked
-		Output:
-			Function will return arduino commands
-			then
-			Function will pass commands to arduino
-	Routine Execution:
-```python
-import json
-import serial
+## Future Enhancements
 
-def load_json(file_path):
-    """Load and validate JSON configuration."""
-    with open(file_path, 'r') as f:
-        config = json.load(f)
-    gui_logger.info("Configuration loaded: %s", file_path)
-    return config
+### Advanced Features
+- [ ] Add customizable test parameters
+- [ ] Implement light/dark theme switching
+- [ ] Add real-time data visualization
+- [ ] Implement advanced data analysis
+- [ ] Add remote monitoring capabilities
 
-def execute_routine(config):
-    """Perform actions based on the JSON configuration."""
-    try:
-        with serial.Serial('/dev/ttyUSB0', 9600) as arduino:
-            for command in config.get("commands", []):
-                arduino.write(command.encode())
-                gui_logger.debug("Sent command: %s", command)
-    except Exception as e:
-        gui_logger.error("Routine execution failed: %s", e)
+### User Experience
+- [ ] Add keyboard shortcuts
+- [ ] Implement drag-and-drop functionality
+- [ ] Add progress animations
+- [ ] Improve error handling
+- [ ] Add user preferences
 
-# User actions
-if __name__ == "__main__":
-    config = load_json("settings.json")
-    execute_routine(config)
-```
-### **Logging**:
-##### **Standard Out**/stdout (Visual logger) 
-	Set priority in GUI
-		Debug
-		Info
-		Warning
-		Error
-	Do this by having Root logger +
-		multiple custom non-root loggers
-			propegate to the root logger  
-	Standardize format string in GUI logger
-##### **File** (Output after routine complete)
-		Set All logs (Root logs) to log in "archive.json"
-		User sets paramaters of the "output_log.csv"
-	CSV Log Output:
-```python
-import csv
+### Performance
+- [ ] Optimize data processing
+- [ ] Improve GUI responsiveness
+- [ ] Add caching mechanisms
+- [ ] Optimize file operations
+- [ ] Implement parallel processing
 
-def export_csv(file_path, logs):
-    """Export logs to a CSV file."""
-    with open(file_path, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(["Timestamp", "Logger", "Level", "Message"])
-        writer.writerows(logs)
-    gui_logger.info("Logs exported to: %s", file_path)
-```
+## Completed
+- [x] Basic GUI framework implementation
+- [x] Dark theme implementation
+- [x] Basic logging system
+- [x] Configuration file handling
+- [x] Basic error handling
+- [x] Real-time plotting
+- [x] Backup management dialog
+- [x] Settings dialog
+- [x] Test control buttons
+- [x] Emergency stop button
 
 
 

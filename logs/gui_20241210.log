@@ -1,0 +1,470 @@
+2024-12-10 15:33:28,298 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:33:28,298 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:33:28,307 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:33:28,307 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:33:28,309 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:33:28,309 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:33:28,347 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'hardware_button'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 183, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 256, in setup_ui
+    self.hardware_button.clicked.connect(self.configure_hardware)
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'hardware_button'
+2024-12-10 15:33:28,347 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'hardware_button'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 183, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 256, in setup_ui
+    self.hardware_button.clicked.connect(self.configure_hardware)
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'hardware_button'
+2024-12-10 15:43:44,451 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:43:44,451 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:43:44,455 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:43:44,455 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:43:44,456 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:43:44,456 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:43:44,485 - gui - ERROR - An error occurred: 'MainWindow' object has no attribute 'log_viewer'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 191, in __init__
+    self.setup_logging() # Set up logging
+    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 1668, in setup_logging
+    gui_handler = QtLogHandler(self.log_viewer)
+                               ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'log_viewer'
+2024-12-10 15:46:56,018 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:46:56,018 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:46:56,022 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:46:56,022 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:46:56,023 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:46:56,023 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:46:56,055 - gui - INFO - Test parameters updated successfully
+2024-12-10 15:46:56,058 - gui - INFO - Entering main event loop...
+2024-12-10 15:47:23,867 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:47:23,867 - gui - INFO - Configuration loaded successfully
+2024-12-10 15:47:23,871 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:47:23,871 - gui - ERROR - Error reading vna_data data: No columns to parse from file
+2024-12-10 15:47:23,871 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:47:23,871 - gui - ERROR - Error reading temperature data: No columns to parse from file
+2024-12-10 15:47:23,909 - gui - INFO - Test parameters updated successfully
+2024-12-10 15:47:23,909 - gui - INFO - Test parameters updated successfully
+2024-12-10 15:47:23,913 - gui - INFO - Entering main event loop...
+2024-12-10 15:47:23,913 - gui - INFO - Entering main event loop...
+2024-12-10 17:43:06 - gui - [0;31mERROR[0m - An error occurred: name 'QSplitter' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.real_time_plots = RealTimePlots()
+                           ^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/components.py", line 115, in __init__
+    self.init_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/components.py", line 142, in init_ui
+    splitter = QSplitter(Qt.Orientation.Vertical)
+               ^^^^^^^^^
+NameError: name 'QSplitter' is not defined
+2024-12-10 17:43:16 - gui - [0;31mERROR[0m - An error occurred: 'MainController' object has no attribute 'data_collected_signal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 146, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 576, in connect_signals
+    self.controller.data_collected_signal.connect(self.real_time_plots.update_data)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'data_collected_signal'
+2024-12-10 17:45:55 - gui - [0;31mERROR[0m - An error occurred: name 'Config' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 126, in __init__
+    self.config = Config()
+                  ^^^^^^
+NameError: name 'Config' is not defined
+2024-12-10 17:46:20 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:46:20 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:46:20 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:46:20 - gui - [0;31mERROR[0m - An error occurred: name 'QSettings' is not defined
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 131, in __init__
+    self.load_last_config()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 400, in load_last_config
+    settings = QSettings()
+               ^^^^^^^^^
+NameError: name 'QSettings' is not defined
+2024-12-10 17:46:33 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:46:33 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:46:33 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:46:33 - gui - [0;31mERROR[0m - An error occurred: 'QTextCursor' object has no attribute 'End'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 131, in __init__
+    self.load_last_config()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 405, in load_last_config
+    self.reset_config()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 413, in reset_config
+    self.log_viewer.log_message("Configuration reset to defaults", "info")
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/components.py", line 109, in log_message
+    self.log_text.moveCursor(self.log_text.textCursor().End)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'QTextCursor' object has no attribute 'End'
+2024-12-10 17:46:57 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:46:57 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:46:57 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:46:57 - gui - [0;31mERROR[0m - An error occurred: 'MainController' object has no attribute 'update_test_parameters'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 57, in main
+    controller.update_test_parameters(test_parameters)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'update_test_parameters'
+2024-12-10 17:47:23 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:47:23 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:47:23 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:47:23 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 17:47:23 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 17:48:33 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:48:33 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:48:33 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:48:33 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 17:48:33 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 17:49:10 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 17:49:10 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 17:49:10 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 17:49:10 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 17:49:10 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:08:47 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 18:08:47 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 18:08:47 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:08:47 - gui - [0;31mERROR[0m - Missing required parameter: start_angle
+2024-12-10 18:08:47 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:10:18 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 18:10:18 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 18:10:18 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:10:18 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:10:18 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:13:09 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 18:13:09 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 18:13:09 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:13:09 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'update_progress'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 300, in connect_signals
+    self.controller.progress_updated.connect(self.update_progress)
+                                             ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'update_progress'. Did you mean: 'update_plots'?
+2024-12-10 18:13:26 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 18:13:26 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 18:13:26 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:13:26 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'plots'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 303, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'plots'
+2024-12-10 18:13:48 - gui - [0;32mINFO[0m - Starting MainWindow initialization...
+2024-12-10 18:13:48 - gui - [0;32mINFO[0m - Initializing components...
+2024-12-10 18:13:48 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:13:48 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'plots'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 135, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 303, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'plots'
+2024-12-10 18:14:03 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:14:03 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'plots'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 137, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 307, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'plots'
+2024-12-10 18:14:28 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:14:28 - gui - [0;31mERROR[0m - An error occurred: type object 'Qt' has no attribute 'Horizontal'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 134, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 157, in setup_ui
+    self.main_splitter = QSplitter(Qt.Horizontal)
+                                   ^^^^^^^^^^^^^
+AttributeError: type object 'Qt' has no attribute 'Horizontal'
+2024-12-10 18:14:40 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:14:40 - gui - [0;31mERROR[0m - An error occurred: type object 'Styles' has no attribute 'PROGRESS_BAR_STYLE'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 134, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 186, in setup_ui
+    self.progress_bar.setStyleSheet(Styles.PROGRESS_BAR_STYLE)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Styles' has no attribute 'PROGRESS_BAR_STYLE'
+2024-12-10 18:16:14 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:16:14 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'save_config_btn'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 134, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 204, in setup_ui
+    self.save_config_btn.clicked.connect(self.save_config)
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'save_config_btn'. Did you mean: 'save_config'?
+2024-12-10 18:16:45 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:16:45 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'start_button'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 134, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 229, in setup_ui
+    self.start_button.clicked.connect(self.start_test)
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'start_button'
+2024-12-10 18:17:07 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:17:08 - gui - [0;31mERROR[0m - An error occurred: 'RealTimePlots' object has no attribute 'update_data'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 137, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 276, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RealTimePlots' object has no attribute 'update_data'. Did you mean: 'update_plots'?
+2024-12-10 18:17:20 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:17:20 - gui - [0;31mERROR[0m - An error occurred: 'RealTimePlots' object has no attribute 'update_data'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 137, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 276, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RealTimePlots' object has no attribute 'update_data'. Did you mean: 'update_plots'?
+2024-12-10 18:17:39 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:17:40 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:17:40 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:17:40 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:17:44 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-10 18:17:44 - gui - [0;32mINFO[0m - TILT Connected
+2024-12-10 18:17:44 - gui - [0;32mINFO[0m - TEMP Connected
+2024-12-10 18:19:17 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:19:17 - gui - [0;31mERROR[0m - An error occurred: type object 'Styles' has no attribute 'BUTTON_STYLE'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 134, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 178, in setup_ui
+    btn.setStyleSheet(Styles.BUTTON_STYLE)
+                      ^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Styles' has no attribute 'BUTTON_STYLE'
+2024-12-10 18:19:31 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:19:31 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:19:31 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:19:31 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:24:24 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:24:24 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'show_settings'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 56, in setup_ui
+    settings_action.triggered.connect(self.show_settings)
+                                      ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'show_settings'
+2024-12-10 18:24:53 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:24:53 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'handle_splitter_moved'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 69, in setup_ui
+    self.main_splitter.splitterMoved.connect(self.handle_splitter_moved)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'handle_splitter_moved'
+2024-12-10 18:25:19 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:25:19 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'save_config'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 187, in setup_ui
+    self.save_config_btn.clicked.connect(self.save_config)
+                                         ^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'save_config'. Did you mean: 'save_config_btn'?
+2024-12-10 18:25:42 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:25:42 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'start_test'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 190, in setup_ui
+    self.start_button.clicked.connect(self.start_test)
+                                      ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'start_test'
+2024-12-10 18:26:01 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:26:01 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'update_progress'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 30, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 202, in connect_signals
+    self.controller.progress_updated.connect(self.update_progress)
+                                             ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'update_progress'
+2024-12-10 18:26:15 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:26:15 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'handle_test_completed'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 30, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 203, in connect_signals
+    self.controller.test_completed.connect(self.handle_test_completed)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'handle_test_completed'. Did you mean: 'handle_logger_test_completed'?
+2024-12-10 18:26:47 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:26:47 - gui - [0;31mERROR[0m - An error occurred: type object 'QTextCursor' has no attribute 'End'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 323, in load_last_config
+    config = self.controller.load_last_config()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainController' object has no attribute 'load_last_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 33, in __init__
+    self.load_last_config()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 333, in load_last_config
+    self.logger.append_message(f"Error loading last configuration: {str(e)}", 'ERROR')
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/log_viewer.py", line 59, in append_message
+    cursor.movePosition(QTextCursor.End)
+                        ^^^^^^^^^^^^^^^
+AttributeError: type object 'QTextCursor' has no attribute 'End'
+2024-12-10 18:27:15 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:27:15 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:27:15 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:27:15 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:28:10 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:28:10 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:28:10 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:28:10 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:28:15 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-10 18:28:15 - gui - [0;32mINFO[0m - TILT Connected
+2024-12-10 18:28:15 - gui - [0;32mINFO[0m - TEMP Connected
+2024-12-10 18:31:57 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:31:57 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:31:57 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:31:57 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:32:02 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-10 18:32:02 - gui - [0;32mINFO[0m - TILT Connected
+2024-12-10 18:32:02 - gui - [0;32mINFO[0m - TEMP Connected
+2024-12-10 18:32:04 - gui - [0;32mINFO[0m - Performing initial calibration...
+2024-12-10 18:32:06 - gui - [0;32mINFO[0m - Homing tilt platform...
+2024-12-10 18:32:07 - gui - [0;32mINFO[0m - Starting test run #1
+2024-12-10 18:32:07 - gui - [0;32mINFO[0m - Test parameters: Increment=1.0°, Range=-30.0° to 30.0°
+2024-12-10 18:32:07 - gui - [0;32mINFO[0m - Moving to -30.0°...
+2024-12-10 18:32:07 - gui - [0;32mINFO[0m - Waiting 15 seconds for oil stabilization...
+2024-12-10 18:35:42 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:35:42 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:35:42 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:35:42 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:35:47 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-10 18:35:47 - gui - [0;32mINFO[0m - TILT Connected
+2024-12-10 18:35:47 - gui - [0;32mINFO[0m - TEMP Connected
+2024-12-10 18:40:33 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:40:33 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:40:33 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:40:33 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:50:48 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:50:48 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:50:48 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:50:48 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:52:13 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:52:13 - gui - [0;31mERROR[0m - An error occurred: type object 'Styles' has no attribute 'PROGRESS_BAR_STYLE'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 46, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 28, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 177, in setup_ui
+    self.progress_bar.setStyleSheet(Styles.PROGRESS_BAR_STYLE)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Styles' has no attribute 'PROGRESS_BAR_STYLE'. Did you mean: 'PROGRESS_STYLE'?
+2024-12-10 18:52:26 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 18:52:26 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 18:52:26 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 18:52:26 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 18:52:31 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-10 18:52:31 - gui - [0;32mINFO[0m - TILT Connected
+2024-12-10 18:52:31 - gui - [0;32mINFO[0m - TEMP Connected
+2024-12-10 19:04:05 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-10 19:04:05 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-10 19:04:05 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-10 19:04:05 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-10 19:04:10 - gui - [0;32mINFO[0m - VNA Connected

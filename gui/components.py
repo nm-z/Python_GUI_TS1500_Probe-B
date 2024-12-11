@@ -1,153 +1,15 @@
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QTextEdit, QLabel, 
-    QScrollArea, QFrame, QGridLayout, QHBoxLayout
+    QScrollArea, QFrame, QGridLayout, QHBoxLayout,
+    QSplitter
 )
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QColor, QPen, QIcon
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
-from matplotlib.figure import Figure
-import numpy as np
-from datetime import datetime, timedelta
+from PyQt6.QtGui import QPainter, QColor, QPen, QIcon, QFont
+import pyqtgraph as pg
+from datetime import datetime
 import os
 
-from .styles import Styles as StylesModule
-
-class RealTimePlots(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.init_ui()
-        
-        # Data storage
-        self.temperature_data = []
-        self.angle_data = []
-        self.time_window = timedelta(minutes=5)  # Show last 5 minutes
-        
-    def init_ui(self):
-        layout = QVBoxLayout()
-        
-        # Create temperature plot
-        self.temp_figure = Figure(figsize=(8, 4))
-        self.temp_canvas = FigureCanvasQTAgg(self.temp_figure)
-        self.temp_ax = self.temp_figure.add_subplot(111)
-        self.temp_ax.set_title('Temperature vs Time')
-        self.temp_ax.set_xlabel('Time')
-        self.temp_ax.set_ylabel('Temperature (°C)')
-        self.temp_figure.patch.set_facecolor('#1c1c1c')
-        self.temp_ax.set_facecolor('#353535')
-        self.temp_ax.tick_params(colors='white')
-        self.temp_ax.title.set_color('white')
-        self.temp_ax.xaxis.label.set_color('white')
-        self.temp_ax.yaxis.label.set_color('white')
-        layout.addWidget(self.temp_canvas)
-        
-        # Create angle plot
-        self.angle_figure = Figure(figsize=(8, 4))
-        self.angle_canvas = FigureCanvasQTAgg(self.angle_figure)
-        self.angle_ax = self.angle_figure.add_subplot(111)
-        self.angle_ax.set_title('Platform Angle vs Time')
-        self.angle_ax.set_xlabel('Time')
-        self.angle_ax.set_ylabel('Angle (degrees)')
-        self.angle_figure.patch.set_facecolor('#1c1c1c')
-        self.angle_ax.set_facecolor('#353535')
-        self.angle_ax.tick_params(colors='white')
-        self.angle_ax.title.set_color('white')
-        self.angle_ax.xaxis.label.set_color('white')
-        self.angle_ax.yaxis.label.set_color('white')
-        layout.addWidget(self.angle_canvas)
-        
-        # Add tilt indicator
-        self.tilt_indicator = TiltIndicator()
-        self.tilt_indicator.setFixedSize(200, 200)  # Set a fixed size for the indicator
-        tilt_container = QWidget()
-        tilt_layout = QHBoxLayout(tilt_container)
-        tilt_layout.addStretch()
-        tilt_layout.addWidget(self.tilt_indicator)
-        tilt_layout.addStretch()
-        layout.addWidget(tilt_container)
-        
-        self.setLayout(layout)
-        
-    def update_data(self, data):
-        current_time = datetime.now()
-        cutoff_time = current_time - self.time_window
-        
-        # Update temperature data
-        if 'temperature' in data:
-            self.temperature_data.append((current_time, data['temperature']))
-            self.temperature_data = [(t, v) for t, v in self.temperature_data 
-                                   if t > cutoff_time]
-            
-            # Update temperature plot
-            times, temps = zip(*self.temperature_data) if self.temperature_data else ([], [])
-            self.temp_ax.clear()
-            self.temp_ax.plot(times, temps, 'w-')
-            self.temp_ax.set_title('Temperature vs Time')
-            self.temp_ax.set_xlabel('Time')
-            self.temp_ax.set_ylabel('Temperature (°C)')
-            self.temp_ax.tick_params(colors='white')
-            self.temp_ax.title.set_color('white')
-            self.temp_ax.xaxis.label.set_color('white')
-            self.temp_ax.yaxis.label.set_color('white')
-            self.temp_canvas.draw()
-        
-        # Update angle data
-        if 'current_angle' in data:
-            self.angle_data.append((current_time, data['current_angle']))
-            self.angle_data = [(t, v) for t, v in self.angle_data 
-                             if t > cutoff_time]
-            
-            # Update angle plot
-            times, angles = zip(*self.angle_data) if self.angle_data else ([], [])
-            self.angle_ax.clear()
-            self.angle_ax.plot(times, angles, 'w-')
-            self.angle_ax.set_title('Platform Angle vs Time')
-            self.angle_ax.set_xlabel('Time')
-            self.angle_ax.set_ylabel('Angle (degrees)')
-            self.angle_ax.tick_params(colors='white')
-            self.angle_ax.title.set_color('white')
-            self.angle_ax.xaxis.label.set_color('white')
-            self.angle_ax.yaxis.label.set_color('white')
-            self.angle_canvas.draw()
-            
-            # Update tilt indicator
-            self.tilt_indicator.set_angle(data['current_angle'])
-            
-    def clear_data(self):
-        """Clear all plot data"""
-        self.temperature_data = []
-        self.angle_data = []
-        self.temp_ax.clear()
-        self.angle_ax.clear()
-        self.temp_canvas.draw()
-        self.angle_canvas.draw()
-        self.tilt_indicator.set_angle(0.0)
-
-class LogViewer(QTextEdit):
-    def __init__(self):
-        super().__init__()
-        self.setReadOnly(True)
-        self.setStyleSheet("""
-            QTextEdit {
-                background-color: #353535;
-                color: white;
-                border: 1px solid #2a82da;
-                border-radius: 3px;
-            }
-        """)
-        
-    def append_log(self, message, level="INFO"):
-        color = {
-            "INFO": "white",
-            "WARNING": "#ffff44",
-            "ERROR": "#ff4444",
-            "CRITICAL": "#ff0000",
-            "DEBUG": "#44ff44"
-        }.get(level, "white")
-        
-        timestamp = datetime.now().strftime("%H:%M:%S")
-        formatted_message = f'<font color="{color}">[{timestamp}] {level}: {message}</font>'
-        self.append(formatted_message)
+from .styles import Styles
 
 class StatusIndicators(QWidget):
     def __init__(self):
@@ -155,115 +17,213 @@ class StatusIndicators(QWidget):
         self.init_ui()
         
     def init_ui(self):
-        layout = QGridLayout()
+        """Initialize the UI"""
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(10)
         
-        # Temperature status
-        self.temp_label = QLabel("Temperature: N/A")
-        layout.addWidget(self.temp_label, 0, 0)
+        # Create status labels
+        self.vna_status = QLabel("VNA: Not Connected")
+        self.tilt_status = QLabel("Tilt: Not Connected")
+        self.temp_status = QLabel("Temp: Not Connected")
         
-        # Angle status
-        self.angle_label = QLabel("Current Angle: 0.0°")
-        layout.addWidget(self.angle_label, 1, 0)
+        # Add labels to layout with separators
+        self.status_widgets = [
+            self.vna_status,
+            QLabel("|"),
+            self.tilt_status,
+            QLabel("|"),
+            self.temp_status
+        ]
         
-        # Test status
-        self.test_status = QLabel("Test Status: Ready")
-        layout.addWidget(self.test_status, 2, 0)
+        for widget in self.status_widgets:
+            layout.addWidget(widget)
+            
+    def update_status(self, status_dict):
+        """Update the status indicators
         
-        # Data storage status
-        self.storage_status = QLabel("Data Storage: Ready")
-        layout.addWidget(self.storage_status, 3, 0)
+        Args:
+            status_dict (dict): Dictionary containing status information
+                              {'vna': bool, 'tilt': bool, 'temp': bool}
+        """
+        status_map = {True: ("Connected", Styles.COLORS['success']),
+                     False: ("Not Connected", Styles.COLORS['error'])}
         
-        self.setLayout(layout)
-        
-    def update_status(self, data):
-        if 'temperature' in data:
-            self.temp_label.setText(f"Temperature: {data['temperature']:.1f}°C")
-        
-        if 'current_angle' in data:
-            self.angle_label.setText(f"Current Angle: {data['current_angle']:.1f}°")
-        
-        if 'test_status' in data:
-            self.test_status.setText(f"Test Status: {data['test_status']}")
-        
-        if 'storage_status' in data:
-            self.storage_status.setText(f"Data Storage: {data['storage_status']}")
+        if 'vna' in status_dict:
+            status, color = status_map[status_dict['vna']]
+            self.vna_status.setText(f"VNA: {status}")
+            self.vna_status.setStyleSheet(f"color: {color};")
+            
+        if 'tilt' in status_dict:
+            status, color = status_map[status_dict['tilt']]
+            self.tilt_status.setText(f"Tilt: {status}")
+            self.tilt_status.setStyleSheet(f"color: {color};")
+            
+        if 'temp' in status_dict:
+            status, color = status_map[status_dict['temp']]
+            self.temp_status.setText(f"Temp: {status}")
+            self.temp_status.setStyleSheet(f"color: {color};")
 
-class TiltIndicator(QWidget):
+class LogViewer(QWidget):
     def __init__(self):
         super().__init__()
-        self.angle = 0.0
-        self.setMinimumSize(200, 200)
+        self.init_ui()
         
-    def set_angle(self, angle):
-        self.angle = angle
-        self.update()
+    def init_ui(self):
+        """Initialize the UI"""
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
         
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        self.log_text = QTextEdit()
+        self.log_text.setReadOnly(True)
         
-        # Calculate center and radius
-        width = self.width()
-        height = self.height()
-        center_x = width / 2
-        center_y = height / 2
-        radius = min(width, height) / 3
+        # Set Ubuntu Bold font
+        font = QFont("Ubuntu")
+        font.setWeight(QFont.Weight.Bold)
+        self.log_text.setFont(font)
         
-        # Draw background circle
-        painter.setPen(QPen(QColor(StylesModule.COLORS['accent']), 2))
-        painter.drawEllipse(int(center_x - radius), int(center_y - radius),
-                          int(radius * 2), int(radius * 2))
+        self.log_text.setStyleSheet(f"""
+            QTextEdit {{
+                background-color: {Styles.COLORS['background_alt']};
+                border: 1px solid {Styles.COLORS['border']};
+                border-radius: {Styles.BORDER_RADIUS}px;
+                padding: 5px;
+                color: {Styles.COLORS['foreground']};
+                font-family: 'Ubuntu';
+                font-weight: bold;
+            }}
+        """)
         
-        # Draw angle indicator
-        painter.setPen(QPen(QColor(StylesModule.COLORS['foreground']), 3))
-        angle_rad = np.radians(self.angle)
-        end_x = center_x + radius * np.sin(angle_rad)
-        end_y = center_y - radius * np.cos(angle_rad)
-        painter.drawLine(int(center_x), int(center_y),
-                        int(end_x), int(end_y))
+        layout.addWidget(self.log_text)
         
-        # Draw angle text
-        painter.drawText(10, height - 10, f"Angle: {self.angle:.1f}°")
+    def log_message(self, message, level="info"):
+        """Add a message to the log
         
-    def update_data(self, data):
-        if 'current_angle' in data:
-            self.set_angle(data['current_angle']) 
+        Args:
+            message (str): The message to log
+            level (str): The message level (info, success, warning, error)
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        color_map = {
+            "info": Styles.COLORS['foreground'],
+            "success": Styles.COLORS['success'],
+            "warning": Styles.COLORS['warning'],
+            "error": Styles.COLORS['error']
+        }
+        
+        color = color_map.get(level, Styles.COLORS['foreground'])
+        formatted_message = f'<span style="color: {color}">[{timestamp}] {message}</span><br>'
+        
+        cursor = self.log_text.textCursor()
+        cursor.movePosition(cursor.MoveOperation.End)
+        self.log_text.setTextCursor(cursor)
+        self.log_text.insertHtml(formatted_message)
+        self.log_text.ensureCursorVisible()
 
-def setup_icons():
-    """Set up icons for components"""
-    icons = {}
-    icon_files = {
-        'issue': 'icons/issue.png',
-        'components': 'icons/components.png',
-        'help': 'icons/help.png',
-        'reset': 'icons/reset.png',
-        'sync': 'icons/sync.png',
-        'upload': 'icons/upload.png',
-        'backup': 'icons/backup.png',
-        'params': 'icons/params.png',
-        'hardware': 'icons/hardware.png',
-        'plots': 'icons/plots.png',
-        'tilt': 'icons/tilt.png',
-        'logs': 'icons/logs.png',
-        'stop': 'icons/stop.png',
-        'pause': 'icons/pause.png',
-        'export': 'icons/export.png',
-        'start': 'icons/start.png',
-        'save': 'icons/save.png',
-        'open': 'icons/open.png'
-    }
-    
-    print("Setting up icons from:", os.getcwd())
-    for name, path in icon_files.items():
-        try:
-            if not os.path.exists(path):
-                print(f"Warning: Icon file not found: {path}")
-                continue
-            icons[name] = QIcon(path)
-            print(f"Successfully loaded icon: {name}")
-        except Exception as e:
-            print(f"Error loading icon {name} from {path}: {str(e)}")
-            # Create an empty icon as fallback
-            icons[name] = QIcon()
-    
-    return icons
+class RealTimePlots(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+        
+    def init_ui(self):
+        """Initialize the UI"""
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        
+        # Set up dark theme for plots
+        pg.setConfigOption('background', Styles.COLORS['background'])
+        pg.setConfigOption('foreground', Styles.COLORS['foreground'])
+        
+        # Create plot widgets
+        self.tilt_plot = pg.PlotWidget(title="Tilt vs Time")
+        self.tilt_plot.setLabel('left', 'Tilt Angle', units='degrees')
+        self.tilt_plot.setLabel('bottom', 'Time', units='s')
+        self.tilt_plot.showGrid(x=True, y=True)
+        
+        self.temp_plot = pg.PlotWidget(title="Temperature vs Time")
+        self.temp_plot.setLabel('left', 'Temperature', units='°C')
+        self.temp_plot.setLabel('bottom', 'Time', units='s')
+        self.temp_plot.showGrid(x=True, y=True)
+        
+        # Create plot curves with specified colors
+        self.tilt_curve = self.tilt_plot.plot(pen=pg.mkPen(color='#ff073a', width=2))  # Red for tilt
+        self.temp_curve = self.temp_plot.plot(pen=pg.mkPen(color='#0FFF50', width=2))  # Green for temperature
+        
+        # Create vertical splitter for plots with snapping behavior
+        splitter = QSplitter(Qt.Orientation.Vertical)
+        splitter.setStyleSheet(Styles.DIVIDER_STYLE)
+        splitter.addWidget(self.tilt_plot)
+        splitter.addWidget(self.temp_plot)
+        
+        # Set initial sizes (50% each)
+        splitter.setSizes([500, 500])
+        
+        # Enable snap-to-edge behavior
+        splitter.splitterMoved.connect(self.handle_splitter_moved)
+        
+        layout.addWidget(splitter)
+        
+        # Initialize data
+        self.time_data = []
+        self.tilt_data = []
+        self.temp_data = []
+        
+        # Set Ubuntu Bold font for all text
+        font = QFont("Ubuntu")
+        font.setWeight(QFont.Weight.Bold)
+        self.tilt_plot.getAxis('bottom').setStyle(tickFont=font)
+        self.tilt_plot.getAxis('left').setStyle(tickFont=font)
+        self.temp_plot.getAxis('bottom').setStyle(tickFont=font)
+        self.temp_plot.getAxis('left').setStyle(tickFont=font)
+        
+        # Set title fonts
+        title_font = QFont("Ubuntu")
+        title_font.setWeight(QFont.Weight.Bold)
+        title_font.setPointSize(12)
+        self.tilt_plot.setTitle("Tilt vs Time", size="12pt")
+        self.temp_plot.setTitle("Temperature vs Time", size="12pt")
+        
+    def handle_splitter_moved(self, pos, index):
+        """Handle splitter movement for snap-to-edge behavior"""
+        splitter = self.sender()
+        total_height = splitter.height()
+        
+        # Get current sizes
+        sizes = splitter.sizes()
+        
+        # Check if any handle is close to edges
+        snap_threshold = 50  # pixels
+        
+        # Top panel
+        if sizes[0] < snap_threshold:
+            sizes[0] = 0
+            sizes[1] = total_height
+        # Bottom panel
+        elif sizes[1] < snap_threshold:
+            sizes[0] = total_height
+            sizes[1] = 0
+        
+        splitter.setSizes(sizes)
+        
+    def update_plots(self, time_point, tilt_angle, temperature):
+        """Update the plots with new data
+        
+        Args:
+            time_point (float): Time point in seconds
+            tilt_angle (float): Current tilt angle in degrees
+            temperature (float): Current temperature in degrees Celsius
+        """
+        self.time_data.append(time_point)
+        self.tilt_data.append(tilt_angle)
+        self.temp_data.append(temperature)
+        
+        self.tilt_curve.setData(self.time_data, self.tilt_data)
+        self.temp_curve.setData(self.time_data, self.temp_data)
+        
+    def clear_plots(self):
+        """Clear all plot data"""
+        self.time_data = []
+        self.tilt_data = []
+        self.temp_data = []
+        self.tilt_curve.setData([], [])
+        self.temp_curve.setData([], [])

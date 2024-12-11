@@ -1,6 +1,7 @@
 # GUI Dependencies
 PyQt6==6.5.2
 pyserial==3.5
+pyqtgraph==0.13.3
 
 # Data Processing & Scientific Libraries
 numpy==1.22.4  # Compatible version for all dependencies

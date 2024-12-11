@@ -2,203 +2,334 @@ from PyQt6.QtGui import QPalette, QColor, QFont, QIcon
 from PyQt6.QtWidgets import QApplication
 
 class Styles:
-    # Color Palette
+    # Font configuration
+    FONT = QFont('Ubuntu')
+    FONT.setBold(True)
+    
+    # Color scheme
     COLORS = {
-        'background': '#1e1e1e',        # Dark background
-        'background_alt': '#252526',    # Slightly lighter background
-        'foreground': '#d4d4d4',        # Light text
-        'accent': '#0078d4',            # Blue accent
-        'accent_alt': '#1a8ad4',        # Lighter blue
-        'border': '#3d3d3d',            # Border color
-        'error': '#f44336',             # Red for errors
-        'warning': '#ff9800',           # Orange for warnings
-        'success': '#4caf50',           # Green for success
-        'disabled': '#666666',          # Gray for disabled elements
+        'background': '#121212',
+        'background_alt': '#1E1E1E',
+        'foreground': '#FFFFFF',
+        'accent': '#47A8E5',  # Light blue
+        'border': '#2D2D2D',
+        'error': '#FF073A',
+        'warning': '#FFA500',
+        'success': '#0FFF50',
+        'divider': '#47A8E5'  # Light blue for dividers
     }
-
-    # Dimensions
-    MARGINS = 8
-    SPACING = 6
-    BORDER_RADIUS = 3
-
-    # Fonts
-    HEADER_FONT = QFont('Segoe UI', 10, QFont.Weight.Bold)
-    BODY_FONT = QFont('Segoe UI', 9)
-    SMALL_FONT = QFont('Segoe UI', 8)
-
-    # Common widget dimensions
-    BUTTON_HEIGHT = 28
-    INPUT_HEIGHT = 24
-    ICON_SIZE = 16
-
-    # Base style sheet
+    
+    # Dialog styles
+    DIALOG_STYLE = f"""
+        QDialog {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+            min-width: 400px;
+            padding: 20px;
+        }}
+    """
+    
+    # Label styles
+    LABEL_STYLE = f"""
+        QLabel {{
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+            padding: 5px;
+        }}
+    """
+    
+    # Progress bar styles
+    PROGRESS_STYLE = f"""
+        QProgressBar {{
+            border: 2px solid {COLORS['border']};
+            border-radius: 5px;
+            text-align: center;
+            color: {COLORS['foreground']};
+            background-color: {COLORS['background_alt']};
+        }}
+        QProgressBar::chunk {{
+            background-color: {COLORS['accent']};
+            width: 10px;
+            margin: 0.5px;
+        }}
+    """
+    
+    # Button styles
+    BUTTON_STYLE = f"""
+        QPushButton {{
+            background-color: {COLORS['background_alt']};
+            color: {COLORS['foreground']};
+            border: 2px solid {COLORS['border']};
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QPushButton:hover {{
+            background-color: {COLORS['accent']};
+            border-color: {COLORS['accent']};
+        }}
+        QPushButton:pressed {{
+            background-color: {COLORS['background']};
+        }}
+    """
+    
+    # Spinbox styles
+    SPINBOX_STYLE = f"""
+        QSpinBox, QDoubleSpinBox, QLineEdit {{
+            background-color: {COLORS['background_alt']};
+            color: {COLORS['foreground']};
+            border: 2px solid {COLORS['border']};
+            border-radius: 5px;
+            padding: 5px;
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QSpinBox:hover, QDoubleSpinBox:hover, QLineEdit:hover {{
+            border-color: {COLORS['accent']};
+        }}
+    """
+    
+    # Combobox styles
+    COMBOBOX_STYLE = f"""
+        QComboBox {{
+            background-color: {COLORS['background_alt']};
+            color: {COLORS['foreground']};
+            border: 2px solid {COLORS['border']};
+            border-radius: 5px;
+            padding: 5px;
+            font-family: 'Ubuntu';
+            font-weight: bold;
+            min-width: 100px;
+        }}
+        QComboBox:hover {{
+            border-color: {COLORS['accent']};
+        }}
+        QComboBox::drop-down {{
+            border: none;
+            width: 20px;
+        }}
+        QComboBox::down-arrow {{
+            image: url(icons/dropdown.png);
+            width: 12px;
+            height: 12px;
+        }}
+        QComboBox QAbstractItemView {{
+            background-color: {COLORS['background_alt']};
+            color: {COLORS['foreground']};
+            selection-background-color: {COLORS['accent']};
+            selection-color: {COLORS['background']};
+        }}
+    """
+    
+    # Tab styles
+    TAB_STYLE = f"""
+        QTabWidget::pane {{
+            border: 1px solid {COLORS['border']};
+            background-color: {COLORS['background_alt']};
+            top: -1px;
+        }}
+        QTabBar::tab {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            border: 1px solid {COLORS['border']};
+            padding: 8px 12px;
+            font-family: 'Ubuntu';
+            font-weight: bold;
+            margin-right: 2px;
+        }}
+        QTabBar::tab:selected {{
+            background-color: {COLORS['accent']};
+            color: {COLORS['background']};
+        }}
+        QTabBar::tab:hover {{
+            background-color: {COLORS['background_alt']};
+        }}
+    """
+    
+    # Group box styles
+    GROUP_STYLE = f"""
+        QGroupBox {{
+            background-color: {COLORS['background_alt']};
+            color: {COLORS['foreground']};
+            border: 2px solid {COLORS['border']};
+            border-radius: 5px;
+            margin-top: 1em;
+            font-family: 'Ubuntu';
+            font-weight: bold;
+            padding: 10px;
+        }}
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 3px;
+        }}
+    """
+    
+    # Spacing and margins
+    SPACING = 5
+    MARGINS = 10
+    BORDER_RADIUS = 4
+    
+    # Styles
+    DIVIDER_STYLE = f"""
+        QSplitter::handle {{
+            background-color: {COLORS['background']};
+            border: 1px solid {COLORS['divider']};
+        }}
+        QSplitter::handle:horizontal {{
+            width: 4px;
+            background-color: {COLORS['divider']};
+        }}
+        QSplitter::handle:vertical {{
+            height: 4px;
+            background-color: {COLORS['divider']};
+        }}
+        QSplitter::handle:hover {{
+            background-color: {COLORS['accent']};
+        }}
+    """
+    
     BASE_STYLE = f"""
+        QMainWindow, QDialog {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
         QWidget {{
             background-color: {COLORS['background']};
             color: {COLORS['foreground']};
-            font-family: 'Segoe UI';
-        }}
-
-        QPushButton {{
-            background-color: {COLORS['accent']};
-            color: white;
-            border: none;
-            border-radius: {BORDER_RADIUS}px;
-            padding: 6px 12px;
-            height: {BUTTON_HEIGHT}px;
+            font-family: 'Ubuntu';
             font-weight: bold;
         }}
-
-        QPushButton:hover {{
-            background-color: {COLORS['accent_alt']};
-        }}
-
-        QPushButton:pressed {{
-            background-color: {COLORS['accent']};
-        }}
-
-        QPushButton:disabled {{
-            background-color: {COLORS['disabled']};
-        }}
-
-        QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox {{
-            background-color: {COLORS['background_alt']};
-            border: 1px solid {COLORS['border']};
-            border-radius: {BORDER_RADIUS}px;
-            padding: 4px 8px;
-            height: {INPUT_HEIGHT}px;
-        }}
-
-        QLineEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus, QComboBox:focus {{
-            border: 1px solid {COLORS['accent']};
-        }}
-
         QGroupBox {{
             border: 1px solid {COLORS['border']};
             border-radius: {BORDER_RADIUS}px;
-            margin-top: 12px;
+            margin-top: 1em;
+            padding-top: 1em;
+            font-family: 'Ubuntu';
             font-weight: bold;
         }}
-
         QGroupBox::title {{
             subcontrol-origin: margin;
-            left: 8px;
+            left: 10px;
             padding: 0 3px;
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
-        QTabWidget::pane {{
-            border: 1px solid {COLORS['border']};
-            background-color: {COLORS['background']};
-        }}
-
-        QTabBar::tab {{
+        QPushButton {{
             background-color: {COLORS['background_alt']};
-            border-top-left-radius: {BORDER_RADIUS}px;
-            border-top-right-radius: {BORDER_RADIUS}px;
-            padding: 6px 12px;
-            min-width: 80px;
+            border: 1px solid {COLORS['border']};
+            border-radius: {BORDER_RADIUS}px;
+            padding: 5px 15px;
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
-        QTabBar::tab:selected {{
+        QPushButton:hover {{
             background-color: {COLORS['accent']};
-            color: white;
+            color: {COLORS['background']};
         }}
-
-        QScrollBar:vertical {{
+        QPushButton:disabled {{
             background-color: {COLORS['background']};
-            width: 12px;
-            margin: 0;
+            color: {COLORS['border']};
         }}
-
-        QScrollBar::handle:vertical {{
-            background-color: {COLORS['border']};
-            min-height: 20px;
-            border-radius: 6px;
-            margin: 2px;
+        QLineEdit, QSpinBox, QDoubleSpinBox {{
+            background-color: {COLORS['background_alt']};
+            border: 1px solid {COLORS['border']};
+            border-radius: {BORDER_RADIUS}px;
+            padding: 5px;
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
-        QScrollBar:horizontal {{
-            background-color: {COLORS['background']};
-            height: 12px;
-            margin: 0;
+        QTextEdit, QListWidget {{
+            background-color: {COLORS['background_alt']};
+            border: 1px solid {COLORS['border']};
+            border-radius: {BORDER_RADIUS}px;
+            padding: 5px;
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
-        QScrollBar::handle:horizontal {{
-            background-color: {COLORS['border']};
-            min-width: 20px;
-            border-radius: 6px;
-            margin: 2px;
+        QLabel {{
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
         QProgressBar {{
             border: 1px solid {COLORS['border']};
             border-radius: {BORDER_RADIUS}px;
             text-align: center;
+            font-family: 'Ubuntu';
+            font-weight: bold;
         }}
-
         QProgressBar::chunk {{
             background-color: {COLORS['accent']};
         }}
+        QToolBar {{
+            background-color: {COLORS['background']};
+            border-bottom: 1px solid {COLORS['border']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QStatusBar {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            border-top: 1px solid {COLORS['border']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QMenuBar {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QMenuBar::item {{
+            background-color: transparent;
+            padding: 4px 8px;
+        }}
+        QMenuBar::item:selected {{
+            background-color: {COLORS['accent']};
+            color: {COLORS['background']};
+        }}
+        QMenu {{
+            background-color: {COLORS['background']};
+            color: {COLORS['foreground']};
+            border: 1px solid {COLORS['border']};
+            font-family: 'Ubuntu';
+            font-weight: bold;
+        }}
+        QMenu::item:selected {{
+            background-color: {COLORS['accent']};
+            color: {COLORS['background']};
+        }}
     """
-
+    
     @staticmethod
-    def setup_application_style(app):
-        """Set up the application style and icons"""
-        # Apply stylesheet
+    def setup_application_style(app: QApplication):
+        """Apply the application-wide style"""
+        app.setStyle("Fusion")
         app.setStyleSheet(Styles.BASE_STYLE)
         
-        # Apply dark theme
-        Styles.apply_dark_theme(app)
-        
-        # Set application icon
-        app.setWindowIcon(QIcon('path/to/app_icon.png'))  # Update with actual icon path
-
-    @staticmethod
-    def apply_dark_theme(app):
-        """Apply dark theme to the application"""
+        # Set up dark palette
         palette = QPalette()
-        
-        # Get colors from our scheme
-        background = QColor(Styles.COLORS['background'])
-        background_alt = QColor(Styles.COLORS['background_alt'])
-        foreground = QColor(Styles.COLORS['foreground'])
-        accent = QColor(Styles.COLORS['accent'])
-        border = QColor(Styles.COLORS['border'])
-        
-        # Set up the palette
-        palette_updates = [
-            # Window and base colors
-            (QPalette.ColorRole.Window, background),
-            (QPalette.ColorRole.WindowText, foreground),
-            (QPalette.ColorRole.Base, background_alt),
-            (QPalette.ColorRole.AlternateBase, background),
-            
-            # Button colors
-            (QPalette.ColorRole.Button, background_alt),
-            (QPalette.ColorRole.ButtonText, foreground),
-            
-            # Selection colors
-            (QPalette.ColorRole.Highlight, accent),
-            (QPalette.ColorRole.HighlightedText, foreground),
-            
-            # Tooltip colors
-            (QPalette.ColorRole.ToolTipBase, background_alt),
-            (QPalette.ColorRole.ToolTipText, foreground),
-            
-            # Text colors
-            (QPalette.ColorRole.Text, foreground),
-            (QPalette.ColorRole.BrightText, foreground),
-            
-            # Link color
-            (QPalette.ColorRole.Link, accent),
-            (QPalette.ColorRole.LinkVisited, accent)
-        ]
-        
-        # Apply colors to all color groups
-        for role, color in palette_updates:
-            palette.setColor(QPalette.ColorGroup.All, role, color)
+        palette.setColor(QPalette.ColorRole.Window, QColor(Styles.COLORS['background']))
+        palette.setColor(QPalette.ColorRole.WindowText, QColor(Styles.COLORS['foreground']))
+        palette.setColor(QPalette.ColorRole.Base, QColor(Styles.COLORS['background_alt']))
+        palette.setColor(QPalette.ColorRole.AlternateBase, QColor(Styles.COLORS['background']))
+        palette.setColor(QPalette.ColorRole.ToolTipBase, QColor(Styles.COLORS['background']))
+        palette.setColor(QPalette.ColorRole.ToolTipText, QColor(Styles.COLORS['foreground']))
+        palette.setColor(QPalette.ColorRole.Text, QColor(Styles.COLORS['foreground']))
+        palette.setColor(QPalette.ColorRole.Button, QColor(Styles.COLORS['background_alt']))
+        palette.setColor(QPalette.ColorRole.ButtonText, QColor(Styles.COLORS['foreground']))
+        palette.setColor(QPalette.ColorRole.Link, QColor(Styles.COLORS['accent']))
+        palette.setColor(QPalette.ColorRole.Highlight, QColor(Styles.COLORS['accent']))
+        palette.setColor(QPalette.ColorRole.HighlightedText, QColor(Styles.COLORS['background']))
         
         app.setPalette(palette)
-
-    # Alias for backward compatibility
-    apply_style = setup_application_style

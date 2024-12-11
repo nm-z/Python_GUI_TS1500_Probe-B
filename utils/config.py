@@ -1,80 +1,118 @@
 import os
-import json
-import logging
+import yaml
+from PyQt6.QtCore import QSettings
 from utils.logger import gui_logger
 
 class Config:
-    def __init__(self, config_file='config.json'):
-        self.logger = gui_logger
-        self.config_file = config_file
-        self.config = self.load_default_config()
+    def __init__(self):
+        self.settings = QSettings()
+        self.config_data = {}
+        self.load_config()
         
-        # Load existing config if it exists
-        if os.path.exists(config_file):
-            try:
-                with open(config_file, 'r') as f:
-                    saved_config = json.load(f)
-                self.config.update(saved_config)
-                self.logger.info("Configuration loaded successfully")
-            except Exception as e:
-                self.logger.error(f"Error loading config: {e}")
-        else:
-            self.save()
-            self.logger.info("Created new configuration file")
-    
-    def load_default_config(self):
-        """Load default configuration"""
-        return {
+    def load_config(self, config_path=None):
+        """Load configuration from YAML file
+        
+        Args:
+            config_path (str, optional): Path to config file. If None, loads last used or default.
+        """
+        try:
+            if not config_path:
+                config_path = self.settings.value("last_config_path")
+                
+            if config_path and os.path.exists(config_path):
+                with open(config_path, 'r') as f:
+                    self.config_data = yaml.safe_load(f)
+            else:
+                self.load_defaults()
+                
+        except Exception as e:
+            gui_logger.error(f"Error loading configuration: {str(e)}")
+            self.load_defaults()
+            
+    def load_defaults(self):
+        """Load default configuration values"""
+        self.config_data = {
+            'test_parameters': {
+                'tilt_increment': 1.0,
+                'min_tilt': -30.0,
+                'max_tilt': 30.0,
+                'oil_level_time': 15
+            },
+            'vna': {
+                'key_event': 'F5',  # Default key event for VNA sweep
+                'port': 'COM1'
+            },
             'logging': {
                 'level': 'INFO',
-                'file': 'app.log'
+                'file': 'logs/app.log'
             },
-            'hardware': {
-                'port': None,
-                'baudrate': 115200,
-                'timeout': 1.0
-            },
-            'web_server': {
-                'enabled': False,
-                'host': '0.0.0.0',
-                'port': 5000
-            },
-            'test': {
-                'default_angle_range': (-15, 15),
-                'default_step_size': 1,
-                'default_dwell_time': 5
+            'data_paths': {
+                'vna_data': 'data/vna',
+                'temperature_data': 'data/temperature',
+                'results': 'data/results'
             }
         }
-    
+        
+    def save_config(self, config_path):
+        """Save current configuration to YAML file
+        
+        Args:
+            config_path (str): Path to save configuration file
+        """
+        try:
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(config_path), exist_ok=True)
+            
+            with open(config_path, 'w') as f:
+                yaml.dump(self.config_data, f, default_flow_style=False)
+                
+            # Save as last used config
+            self.settings.setValue("last_config_path", config_path)
+            gui_logger.info(f"Configuration saved to {config_path}")
+            
+        except Exception as e:
+            gui_logger.error(f"Error saving configuration: {str(e)}")
+            
     def get(self, section, key, default=None):
-        """Get configuration value"""
+        """Get configuration value
+        
+        Args:
+            section (str): Configuration section
+            key (str): Configuration key
+            default: Default value if not found
+            
+        Returns:
+            Configuration value or default
+        """
         try:
-            return self.config.get(section, {}).get(key, default)
-        except Exception as e:
-            self.logger.error(f"Error getting config value {section}.{key}: {e}")
+            return self.config_data[section][key]
+        except KeyError:
             return default
-    
+            
     def set(self, section, key, value):
-        """Set configuration value"""
-        try:
-            if section not in self.config:
-                self.config[section] = {}
-            self.config[section][key] = value
-            self.logger.info(f"Config updated: {section}.{key} = {value}")
-        except Exception as e:
-            self.logger.error(f"Error setting config value {section}.{key}: {e}")
-    
-    def save(self):
-        """Save configuration to file"""
-        try:
-            with open(self.config_file, 'w') as f:
-                json.dump(self.config, f, indent=4)
-            self.logger.info("Configuration saved successfully")
-        except Exception as e:
-            self.logger.error(f"Error saving config: {e}")
-    
-    def reset_to_defaults(self):
-        """Reset configuration to defaults"""
-        self.config = self.load_default_config()
-        self.save()
-        self.logger.info("Configuration reset to defaults") 
+        """Set configuration value
+        
+        Args:
+            section (str): Configuration section
+            key (str): Configuration key
+            value: Value to set
+        """
+        if section not in self.config_data:
+            self.config_data[section] = {}
+        self.config_data[section][key] = value
+        
+    def update_test_parameters(self, parameters):
+        """Update test parameters in configuration
+        
+        Args:
+            parameters (dict): Dictionary of test parameters
+        """
+        self.config_data['test_parameters'].update(parameters)
+        
+    def get_test_parameters(self):
+        """Get current test parameters
+        
+        Returns:
+            dict: Dictionary of test parameters
+        """
+        return self.config_data.get('test_parameters', {}) 

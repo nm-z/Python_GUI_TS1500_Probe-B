@@ -1,8 +1,7 @@
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import QObject, pyqtSignal
 import serial
 import time
-import logging
-from utils.logger import hardware_logger
+from utils.logger import hardware_logger, log_hardware_event
 
 class ArduinoController(QObject):
     # Define signals
@@ -12,7 +11,6 @@ class ArduinoController(QObject):
         super().__init__()
         self.arduino = None
         self.arduino_connected = False
-        self.logger = logging.getLogger(__name__)
 
     def connect(self, port='/dev/ttyACM0', baudrate=115200):
         """Connect to Arduino"""
@@ -34,18 +32,21 @@ class ArduinoController(QObject):
             response = self.send_command("TEST")
             if response and not isinstance(response, dict):
                 self.arduino_connected = True
+                log_hardware_event('arduino', 'INFO', 'Connected successfully', port=port, baudrate=baudrate)
                 return True
                 
+            log_hardware_event('arduino', 'WARNING', 'Connection test failed', port=port, response=response)
             return False
             
         except Exception as e:
-            self.logger.error(f"Failed to connect to Arduino: {e}")
+            log_hardware_event('arduino', 'ERROR', 'Failed to connect', port=port, error=str(e))
             self.arduino_connected = False
             return False
 
     def send_command(self, command):
         """Send command to Arduino and read response"""
         if not self.arduino or not self.arduino.is_open:
+            log_hardware_event('arduino', 'WARNING', 'Cannot send command - not connected', command=command)
             return None
             
         try:
@@ -53,7 +54,7 @@ class ArduinoController(QObject):
             self.arduino.reset_input_buffer()
             
             # Send command
-            print(f"\n→ Sending: {command}")
+            log_hardware_event('arduino', 'DEBUG', 'Sending command', command=command)
             self.arduino.write(f"{command}\n".encode('utf-8'))
             time.sleep(0.1)
             
@@ -66,7 +67,7 @@ class ArduinoController(QObject):
                 if self.arduino.in_waiting:
                     line = self.arduino.readline().decode('utf-8').strip()
                     if line:
-                        print(f"← Received: {line}")
+                        log_hardware_event('arduino', 'DEBUG', 'Received response', response=line)
                         
                         # Handle special cases
                         if line == "START_TEST":
@@ -76,6 +77,7 @@ class ArduinoController(QObject):
                             in_test = False
                             break
                         elif line.startswith("ERROR"):
+                            log_hardware_event('arduino', 'ERROR', 'Error response received', error=line)
                             return {"error": line}
                         
                         responses.append(line)
@@ -87,6 +89,7 @@ class ArduinoController(QObject):
                 time.sleep(0.1)
 
             if not responses:
+                log_hardware_event('arduino', 'WARNING', 'No response received', command=command)
                 return {"error": "NO_RESPONSE"}
                 
             # Parse responses based on command
@@ -103,8 +106,10 @@ class ArduinoController(QObject):
                 try:
                     angle = float(parts[3])
                     self.angle_updated_signal.emit(angle)  # Emit angle update signal
-                except (IndexError, ValueError):
-                    pass
+                except (IndexError, ValueError) as e:
+                    log_hardware_event('arduino', 'ERROR', 'Failed to parse status response', 
+                                     response=responses[0], error=str(e))
+                    return {"error": "PARSE_ERROR"}
                     
                 return {
                     "position": int(parts[1]),
@@ -117,12 +122,13 @@ class ArduinoController(QObject):
             elif command == "TEMP":
                 if responses[0].startswith("TEMP"):
                     return {"temperature": float(responses[0].split()[1])}
+                log_hardware_event('arduino', 'WARNING', 'Invalid temperature response', response=responses[0])
                 return {"error": responses[0]}
             else:
                 return responses[0] if responses else None
             
         except Exception as e:
-            print(f"Error sending command: {e}")
+            log_hardware_event('arduino', 'ERROR', 'Command error', command=command, error=str(e))
             return {"error": str(e)}
 
     def is_connected(self):
@@ -133,7 +139,8 @@ class ArduinoController(QObject):
             # Send test command
             response = self.send_command("STATUS")
             return response is not None and not isinstance(response, dict)
-        except:
+        except Exception as e:
+            log_hardware_event('arduino', 'ERROR', 'Connection check failed', error=str(e))
             return False
 
     def disconnect(self):
@@ -142,9 +149,9 @@ class ArduinoController(QObject):
             if self.arduino and self.arduino.is_open:
                 self.arduino.close()
             self.arduino_connected = False
-            print("Arduino disconnected")
+            log_hardware_event('arduino', 'INFO', 'Disconnected')
         except Exception as e:
-            print(f"Error disconnecting from Arduino: {e}")
+            log_hardware_event('arduino', 'ERROR', 'Error disconnecting', error=str(e))
 
     def get_tilt(self):
         """Get current tilt data"""
