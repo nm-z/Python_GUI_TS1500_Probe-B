@@ -20,7 +20,7 @@ class LogViewer(QWidget):
         self.log_display.setStyleSheet(f"""
             QTextEdit {{
                 background-color: {Styles.COLORS['background']};
-                color: {Styles.COLORS['foreground']};
+                color: #FFFFFF;  /* Pure white text */
                 border: none;
                 font-family: 'Ubuntu';
                 font-weight: bold;
@@ -40,12 +40,12 @@ class LogViewer(QWidget):
         }
         
         # Set colors for different message types
-        self.formats['INFO'].setForeground(QColor(Styles.COLORS['foreground']))
-        self.formats['ERROR'].setForeground(QColor(Styles.COLORS['error']))
-        self.formats['WARNING'].setForeground(QColor(Styles.COLORS['warning']))
-        self.formats['SUCCESS'].setForeground(QColor(Styles.COLORS['success']))
-        self.formats['EXECUTION_TIME'].setForeground(QColor(Styles.COLORS['accent']))
-        self.formats['CONNECTION'].setForeground(QColor(Styles.COLORS['divider']))
+        self.formats['INFO'].setForeground(QColor('#FFFFFF'))  # Pure white for info
+        self.formats['ERROR'].setForeground(QColor('#FF4444'))  # Bright red for errors
+        self.formats['WARNING'].setForeground(QColor('#FFAA00'))  # Bright orange for warnings
+        self.formats['SUCCESS'].setForeground(QColor('#44FF44'))  # Bright green for success
+        self.formats['EXECUTION_TIME'].setForeground(QColor('#47A8E5'))  # Light blue for execution time
+        self.formats['CONNECTION'].setForeground(QColor('#47A8E5'))  # Light blue for connection status
         
     @pyqtSlot(str, str)
     def append_message(self, message, level='INFO'):
@@ -58,16 +58,21 @@ class LogViewer(QWidget):
         cursor = self.log_display.textCursor()
         cursor.movePosition(QTextCursor.MoveOperation.End)
         
-        # Format timestamp
-        timestamp = QTextCharFormat()
-        timestamp.setForeground(QColor(Styles.COLORS['border']))
-        cursor.insertText(f"{message[:19]} - ", timestamp)
-        
+        # Check if message has timestamp format (YYYY-MM-DD HH:MM:SS)
+        if len(message) > 19 and message[4] == '-' and message[7] == '-' and message[10] == ' ' and message[13] == ':' and message[16] == ':':
+            # Format timestamp with light gray color
+            timestamp = QTextCharFormat()
+            timestamp.setForeground(QColor('#CCCCCC'))  # Light gray for better visibility
+            cursor.insertText(f"{message[:19]} - ", timestamp)
+            message_text = message[21:]
+        else:
+            message_text = message
+            
         # Get appropriate format for message type
         format = self.formats.get(level, self.formats['INFO'])
         
         # Insert message with format
-        cursor.insertText(f"{message[21:]}\n", format)
+        cursor.insertText(f"{message_text}\n", format)
         
         # Ensure latest message is visible
         self.log_display.setTextCursor(cursor)

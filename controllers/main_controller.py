@@ -8,6 +8,7 @@ import yaml
 
 from utils.logger import gui_logger, log_test_results, hardware_logger, log_hardware_event
 from utils.config import Config
+from hardware.controller import HardwareController
 
 class MainController(QObject):
     # Signals for UI updates
@@ -21,11 +22,14 @@ class MainController(QObject):
     def __init__(self):
         super().__init__()
         self.config = Config()
+        self.logger = gui_logger  # Initialize logger
         self.test_running = False
         self.test_paused = False
         self.current_run = 0
         self.current_angle = 0.0
-        self.start_time = None
+        
+        # Initialize hardware controller
+        self.hardware = HardwareController()
         
         # Initialize connection states
         self.connection_states = {
@@ -36,6 +40,15 @@ class MainController(QObject):
         
         # Set up data directories
         self.setup_data_directories()
+        
+        # Initialize VNA settings
+        self.vna_trigger_key = self.config.get('vna', 'key', default='F5')
+        self.vna_port = self.config.get('vna', 'port', default='COM1')
+        
+        # Initialize data paths
+        self.vna_data_path = self.config.get('data_paths', 'vna', default='data/vna')
+        self.temperature_data_path = self.config.get('data_paths', 'temperature', default='data/temperature')
+        self.results_path = self.config.get('data_paths', 'results', default='data/results')
         
         # Start connection status polling
         self.connection_timer = QTimer()
@@ -314,13 +327,13 @@ class MainController(QObject):
     def _read_temperature(self):
         """Read temperature from sensor"""
         try:
-            # Simulate temperature reading for now
-            # TODO: Replace with actual hardware communication
-            import random
-            temp = 20.0 + random.uniform(-1.0, 1.0)
-            self.logger.info(f"Temperature: {temp:.1f}°C")
-            return temp
-            
+            temp = self.hardware.get_temperature()
+            if temp is not None:
+                self.logger.info(f"Temperature: {temp:.1f}°C")
+                return temp
+            else:
+                self.logger.error("Failed to read temperature")
+                return None
         except Exception as e:
             self.logger.error(f"Temperature read failed: {str(e)}")
             return None
@@ -332,17 +345,14 @@ class MainController(QObject):
             steps (int): Number of steps to move (positive = clockwise)
         """
         try:
-            # Convert steps to degrees for logging
-            degrees = steps * 0.0002  # 1 step = ±0.0002 degrees
-            self.logger.info(f"Moving motor {steps} steps ({degrees:.4f}°)")
-            
-            # TODO: Replace with actual motor control
-            # For now, simulate movement
-            import time
-            time.sleep(abs(steps) * 0.001)  # Simulate movement time
-            
-            return True
-            
+            angle = steps * 0.0002  # Convert steps to degrees
+            success = self.hardware.move_to_angle(angle)
+            if success:
+                self.logger.info(f"Moving motor {steps} steps ({angle:.4f}°)")
+                return True
+            else:
+                self.logger.error("Failed to move motor")
+                return False
         except Exception as e:
             self.logger.error(f"Motor movement failed: {str(e)}")
             return False
@@ -350,16 +360,13 @@ class MainController(QObject):
     def _home_motor(self):
         """Home the stepper motor"""
         try:
-            self.logger.info("Homing motor...")
-            
-            # TODO: Replace with actual homing sequence
-            # For now, simulate homing
-            import time
-            time.sleep(2.0)
-            
-            self.logger.info("Motor homed successfully")
-            return True
-            
+            success = self.hardware.home()
+            if success:
+                self.logger.info("Motor homed successfully")
+                return True
+            else:
+                self.logger.error("Failed to home motor")
+                return False
         except Exception as e:
             self.logger.error(f"Homing failed: {str(e)}")
             return False
@@ -367,10 +374,13 @@ class MainController(QObject):
     def _stop_motor(self):
         """Stop motor movement"""
         try:
-            self.logger.info("Stopping motor...")
-            # TODO: Replace with actual motor stop command
-            return True
-            
+            success = self.hardware.stop()
+            if success:
+                self.logger.info("Motor stopped")
+                return True
+            else:
+                self.logger.error("Failed to stop motor")
+                return False
         except Exception as e:
             self.logger.error(f"Stop failed: {str(e)}")
             return False
@@ -378,11 +388,13 @@ class MainController(QObject):
     def _emergency_stop(self):
         """Emergency stop all movement"""
         try:
-            self.logger.warning("EMERGENCY STOP activated")
-            # TODO: Replace with actual emergency stop implementation
-            self._stop_motor()
-            return True
-            
+            success = self.hardware.emergency_stop()
+            if success:
+                self.logger.warning("EMERGENCY STOP activated")
+                return True
+            else:
+                self.logger.error("Failed to activate emergency stop")
+                return False
         except Exception as e:
             self.logger.error(f"Emergency stop failed: {str(e)}")
             return False
@@ -390,26 +402,13 @@ class MainController(QObject):
     def _calibrate_system(self):
         """Calibrate the system"""
         try:
-            self.logger.info("Starting system calibration...")
-            
-            # Home the motor first
-            if not self._home_motor():
+            success = self.hardware.calibrate()
+            if success:
+                self.logger.info("Calibration completed successfully")
+                return True
+            else:
+                self.logger.error("Failed to calibrate system")
                 return False
-                
-            # Move to known positions and verify
-            test_angles = [-30, 0, 30]
-            for angle in test_angles:
-                steps = int(angle / 0.0002)  # Convert angle to steps
-                if not self._move_motor(steps):
-                    return False
-                    
-            # Return to zero
-            if not self._move_motor(0):
-                return False
-                
-            self.logger.info("Calibration completed successfully")
-            return True
-            
         except Exception as e:
             self.logger.error(f"Calibration failed: {str(e)}")
             return False
@@ -417,20 +416,9 @@ class MainController(QObject):
     def _check_vna_connection(self):
         """Check VNA connection status"""
         try:
-            # TODO: Replace with actual VNA connection check
-            # For now, simulate connection
-            import random
-            connected = random.random() > 0.1  # 90% chance of being connected
-            
-            if connected:
-                self.logger.info("VNA connection verified")
-            else:
-                self.logger.warning("VNA connection failed")
-                
-            return connected
-            
-        except Exception as e:
-            self.logger.error(f"VNA connection check failed: {str(e)}")
+            # TODO: Implement actual VNA connection check
+            return True
+        except Exception:
             return False
             
     def _check_motor_homed(self):
@@ -447,12 +435,12 @@ class MainController(QObject):
     def _get_current_angle(self):
         """Get current motor angle"""
         try:
-            # TODO: Replace with actual angle reading
-            # For now, simulate angle
-            import random
-            angle = random.uniform(-30.0, 30.0)
-            return round(angle, 4)
-            
+            angle = self.hardware.get_angle()
+            if angle is not None:
+                return round(angle, 4)
+            else:
+                self.logger.error("Failed to read angle")
+                return None
         except Exception as e:
             self.logger.error(f"Angle read failed: {str(e)}")
             return None
@@ -539,19 +527,19 @@ class MainController(QObject):
     def check_tilt_connection(self):
         """Check tilt sensor connection status"""
         try:
-            response = self.send_command('STATUS')
-            return response == "OK"
+            angle = self.hardware.get_angle()
+            return angle is not None
         except Exception:
             return False
             
     def check_temp_connection(self):
         """Check temperature sensor connection status"""
         try:
-            response = self.send_command('TEMP')
-            return response != "ERROR"
+            temp = self.hardware.get_temperature()
+            return temp is not None
         except Exception:
             return False
-        
+            
     def update_settings(self, settings):
         """Update application settings
         

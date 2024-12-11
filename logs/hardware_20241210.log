@@ -16,3 +16,22 @@
 2024-12-10 19:04:10 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
 2024-12-10 23:14:13 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
 2024-12-10 23:14:26 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:19:09 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:19:09 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-10 23:24:57 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:24:57 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-10 23:25:39 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:25:39 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-10 23:27:15 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:27:15 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-10 23:30:14 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-10 23:30:14 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-10 23:30:14 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-10 23:30:19 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-10 23:30:19 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-10 23:30:24 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-10 23:30:24 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-10 23:30:29 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-10 23:30:29 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-10 23:30:34 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-10 23:30:34 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
