@@ -1,118 +1,101 @@
 import os
 import yaml
-from PyQt6.QtCore import QSettings
 from utils.logger import gui_logger
 
 class Config:
     def __init__(self):
-        self.settings = QSettings()
-        self.config_data = {}
-        self.load_config()
+        self.config_file = 'config.yaml'
+        self.config = self.load_config()
         
-    def load_config(self, config_path=None):
-        """Load configuration from YAML file
-        
-        Args:
-            config_path (str, optional): Path to config file. If None, loads last used or default.
-        """
+    def load_config(self):
+        """Load configuration from YAML file"""
         try:
-            if not config_path:
-                config_path = self.settings.value("last_config_path")
-                
-            if config_path and os.path.exists(config_path):
-                with open(config_path, 'r') as f:
-                    self.config_data = yaml.safe_load(f)
+            if os.path.exists(self.config_file):
+                with open(self.config_file, 'r') as f:
+                    config = yaml.safe_load(f)
+                gui_logger.info("Configuration loaded successfully")
+                return config or {}
             else:
-                self.load_defaults()
-                
+                gui_logger.info("No configuration file found, creating default")
+                return self.create_default_config()
         except Exception as e:
             gui_logger.error(f"Error loading configuration: {str(e)}")
-            self.load_defaults()
+            return self.create_default_config()
             
-    def load_defaults(self):
-        """Load default configuration values"""
-        self.config_data = {
+    def create_default_config(self):
+        """Create default configuration"""
+        config = {
+            'theme': {
+                'dark_mode': True,
+                'font_size': 12
+            },
             'test_parameters': {
                 'tilt_increment': 1.0,
                 'min_tilt': -30.0,
                 'max_tilt': 30.0,
-                'oil_level_time': 15
+                'oil_level_time': 15,
+                'tilt_accuracy': 0.1
             },
             'vna': {
-                'key_event': 'F5',  # Default key event for VNA sweep
+                'key': 'F5',
                 'port': 'COM1'
             },
-            'logging': {
-                'level': 'INFO',
-                'file': 'logs/app.log'
-            },
             'data_paths': {
-                'vna_data': 'data/vna',
-                'temperature_data': 'data/temperature',
+                'vna': 'data/vna',
+                'temperature': 'data/temperature',
                 'results': 'data/results'
+            },
+            'logging': {
+                'level': 'INFO'
             }
         }
         
-    def save_config(self, config_path):
-        """Save current configuration to YAML file
+        self.save_config(config)
+        return config
         
-        Args:
-            config_path (str): Path to save configuration file
-        """
+    def save_config(self, config=None):
+        """Save configuration to YAML file"""
         try:
-            # Ensure directory exists
-            os.makedirs(os.path.dirname(config_path), exist_ok=True)
-            
-            with open(config_path, 'w') as f:
-                yaml.dump(self.config_data, f, default_flow_style=False)
+            if config is not None:
+                self.config = config
                 
-            # Save as last used config
-            self.settings.setValue("last_config_path", config_path)
-            gui_logger.info(f"Configuration saved to {config_path}")
-            
+            with open(self.config_file, 'w') as f:
+                yaml.dump(self.config, f, default_flow_style=False)
+            gui_logger.info("Configuration saved successfully")
+            return True
         except Exception as e:
             gui_logger.error(f"Error saving configuration: {str(e)}")
+            return False
             
-    def get(self, section, key, default=None):
-        """Get configuration value
+    def save(self):
+        """Save current configuration"""
+        return self.save_config()
         
-        Args:
-            section (str): Configuration section
-            key (str): Configuration key
-            default: Default value if not found
-            
-        Returns:
-            Configuration value or default
-        """
+    def get(self, section, key, default=None):
+        """Get configuration value"""
         try:
-            return self.config_data[section][key]
-        except KeyError:
+            return self.config.get(section, {}).get(key, default)
+        except Exception as e:
+            gui_logger.error(f"Error getting configuration value: {str(e)}")
             return default
             
     def set(self, section, key, value):
-        """Set configuration value
-        
-        Args:
-            section (str): Configuration section
-            key (str): Configuration key
-            value: Value to set
-        """
-        if section not in self.config_data:
-            self.config_data[section] = {}
-        self.config_data[section][key] = value
-        
+        """Set configuration value"""
+        try:
+            if section not in self.config:
+                self.config[section] = {}
+            self.config[section][key] = value
+            return True
+        except Exception as e:
+            gui_logger.error(f"Error setting configuration value: {str(e)}")
+            return False
+            
     def update_test_parameters(self, parameters):
-        """Update test parameters in configuration
-        
-        Args:
-            parameters (dict): Dictionary of test parameters
-        """
-        self.config_data['test_parameters'].update(parameters)
-        
-    def get_test_parameters(self):
-        """Get current test parameters
-        
-        Returns:
-            dict: Dictionary of test parameters
-        """
-        return self.config_data.get('test_parameters', {}) 
+        """Update test parameters in configuration"""
+        try:
+            self.config['test_parameters'] = parameters
+            self.save()
+            return True
+        except Exception as e:
+            gui_logger.error(f"Error updating test parameters: {str(e)}")
+            return False 

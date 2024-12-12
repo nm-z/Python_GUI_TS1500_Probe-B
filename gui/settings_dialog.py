@@ -1,131 +1,91 @@
 from PyQt6.QtWidgets import (
-    QDialog, QVBoxLayout, QHBoxLayout, QTabWidget,
-    QWidget, QFormLayout, QLineEdit, QPushButton,
-    QLabel, QSpinBox, QComboBox, QGroupBox,
-    QDialogButtonBox
+    QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+    QComboBox, QSpinBox, QPushButton, QGroupBox,
+    QFormLayout
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from .styles import Styles
+from utils.config import Config
 
 class SettingsDialog(QDialog):
+    settings_updated = pyqtSignal(dict)
+    
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.parent = parent
+        self.config = Config()
+        self.setup_ui()
+        self.load_settings()
+        
+    def setup_ui(self):
+        """Initialize the settings dialog UI"""
         self.setWindowTitle("Settings")
-        self.setStyleSheet(Styles.DIALOG_STYLE)
-        self.init_ui()
+        self.setMinimumWidth(400)
         
-    def init_ui(self):
         layout = QVBoxLayout(self)
-        tab_widget = QTabWidget()
-        tab_widget.setStyleSheet(Styles.TAB_STYLE)
+        layout.setSpacing(20)
         
-        # Hardware tab
-        hardware_tab = QWidget()
-        hardware_layout = QVBoxLayout()
+        # Theme settings
+        theme_group = QGroupBox("Theme Settings")
+        theme_layout = QFormLayout()
         
-        # VNA group
-        vna_group = QGroupBox("VNA Settings")
-        vna_layout = QFormLayout()
+        self.theme_combo = QComboBox()
+        self.theme_combo.addItems(["Dark Mode", "Light Mode"])
+        self.theme_combo.setStyleSheet(Styles.SPINBOX_STYLE)
+        theme_layout.addRow("Theme:", self.theme_combo)
         
-        self.vna_key = QLineEdit()
-        self.vna_key.setStyleSheet(Styles.SPINBOX_STYLE)
-        self.vna_key.setText("F5")
-        vna_layout.addRow("Trigger Key:", self.vna_key)
+        # Font settings
+        self.font_size = QSpinBox()
+        self.font_size.setRange(8, 24)
+        self.font_size.setValue(12)
+        self.font_size.setStyleSheet(Styles.SPINBOX_STYLE)
+        theme_layout.addRow("Font Size:", self.font_size)
         
-        self.vna_port = QComboBox()
-        self.vna_port.setStyleSheet(Styles.COMBOBOX_STYLE)
-        self.vna_port.addItems(["COM1", "COM2", "COM3", "COM4"])
-        vna_layout.addRow("Port:", self.vna_port)
+        theme_group.setLayout(theme_layout)
+        layout.addWidget(theme_group)
         
-        vna_group.setLayout(vna_layout)
-        hardware_layout.addWidget(vna_group)
-        hardware_tab.setLayout(hardware_layout)
+        # Buttons
+        button_layout = QHBoxLayout()
         
-        # Data tab
-        data_tab = QWidget()
-        data_layout = QVBoxLayout()
+        save_btn = QPushButton("Save")
+        save_btn.setStyleSheet(Styles.BUTTON_STYLE)
+        save_btn.clicked.connect(self.save_settings)
         
-        # Data paths group
-        data_group = QGroupBox("Data Paths")
-        paths_layout = QFormLayout()
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.setStyleSheet(Styles.BUTTON_STYLE)
+        cancel_btn.clicked.connect(self.reject)
         
-        self.vna_data_path = QLineEdit()
-        self.vna_data_path.setStyleSheet(Styles.SPINBOX_STYLE)
-        self.vna_data_path.setText("data/vna")
-        paths_layout.addRow("VNA Data:", self.vna_data_path)
+        button_layout.addWidget(save_btn)
+        button_layout.addWidget(cancel_btn)
+        layout.addLayout(button_layout)
         
-        self.temp_data_path = QLineEdit()
-        self.temp_data_path.setStyleSheet(Styles.SPINBOX_STYLE)
-        self.temp_data_path.setText("data/temperature")
-        paths_layout.addRow("Temperature Data:", self.temp_data_path)
+    def load_settings(self):
+        """Load current settings"""
+        # Load theme
+        is_dark_mode = self.config.get('theme', 'dark_mode', default=True)
+        self.theme_combo.setCurrentText("Dark Mode" if is_dark_mode else "Light Mode")
         
-        self.results_path = QLineEdit()
-        self.results_path.setStyleSheet(Styles.SPINBOX_STYLE)
-        self.results_path.setText("data/results")
-        paths_layout.addRow("Results:", self.results_path)
+        # Load font size
+        font_size = self.config.get('theme', 'font_size', default=12)
+        self.font_size.setValue(font_size)
         
-        data_group.setLayout(paths_layout)
-        data_layout.addWidget(data_group)
-        data_tab.setLayout(data_layout)
-        
-        # Add tabs
-        tab_widget.addTab(hardware_tab, "Hardware")
-        tab_widget.addTab(data_tab, "Data")
-        layout.addWidget(tab_widget)
-        
-        # Add dialog buttons
-        button_box = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
-        )
-        button_box.accepted.connect(self.accept)
-        button_box.rejected.connect(self.reject)
-        
-        # Style buttons
-        for button in button_box.buttons():
-            button.setStyleSheet(Styles.BUTTON_STYLE)
-            
-        layout.addWidget(button_box)
-        
-    def accept(self):
-        """Handle dialog acceptance"""
-        try:
-            print("[DEBUG] Settings dialog: Saving settings...")
-            
-            # Save settings
-            settings = {
-                'vna': {
-                    'key': self.vna_key.text(),
-                    'port': self.vna_port.currentText()
-                },
-                'data_paths': {
-                    'vna': self.vna_data_path.text(),
-                    'temperature': self.temp_data_path.text(),
-                    'results': self.results_path.text()
-                }
+    def save_settings(self):
+        """Save settings and emit update signal"""
+        settings = {
+            'theme': {
+                'dark_mode': self.theme_combo.currentText() == "Dark Mode",
+                'font_size': self.font_size.value()
             }
-            
-            print(f"[DEBUG] Settings to save: {settings}")
-            
-            # Update parent's configuration
-            if self.parent and hasattr(self.parent, 'controller'):
-                self.parent.controller.update_settings(settings)
-                self.parent.logger.append_message("Settings updated successfully", 'SUCCESS')
-                print("[DEBUG] Settings saved successfully")
-            else:
-                print("[WARNING] Settings dialog: No parent controller found")
-            
-            super().accept()
-            
-        except Exception as e:
-            import traceback
-            print(f"[ERROR] Settings save error: {str(e)}")
-            print("[ERROR] Traceback:")
-            print(traceback.format_exc())
-            
-            if self.parent:
-                self.parent.logger.append_message(f"Error saving settings: {str(e)}", 'ERROR')
-            
+        }
+        
+        # Save to config
+        self.config.set('theme', 'dark_mode', settings['theme']['dark_mode'])
+        self.config.set('theme', 'font_size', settings['theme']['font_size'])
+        self.config.save()
+        
+        # Emit signal for UI update
+        self.settings_updated.emit(settings)
+        self.accept()
+        
     def reject(self):
         """Handle dialog rejection"""
         print("[DEBUG] Settings dialog: Changes cancelled by user")

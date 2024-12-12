@@ -24,3 +24,119 @@
 2024-12-11 14:12:18 - gui - [0;32mINFO[0m - Test parameters updated successfully
 2024-12-11 14:12:18 - gui - [0;32mINFO[0m - Entering main event loop...
 2024-12-11 14:12:23 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 15:39:27 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:39:27 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:39:27 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:39:27 - gui - [0;31mERROR[0m - An error occurred: setFont(self, a0: QFont): argument 1 has unexpected type 'str'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 51, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 29, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 84, in setup_ui
+    config_group.setFont(Styles.FONT)
+TypeError: setFont(self, a0: QFont): argument 1 has unexpected type 'str'
+2024-12-11 15:41:02 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:02 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:02 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:41:02 - gui - [0;31mERROR[0m - An error occurred: 'RealTimePlots' object has no attribute 'update_data'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 51, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 32, in __init__
+    self.connect_signals()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 253, in connect_signals
+    self.controller.data_collected_signal.connect(self.plots.update_data)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RealTimePlots' object has no attribute 'update_data'. Did you mean: 'update_tilt'?
+2024-12-11 15:41:16 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:16 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:16 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:41:16 - gui - [0;31mERROR[0m - An error occurred: 'MainWindow' object has no attribute 'show_settings'
+Traceback (most recent call last):
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/main.py", line 51, in main
+    window = MainWindow(controller)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 29, in __init__
+    self.setup_ui()
+  File "/home/nate/Desktop/Python_GUI_TS1500_Probe-B/gui/main_window.py", line 58, in setup_ui
+    settings_action.triggered.connect(self.show_settings)
+                                      ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'show_settings'
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 15:41:28 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 15:41:33 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 15:42:03 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 15:42:08 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 15:42:10 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:42:13 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 15:42:49 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 15:42:54 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 15:42:55 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 15:43:10 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 15:43:14 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 17:09:06 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 17:09:11 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 17:12:32 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 17:12:36 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 17:13:08 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:13:08 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:13:08 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 17:13:09 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 17:13:09 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 17:13:09 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 17:13:09 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 17:13:13 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 17:23:43 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 17:23:48 - gui - [0;32mINFO[0m - VNA Connected
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Configuration saved successfully
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Test parameters updated successfully
+2024-12-11 17:30:34 - gui - [0;32mINFO[0m - Entering main event loop...
+2024-12-11 17:30:39 - gui - [0;32mINFO[0m - VNA Connected

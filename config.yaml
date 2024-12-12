@@ -2,6 +2,15 @@ data_paths:
   results: data/results
   temperature: data/temperature
   vna: data/vna
+test_parameters:
+  max_tilt: 30.0
+  min_tilt: -30.0
+  oil_level_time: 15
+  tilt_accuracy: 0.1
+  tilt_increment: 1.0
+theme:
+  dark_mode: true
+  font_size: 12
 vna:
   key: F5
   port: COM1

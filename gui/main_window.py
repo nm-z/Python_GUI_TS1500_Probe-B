@@ -250,14 +250,13 @@ class MainWindow(QMainWindow):
             # Connect test signals
             self.controller.progress_updated.connect(self.update_progress)
             self.controller.test_completed.connect(self.handle_test_completed)
-            self.controller.data_collected_signal.connect(self.plots.update_data)
+            self.controller.angle_updated.connect(self.plots.update_tilt)
+            
+            # Connect data signals
+            self.controller.data_collected_signal.connect(self.handle_data_collected)
             
             # Connect connection status signals
             self.controller.connection_status_updated.connect(self.handle_connection_status)
-            
-            # Connect logger signals
-            self.controller.connection_status_updated.connect(self.handle_logger_connection_status)
-            self.controller.test_completed.connect(self.handle_logger_test_completed)
             
     def handle_connection_status(self, status_dict):
         """Handle connection status updates"""
@@ -265,80 +264,65 @@ class MainWindow(QMainWindow):
             status_str = "Connected" if status else "Not Connected"
             self.logger.append_message(f"{device.upper()} {status_str}", 'CONNECTION')
             
-    def handle_logger_connection_status(self, status_dict):
-        """Handle connection status updates in logger"""
-        for device, status in status_dict.items():
-            status_str = "Connected" if status else "Not Connected"
-            self.logger.append_message(f"{device.upper()} {status_str}", 'CONNECTION')
-            
-    def handle_logger_test_completed(self, results):
-        """Handle test completion in logger"""
-        # Log execution time
-        self.logger.append_message(f"Total Execution Time: {results['execution_time']}", 'EXECUTION_TIME')
-        
-        # Log data file paths
-        for data_type, path in results['data_files'].items():
-            self.logger.append_message(f"{data_type.upper()} data: {path}", 'SUCCESS')
-            
-        # Log test configuration
-        config = results['config']
-        self.logger.append_message(
-            f"Test completed - Run #{results['run_number']}\n"
-            f"Configuration: Increment={config['tilt_increment']}°, "
-            f"Range={config['min_tilt']}° to {config['max_tilt']}°",
-            'SUCCESS'
-        )
-
-    def show_settings(self):
-        """Show settings dialog"""
-        dialog = SettingsDialog(self)
-        dialog.exec()
+    def handle_data_collected(self, data):
+        """Handle collected data updates"""
+        if 'time_point' in data:
+            if 'tilt_angle' in data:
+                self.plots.update_tilt(data['time_point'], data['tilt_angle'])
+            if 'temperature' in data:
+                self.plots.update_temperature(data['time_point'], data['temperature'])
 
     def handle_splitter_moved(self, pos, index):
-        """Handle splitter movement for snapping behavior
+        """Handle splitter movement and snapping"""
+        splitter = self.sender()
+        if not isinstance(splitter, QSplitter):
+            return
+            
+        # Get splitter geometry
+        width = splitter.width()
+        height = splitter.height()
         
-        Args:
-            pos (int): Position of the splitter handle
-            index (int): Index of the handle
-        """
-        try:
-            splitter = self.sender()
+        # Get current sizes
+        sizes = list(splitter.sizes())  # Convert to list for modification
+        
+        # Calculate snap thresholds (10% of total size)
+        snap_threshold = int(width * 0.1) if splitter.orientation() == Qt.Orientation.Horizontal else int(height * 0.1)
+        
+        # Handle horizontal splitter (main splitter)
+        if splitter == self.main_splitter:
+            # Left panel has minimum and maximum widths
+            if sizes[0] < self.left_panel.minimumWidth():
+                sizes[0] = self.left_panel.minimumWidth()
+                sizes[1] = width - sizes[0]
+            elif sizes[0] > self.left_panel.maximumWidth():
+                sizes[0] = self.left_panel.maximumWidth()
+                sizes[1] = width - sizes[0]
+                
+            # Snap to edges
+            if sizes[0] < snap_threshold:
+                sizes[0] = 0
+                sizes[1] = width
+            elif sizes[1] < snap_threshold:
+                sizes[0] = width
+                sizes[1] = 0
+                
+        # Handle vertical splitter (right splitter)
+        elif splitter == self.right_splitter:
+            # Ensure minimum heights for plots and logger
+            min_plot_height = int(height * 0.3)  # 30% minimum for plots
+            min_logger_height = int(height * 0.2)  # 20% minimum for logger
             
-            # Get splitter geometry
-            width = splitter.width()
-            height = splitter.height()
-            
-            # Snap threshold (pixels)
-            threshold = 50
-            
-            print(f"[DEBUG] Splitter moved - Position: {pos}, Index: {index}")
-            print(f"[DEBUG] Splitter geometry - Width: {width}, Height: {height}")
-            
-            if splitter.orientation() == Qt.Orientation.Horizontal:
-                # Horizontal splitter (main_splitter)
-                if pos < threshold:
-                    splitter.moveSplitter(0, index)
-                    print("[DEBUG] Snapped to left edge")
-                elif width - pos < threshold:
-                    splitter.moveSplitter(width, index)
-                    print("[DEBUG] Snapped to right edge")
-            else:
-                # Vertical splitter (right_splitter)
-                if pos < threshold:
-                    splitter.moveSplitter(0, index)
-                    print("[DEBUG] Snapped to top edge")
-                elif height - pos < threshold:
-                    splitter.moveSplitter(height, index)
-                    print("[DEBUG] Snapped to bottom edge")
-                    
-            print(f"[DEBUG] New splitter sizes: {splitter.sizes()}")
-            
-        except Exception as e:
-            import traceback
-            print(f"[ERROR] Splitter error: {str(e)}")
-            print("[ERROR] Traceback:")
-            print(traceback.format_exc())
-            
+            if sizes[0] < min_plot_height:
+                sizes[0] = min_plot_height
+                sizes[1] = height - sizes[0]
+            elif sizes[1] < min_logger_height:
+                sizes[1] = min_logger_height
+                sizes[0] = height - sizes[1]
+                
+        # Convert sizes to integers and apply
+        sizes = [int(size) for size in sizes]
+        splitter.setSizes(sizes)
+
     def save_config(self):
         """Save current configuration to YAML file"""
         file_path, _ = QFileDialog.getSaveFileName(
@@ -548,3 +532,25 @@ class MainWindow(QMainWindow):
             print("[ERROR] Traceback:")
             print(traceback.format_exc())
             event.accept()  # Accept the close event even if there's an error
+
+    def show_settings(self):
+        """Show settings dialog"""
+        dialog = SettingsDialog(self)
+        dialog.settings_updated.connect(self.apply_settings)
+        dialog.exec()
+        
+    def apply_settings(self, settings):
+        """Apply updated settings"""
+        # Update theme
+        is_dark_mode = settings['theme']['dark_mode']
+        self.plots.update_theme(is_dark_mode)
+        self.logger.update_theme(is_dark_mode)
+        
+        # Update font size
+        font = Styles.FONT
+        font.setPointSize(settings['theme']['font_size'])
+        self.setFont(font)
+        
+        # Update all widgets that need font size changes
+        for widget in self.findChildren(QWidget):
+            widget.setFont(font)
