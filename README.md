@@ -98,6 +98,74 @@ keyboard==0.13.5
   └── results/
   ```
 
+
+# Arduino Library: 
+
+1. **LiquidCrystal** (v1.0.7)  
+   - For controlling alphanumeric LCD displays (Hitachi HD44780).
+
+2. **AccelStepper** (v1.64)  
+   - Object-oriented library for controlling stepper motors.
+
+3. **Adafruit BusIO** (v1.12.6)  
+   - Abstraction library for I2C and SPI interfaces.
+
+4. **Adafruit GFX Library** (v1.11.11)  
+   - Core graphics library for Adafruit displays.
+
+5. **Adafruit MPU6050** (v2.2.6)  
+   - Arduino library for MPU6050 accelerometer/gyroscope.
+
+6. **Adafruit SSD1306** (v2.5.13)  
+   - Driver for SSD1306 monochrome OLED displays (128x64, 128x32).
+
+7. **Adafruit Unified Sensor** (v1.1.14)  
+   - Sensor abstraction layer for Adafruit sensor libraries.
+
+8. **DallasTemperature** (v3.9.0)  
+   - Library for Dallas Temperature ICs (e.g., DS18B20).
+
+9. **MAX6675** (v0.3.2)  
+   - Library for MAX6675 K-type thermocouple.
+
+10. **MAX6675 Thermocouple** (v2.0.2)  
+    - Thermocouple temperature handling library for MAX6675.
+
+11. **MPU6050** (v1.4.1)  
+    - Another MPU6050 library for 6-axis accelerometer/gyroscope.
+
+12. **OneWire** (v2.3.8)  
+    - Access library for 1-Wire devices, including temperature sensors.
+
+13. **Time** (v1.6.1)  
+    - Library for timekeeping functionality in Arduino, supporting GPS and NTP.
+
+
+
+# MPU-6050 Wiring (Tilt)
+
+| **MPU-6050 Pin** | **Arduino Pin**  | **Notes**                                                  |
+| ---------------- | ---------------- | ---------------------------------------------------------- |
+| **VCC**          | **Power - 3.3V** | Supply voltage to the MPU-6050. Ensure 3.3V compatibility. |
+| **GND**          | **Power - GND**  | Ground connection.                                         |
+| **SCL**          | **SCL Pin 21**   | I2C Clock line (SCL).                                      |
+| **SDA**          | **SDA Pin 20**   | I2C Data line (SDA).                                       |
+
+# MAX6675 Wiring (Temp)
+
+| **MAX6675 Pin** | **Arduino ICSP Header** | **Notes**                                                      |
+| --------------- | ----------------------- | -------------------------------------------------------------- |
+| **GND**         | **Pin 6 - GND**         | Connect to Ground.                                             |
+| **VCC**         | **Pin 2 - VCC**         | Connect to 3.3V or 5V (based on MAX6675 module compatibility). |
+| **SO**          | **Pin 12 - MISO**       | SPI Data Out (Slave Out).                                      |
+| **SCK**         | **Pin 13 - SCK**        | SPI Clock.                                                     |
+| **CS**          | **PWM Pin 10**          | Chip Select (can be any digital pin).                          |
+|                 |                         |                                                                |
+|                 |                         |                                                                |
+
+
+
+
 ## Hardware Commands
 
 - `TEST`: System-wide self-test
