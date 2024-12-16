@@ -90,3 +90,9 @@
 2024-12-11 17:30:39 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
 2024-12-11 17:30:39 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
 2024-12-11 17:30:39 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-11 18:26:24 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-11 18:26:24 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-11 18:26:24 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-11 18:26:50 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-11 18:26:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-11 18:26:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
