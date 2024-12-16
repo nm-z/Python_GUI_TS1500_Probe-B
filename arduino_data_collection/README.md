@@ -31,7 +31,7 @@ This Arduino project provides a comprehensive control system for a stepper motor
 
 # MAX6675 Wiring (Temp)
 
-| **MAX6675 Pin** | **Arduino ICSP Header** | **Notes**                                                      |
+| **MAX6675 Pin** | **Arduino Pin** | **Notes**                                                      |
 | --------------- | ----------------------- | -------------------------------------------------------------- |
 | **GND**         | **Pin 6 - GND**         | Connect to Ground.                                             |
 | **VCC**         | **Pin 2 - VCC**         | Connect to 3.3V or 5V (based on MAX6675 module compatibility). |
