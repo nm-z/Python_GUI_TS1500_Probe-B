@@ -59,6 +59,11 @@ sudo apt install libxcb-cursor0 libxcb-xinerama0 libxcb-xfixes0 libxcb-shape0 \
 
 These libraries are required for the PyQt6 GUI components to function properly.
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9a821f2 (WIP)
 ## Features
 
 ### Hardware Control
