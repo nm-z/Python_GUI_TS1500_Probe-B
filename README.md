@@ -46,6 +46,19 @@ PyYAML==6.0.1
 keyboard==0.13.5
 ```
 
+## System Dependencies
+
+Before installing Python dependencies, ensure the following system libraries are installed:
+
+```bash
+sudo apt update
+sudo apt install libxcb-cursor0 libxcb-xinerama0 libxcb-xfixes0 libxcb-shape0 \
+    libxcb-render-util0 libxcb-render0 libxcb-shm0 libxcb-keysyms1 libxcb-icccm4 \
+    libxcb-image0 libxcb-util1 libxcb-xkb1 libxkbcommon-x11-0
+```
+
+These libraries are required for the PyQt6 GUI components to function properly.
+
 ## Features
 
 ### Hardware Control
@@ -94,7 +107,7 @@ keyboard==0.13.5
   │   └── vna_measurements.csv
   ├── temperature/
   │   └── temperature_log.csv
-  ├── logs/
+  ├���─ logs/
   └── results/
   ```
 
