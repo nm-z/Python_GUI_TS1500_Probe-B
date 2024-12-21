@@ -1,0 +1,618 @@
+2024-12-21 00:00:10 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:00:10 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:00:10 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:00:10 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:00:10 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:00:12 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:00:17 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m
+2024-12-21 00:00:32 - gui - [0;32mINFO[0m - [93mVNA: Starting sweep at -30.0°...[0m
+2024-12-21 00:00:32 - gui - [0;32mINFO[0m - [93mVNA: Initiating sweep...[0m
+2024-12-21 00:00:32 - gui - [0;32mINFO[0m - [93mVNA: Sweep completed[0m
+2024-12-21 00:00:32 - gui - [0;32mINFO[0m - [92mTemperature: 33.5°C[0m
+2024-12-21 00:00:32 - gui - [0;32mINFO[0m - [37mWaiting 10s for VNA sweep...[0m
+2024-12-21 00:01:33 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:01:33 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:01:33 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:01:33 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:01:33 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:01:35 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:01:36 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:01:36 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:01:36 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:02:38 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:02:38 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:02:38 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:02:38 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:02:38 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:02:40 - gui - [0;32mINFO[0m - Data collection started
+2024-12-21 00:02:40 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:02:40 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-21 00:02:40 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:02:40 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:02:41 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:02:46 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m
+2024-12-21 00:07:30 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:07:30 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:07:30 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:07:30 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:07:30 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m=== Planned Test Sequence ===[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -150000 steps (-30.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -145000 steps (-29.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -140000 steps (-28.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -135000 steps (-27.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -130000 steps (-26.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -125000 steps (-25.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -120000 steps (-24.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -115000 steps (-23.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -110000 steps (-22.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -105000 steps (-21.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -100000 steps (-20.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -95000 steps (-19.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -90000 steps (-18.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -85000 steps (-17.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -80000 steps (-16.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -75000 steps (-15.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -70000 steps (-14.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -65000 steps (-13.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -60000 steps (-12.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -55000 steps (-11.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -50000 steps (-10.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -45000 steps (-9.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -40000 steps (-8.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -35000 steps (-7.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -30000 steps (-6.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -25000 steps (-5.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -20000 steps (-4.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -15000 steps (-3.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -10000 steps (-2.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE -5000 steps (-1.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 0 steps (0.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 5000 steps (1.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 10000 steps (2.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 15000 steps (3.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 20000 steps (4.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 25000 steps (5.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 30000 steps (6.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 35000 steps (7.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 40000 steps (8.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 45000 steps (9.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 50000 steps (10.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 55000 steps (11.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 60000 steps (12.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 65000 steps (13.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 70000 steps (14.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 75000 steps (15.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 80000 steps (16.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 85000 steps (17.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 90000 steps (18.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 95000 steps (19.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 100000 steps (20.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 105000 steps (21.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 110000 steps (22.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 115000 steps (23.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 120000 steps (24.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 125000 steps (25.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 130000 steps (26.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 135000 steps (27.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 140000 steps (28.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 145000 steps (29.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOVE 150000 steps (30.0°)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 5 seconds for motor movement[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 15 seconds for oil to level[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake temperature reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTake tilt reading[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTrigger VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mWait 10 seconds for VNA sweep[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m------------------------[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95m=== End of Sequence ===[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - Data collection started
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:07:31 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:07:32 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:07:37 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m
+2024-12-21 00:09:24 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:09:24 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:09:24 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:09:24 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:09:24 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:09:26 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:09:26 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:09:26 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:09:26 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:09:27 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:09:27 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:09:27 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:09:27 - gui - [0;32mINFO[0m - Test cancelled by user
+2024-12-21 00:09:27 - gui - [0;31mERROR[0m - Failed to start test: Failed to start test
+2024-12-21 00:10:40 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-21 00:10:40 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-21 00:10:40 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-21 00:10:40 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-21 00:10:40 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:10:42 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [95mInitializing test...[0m
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - Data collection started
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:11:22 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:11:27 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [92mTemperature at -30.0°: 33.2°C[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [92mVerified tilt at -3.2°[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [93mVNA: Starting sweep at -30.0°...[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [93mVNA: Initiating sweep...[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [93mVNA: Sweep completed[0m
+2024-12-21 00:11:42 - gui - [0;32mINFO[0m - [37mWaiting 10s for VNA sweep...[0m
+2024-12-21 00:11:52 - gui - [0;31mERROR[0m - Error saving data point: dict contains fields not in fieldnames: 'Angle'
+2024-12-21 00:11:52 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -29.0000° (-145000 steps)[0m
+2024-12-21 00:11:52 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -29.0000° (-145000 steps)[0m
+2024-12-21 00:11:52 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-21 00:11:52 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-21 00:11:57 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m

@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import QApplication
 import yaml
 import threading
 import csv
+import logging
 
 from utils.logger import gui_logger, log_test_results, hardware_logger, log_hardware_event
 from utils.config import Config
@@ -74,59 +75,73 @@ class MainController(QObject):
             
     def send_vna_key_event(self):
         """Send key event to trigger VNA sweep"""
-        key = self.config.get('vna', 'key_event', default='F5')
-        app = QApplication.instance()
-        
         try:
-            # Create and post key press/release events
-            key_event = QKeyEvent(QKeyEvent.Type.KeyPress, ord(key), app.keyboardModifiers())
+            self.logger.info(f"\033[93mVNA: Initiating sweep...\033[0m")
+            
+            # Handle F5 key properly
+            from PyQt6.QtCore import Qt
+            key = Qt.Key.Key_F5
+            
+            app = QApplication.instance()
+            # Create and post key press/release events with proper key code
+            key_event = QKeyEvent(QKeyEvent.Type.KeyPress, key, app.keyboardModifiers())
             app.postEvent(app.focusWidget(), key_event)
             
-            # Small delay between press and release
             time.sleep(0.1)
             
-            key_event = QKeyEvent(QKeyEvent.Type.KeyRelease, ord(key), app.keyboardModifiers())
+            key_event = QKeyEvent(QKeyEvent.Type.KeyRelease, key, app.keyboardModifiers())
             app.postEvent(app.focusWidget(), key_event)
             
-            log_hardware_event('vna', 'DEBUG', 'VNA key event sent', key=key)
+            self.logger.info(f"\033[93mVNA: Sweep completed\033[0m")
+            log_hardware_event('vna', 'DEBUG', 'VNA key event sent')
         except Exception as e:
-            log_hardware_event('vna', 'ERROR', 'Failed to send VNA key event', key=key, error=str(e))
+            self.logger.error(f"\033[93mVNA: Failed to send key event: {str(e)}\033[0m")
+            log_hardware_event('vna', 'ERROR', 'Failed to send VNA key event', error=str(e))
         
     def _collect_data(self):
-        """Collect data from hardware and emit signals"""
+        """Collect data continuously for graph updates"""
         try:
             if not self.hardware.is_connected():
-                self.logger.warning("Hardware not connected, skipping data collection")
                 return
                 
             # Get current time point
             current_time = time.time() - self.test_start_time
             
-            # Get tilt angle
-            tilt_angle = self.hardware.get_tilt_angle()
-            if tilt_angle is not None:
-                self.angle_updated.emit(tilt_angle)
-                self.data_collected_signal.emit({
-                    'time_point': current_time,
-                    'tilt_angle': tilt_angle
-                })
-                self.logger.debug(f"Tilt angle: {tilt_angle:.1f}°")
-            
-            # Get temperature
-            temperature = self.hardware.get_temperature()
-            if temperature is not None:
-                self.data_collected_signal.emit({
-                    'time_point': current_time,
-                    'temperature': temperature
-                })
-                self.logger.debug(f"Temperature: {temperature:.1f}°C")
-            
-            # Save data point
-            self._save_data_point(current_time, tilt_angle, temperature)
-            
+            # Collect data every second
+            if int(current_time) == current_time:
+                with self._suppress_logging():
+                    tilt_angle = self.hardware.get_tilt_angle()
+                    temperature = self.hardware.get_temperature()
+                
+                if tilt_angle is not None:
+                    self.angle_updated.emit(tilt_angle)
+                    self.data_collected_signal.emit({
+                        'time_point': current_time,
+                        'tilt_angle': tilt_angle
+                    })
+                    
+                if temperature is not None:
+                    self.data_collected_signal.emit({
+                        'time_point': current_time,
+                        'temperature': temperature
+                    })
+                
         except Exception as e:
-            self.logger.error(f"Error collecting data: {str(e)}")
-            
+            pass  # Silently ignore data collection errors
+        
+    def _suppress_logging(self):
+        """Context manager to temporarily suppress logging"""
+        class SuppressLogging:
+            def __enter__(self):
+                self.old_level = hardware_logger.level
+                hardware_logger.setLevel(logging.ERROR)
+                return self
+                
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                hardware_logger.setLevel(self.old_level)
+                
+        return SuppressLogging()
+        
     def _save_data_point(self, time_point, tilt_angle, temperature):
         """Save data point to CSV file
         
@@ -139,10 +154,10 @@ class MainController(QObject):
             if not self.data_file:
                 return
                 
-            # Create data row
+            # Create data row with matching fieldnames
             row = {
                 'Time': f"{time_point:.1f}",
-                'Tilt_Angle': f"{tilt_angle:.1f}" if tilt_angle is not None else "N/A",
+                'Angle': f"{tilt_angle:.1f}" if tilt_angle is not None else "N/A",
                 'Temperature': f"{temperature:.1f}" if temperature is not None else "N/A"
             }
             
@@ -153,42 +168,205 @@ class MainController(QObject):
         except Exception as e:
             self.logger.error(f"Error saving data point: {str(e)}")
             
-    def start_test(self, parameters):
-        """Start a new test with the given parameters
+    def _run_test_sequence(self, angle):
+        """Run a single test sequence at the given angle"""
+        try:
+            # 1. Move motor to position
+            self.logger.info(f"\033[95mMOTOR: Moving to {angle:.4f}° ({int(angle / 0.0002)} steps)\033[0m")
+            if not self._move_motor(int(angle / 0.0002)):
+                raise Exception("Failed to move motor")
+            
+            # 2. Wait for motor movement to complete
+            self.logger.info("\033[37mWaiting 5s for motor movement...\033[0m")
+            time.sleep(5)
+            
+            # 3. Wait for oil to level
+            oil_level_time = self.test_parameters.get('oil_level_time', 15)
+            self.logger.info(f"\033[37mWaiting {oil_level_time}s for oil to level...\033[0m")
+            time.sleep(oil_level_time)
+            
+            # 4. Take measurements after oil has leveled
+            # Get temperature reading
+            with self._suppress_logging():
+                temperature = self.hardware.get_temperature()
+            if temperature is not None:
+                self.logger.info(f"\033[92mTemperature at {angle:.1f}°: {temperature:.1f}°C\033[0m")
+                # Update graph with temperature
+                current_time = time.time() - self.test_start_time
+                self.data_collected_signal.emit({
+                    'time_point': current_time,
+                    'temperature': temperature
+                })
+            
+            # Get current tilt angle for verification
+            with self._suppress_logging():
+                actual_angle = self.hardware.get_tilt_angle()
+            if actual_angle is not None:
+                self.logger.info(f"\033[92mVerified tilt at {actual_angle:.1f}°\033[0m")
+                # Update graph with tilt angle
+                self.data_collected_signal.emit({
+                    'time_point': current_time,
+                    'tilt_angle': actual_angle
+                })
+            
+            # Start VNA sweep
+            self.logger.info(f"\033[93mVNA: Starting sweep at {angle:.1f}°...\033[0m")
+            self.send_vna_key_event()
+            
+            # 5. Wait for VNA sweep to complete
+            self.logger.info("\033[37mWaiting 10s for VNA sweep...\033[0m")
+            time.sleep(10)
+            
+            # Save data point
+            self._save_data_point(current_time, actual_angle or angle, temperature)
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Test sequence failed: {str(e)}")
+            return False
+
+    def _generate_test_sequence(self, parameters):
+        """Generate and return the test sequence commands
         
         Args:
             parameters (dict): Test parameters
             
         Returns:
-            bool: True if test started successfully
+            list: List of commands and wait times
         """
         try:
-            if not self.hardware.is_connected():
-                raise Exception("Hardware not connected")
-                
-            if self._test_running:
-                raise Exception("Test already running")
-                
-            # Store test parameters
-            self.test_parameters = parameters
+            min_angle = parameters.get('min_tilt', -30.0)
+            max_angle = parameters.get('max_tilt', 30.0)
+            increment = parameters.get('tilt_increment', 1.0)
+            oil_level_time = parameters.get('oil_level_time', 15)
             
-            # Reset test state
+            # Calculate test points
+            angles = []
+            current_angle = min_angle
+            while current_angle <= max_angle:
+                angles.append(current_angle)
+                current_angle += increment
+                
+            # Generate command sequence
+            commands = []
+            for angle in angles:
+                steps = int(angle / 0.0002)  # Convert angle to steps
+                commands.append(f"MOVE {steps} steps ({angle:.1f}°)")
+                commands.append(f"Wait 5 seconds for motor movement")
+                commands.append(f"Wait {oil_level_time} seconds for oil to level")
+                commands.append(f"Take temperature reading")
+                commands.append(f"Take tilt reading")
+                commands.append(f"Trigger VNA sweep")
+                commands.append(f"Wait 10 seconds for VNA sweep")
+                commands.append("---")  # Separator between angle sequences
+                
+            return commands
+            
+        except Exception as e:
+            self.logger.error(f"Error generating test sequence: {str(e)}")
+            return []
+
+    def start_test(self, parameters):
+        """Start a new test with the given parameters"""
+        try:
+            # First validate hardware connection
+            if not self.hardware.is_connected():
+                self.logger.error("Cannot start test: Hardware not connected")
+                return False
+            
+            # Check if test is already running
+            if self._test_running:
+                self.logger.error("Cannot start test: Test already running")
+                return False
+            
+            # Show test sequence dialog first
+            from gui.test_parameters_dialog import show_test_sequence
+            if not show_test_sequence(None, parameters):
+                self.logger.info("Test cancelled by user")
+                return False
+            
+            # If user accepted, start the test
+            self.logger.info("\033[95mInitializing test...\033[0m")
+            
+            # Store test parameters and initialize test state
+            self.test_parameters = parameters
             self._test_running = True
             self._test_paused = False
             self._current_angle = None
-            self._start_time = time.time()
+            self.test_start_time = time.time()
             
-            # Start data collection
+            # Start continuous data collection
             self._start_data_collection()
             
-            self.logger.info("Test started successfully")
+            # Emit signal to open plots window
+            self.test_started = True  # Flag to indicate test has started
+            self.status_updated.emit({'test_started': True})
+            
+            # Start test sequence in a separate thread
+            self.test_thread = threading.Thread(target=self._run_test_routine)
+            self.test_thread.start()
+            
+            self.logger.info("\033[95mTest started\033[0m")
             return True
             
         except Exception as e:
             self.logger.error(f"Failed to start test: {str(e)}")
             self._test_running = False
             return False
-        
+
+    def _run_test_routine(self):
+        """Run the complete test routine"""
+        try:
+            min_angle = self.test_parameters.get('min_tilt', -30.0)
+            max_angle = self.test_parameters.get('max_tilt', 30.0)
+            increment = self.test_parameters.get('tilt_increment', 1.0)
+            
+            # Calculate test points
+            angles = []
+            current_angle = min_angle
+            while current_angle <= max_angle:
+                angles.append(current_angle)
+                current_angle += increment
+            
+            # Run test sequence for each angle
+            total_points = len(angles)
+            for i, angle in enumerate(angles):
+                if not self._test_running:  # Check for stop condition
+                    break
+                    
+                if self._test_paused:  # Handle pause
+                    while self._test_paused and self._test_running:
+                        time.sleep(0.1)
+                    if not self._test_running:  # Check if stopped during pause
+                        break
+                
+                # Run test sequence for this angle
+                if not self._run_test_sequence(angle):
+                    self.logger.error(f"Failed at angle {angle:.1f}°")
+                    break
+                
+                # Update progress
+                progress = int((i + 1) * 100 / total_points)
+                self.progress_updated.emit(progress)
+            
+            # Test completed
+            self.test_completed.emit({
+                'run_number': self.current_run,
+                'execution_time': time.time() - self.test_start_time,
+                'data_files': {
+                    'vna': self.vna_data_path,
+                    'temperature': self.temperature_data_path
+                }
+            })
+            
+        except Exception as e:
+            self.logger.error(f"Test routine failed: {str(e)}")
+        finally:
+            self._test_running = False
+            if self.data_file:
+                self.data_file.close()
+                self.data_file = None
+
     def _validate_parameters(self, parameters):
         """Validate test parameters
         
@@ -237,37 +415,67 @@ class MainController(QObject):
     def stop_test(self):
         """Stop the test"""
         try:
-            if not self.test_running:
+            if not hasattr(self, '_test_running') or not self._test_running:
                 return
                 
             # Stop data collection
-            if hasattr(self, 'data_timer'):
+            if hasattr(self, 'data_timer') and self.data_timer:
                 self.data_timer.stop()
+                self.data_timer = None
             
             # Close data file
-            if self.data_file:
+            if hasattr(self, 'data_file') and self.data_file:
                 self.data_file.close()
                 self.data_file = None
             
-            self.test_running = False
+            self._test_running = False
             self.logger.info("Test stopped")
             
         except Exception as e:
             self.logger.error(f"Error stopping test: {str(e)}")
             
     def cleanup(self):
-        """Clean up resources"""
+        """Clean up resources before exit"""
         try:
             # Stop test if running
             self.stop_test()
             
+            # Stop all timers first
+            for timer_attr in ['connection_timer', 'data_timer']:
+                if hasattr(self, timer_attr):
+                    timer = getattr(self, timer_attr)
+                    if timer is not None:
+                        timer.stop()
+                        setattr(self, timer_attr, None)
+            
+            # Stop all threads
+            for thread_attr in ['test_thread', 'init_thread']:
+                if hasattr(self, thread_attr):
+                    thread = getattr(self, thread_attr)
+                    if thread is not None and thread.is_alive():
+                        thread.join(timeout=0.5)
+            
             # Disconnect hardware
-            if self.hardware:
-                self.hardware.disconnect()
+            if hasattr(self, 'hardware') and self.hardware:
+                try:
+                    self.hardware.disconnect()
+                except:
+                    pass
+                self.hardware = None
+            
+            self.hardware_initialized = False
             
         except Exception as e:
-            self.logger.error(f"Error during cleanup: {str(e)}")
-        
+            pass  # Silently ignore cleanup errors
+        finally:
+            # Force stop all remaining threads
+            for thread in threading.enumerate():
+                if thread != threading.current_thread() and thread.is_alive():
+                    try:
+                        thread.join(timeout=0.1)
+                    except:
+                        pass
+
     def send_command(self, command, retry_count=2, retry_delay=1):
         """Send command to hardware with improved error handling and retry logic
         
@@ -416,20 +624,20 @@ class MainController(QObject):
         try:
             # Calculate angle using precise step size (0.0002 degrees per step)
             angle = steps * 0.0002
-            self.logger.info(f"Moving motor {steps} steps ({angle:.4f}°)")
+            self.logger.info(f"\033[95mMOTOR: Moving to {angle:.4f}° ({steps} steps)\033[0m")  # Purple color
             
             # Send movement command
             success = self.hardware.move_to_angle(angle)
             
             if success:
-                self.logger.info(f"Motor movement initiated")
+                self.logger.info(f"\033[95mMOTOR: Movement initiated\033[0m")  # Purple color
                 return True
             else:
-                self.logger.error("Failed to initiate motor movement")
+                self.logger.error("\033[95mMOTOR: Failed to initiate movement\033[0m")  # Purple color
                 return False
                 
         except Exception as e:
-            self.logger.error(f"Motor movement failed: {str(e)}")
+            self.logger.error(f"\033[95mMOTOR: Movement failed: {str(e)}\033[0m")  # Purple color
             return False
             
     def _home_motor(self):
@@ -597,59 +805,32 @@ class MainController(QObject):
     def poll_connections(self):
         """Poll connection status of all components"""
         if not hasattr(self, 'hardware') or not self.hardware_initialized:
-            self.connection_states = {
-                'vna': False,
-                'tilt': False,
-                'temp': False
-            }
-            self.connection_status_updated.emit(self.connection_states)
             return
-            
+        
         try:
-            # Check Arduino connection with STATUS command
-            response = self.hardware.send_command("STATUS", timeout=0.5)
-            arduino_ok = response and response.startswith("POS ")
+            # Skip connection polling during test
+            if hasattr(self, '_test_running') and self._test_running:
+                return
             
-            # Check temperature sensor
-            temp_response = self.hardware.send_command("TEMP", timeout=0.5)
-            temp_ok = temp_response and temp_response.startswith("TEMP ")
-            
-            # Check tilt sensor
-            tilt_response = self.hardware.send_command("TILT", timeout=0.5)
-            tilt_ok = tilt_response and tilt_response.startswith("TILT ")
-            
-            # Update connection states
-            new_states = {
-                'vna': arduino_ok,  # VNA depends on Arduino connection
-                'tilt': tilt_ok,
-                'temp': temp_ok
-            }
-            
-            # Only emit signal if states have changed
-            if new_states != self.connection_states:
-                self.connection_states = new_states
-                self.connection_status_updated.emit(new_states)
+            # Only check hardware connection during initialization
+            if not hasattr(self, '_connection_initialized'):
+                response = self.hardware.send_command("STATUS", timeout=0.5)
+                arduino_ok = response and response.startswith("POS ")
                 
-                # Log connection changes
-                for device, connected in new_states.items():
-                    status = "connected" if connected else "disconnected"
-                    self.logger.info(f"{device.upper()} is {status}")
-                    
-        except Exception as e:
-            self.logger.error(f"Error polling connections: {str(e)}")
-            # Ensure hardware is disconnected on error
-            try:
-                if hasattr(self, 'hardware'):
-                    self.hardware.disconnect()
-            except:
-                pass
-            self.hardware_initialized = False
-            self.connection_states = {
-                'vna': False,
-                'tilt': False,
-                'temp': False
-            }
-            self.connection_status_updated.emit(self.connection_states)
+                new_states = {
+                    'vna': arduino_ok,
+                    'tilt': arduino_ok,
+                    'temp': arduino_ok
+                }
+                
+                if new_states != self.connection_states:
+                    self.connection_states = new_states
+                    self.connection_status_updated.emit(new_states)
+                
+                self._connection_initialized = True
+            
+        except Exception:
+            pass  # Silently ignore connection polling errors
 
     def update_settings(self, settings):
         """Update application settings
@@ -821,7 +1002,7 @@ class MainController(QObject):
             retry_delay = 2  # Reduced delay
             
             for attempt in range(max_retries):
-                if not self.test_running:  # Check if we should stop
+                if not self._test_running:  # Fixed attribute name
                     return
                     
                 try:
@@ -834,7 +1015,6 @@ class MainController(QObject):
                         self.logger.warning(f"Hardware initialization attempt {attempt + 1} failed")
                         if attempt < max_retries - 1:
                             time.sleep(retry_delay)
-                            # Try to clean up before next attempt
                             try:
                                 self.hardware.disconnect()
                             except:
@@ -843,14 +1023,12 @@ class MainController(QObject):
                     self.logger.error(f"Hardware initialization error: {str(e)}")
                     if attempt < max_retries - 1:
                         time.sleep(retry_delay)
-                        # Try to clean up before next attempt
                         try:
                             self.hardware.disconnect()
                         except:
                             pass
                             
             self.logger.error("Hardware initialization failed after all retries")
-            # Update UI to show disconnected state
             self.connection_states = {
                 'vna': False,
                 'tilt': False,
@@ -861,51 +1039,6 @@ class MainController(QObject):
         self.init_thread = threading.Thread(target=init_with_retry, daemon=True)
         self.init_thread.start()
         
-    def cleanup(self):
-        """Clean up resources before exit"""
-        try:
-            # Set flags to stop operations
-            self.test_running = False
-            self.test_paused = False
-            
-            # Stop connection timer first
-            if hasattr(self, 'connection_timer'):
-                try:
-                    self.connection_timer.stop()
-                    self.connection_timer = None
-                except Exception as e:
-                    self.logger.error(f"Error stopping connection timer: {str(e)}")
-            
-            # Stop initialization thread if running
-            if hasattr(self, 'init_thread') and self.init_thread and self.init_thread.is_alive():
-                try:
-                    self.init_thread.join(timeout=1.0)
-                except Exception as e:
-                    self.logger.error(f"Error stopping init thread: {str(e)}")
-                finally:
-                    self.init_thread = None
-            
-            # Disconnect hardware last
-            if hasattr(self, 'hardware'):
-                try:
-                    self.hardware.disconnect()
-                    self.hardware = None
-                except Exception as e:
-                    self.logger.error(f"Error disconnecting hardware: {str(e)}")
-            
-            self.hardware_initialized = False
-            self.logger.info("Cleanup completed successfully")
-            
-        except Exception as e:
-            self.logger.error(f"Cleanup error: {str(e)}")
-            
-    def __del__(self):
-        """Ensure cleanup on destruction"""
-        try:
-            self.cleanup()
-        except:
-            pass
-
     def initialize_hardware(self):
         """Initialize hardware with improved error handling"""
         try:
@@ -1002,13 +1135,13 @@ class MainController(QObject):
             self.csv_writer = csv.DictWriter(self.data_file, fieldnames=['Time', 'Tilt_Angle', 'Temperature'])
             self.csv_writer.writeheader()
             
-            # Start data collection timer
+            # Start data collection timer with higher frequency
             self.data_timer = QTimer()
             self.data_timer.timeout.connect(self._collect_data)
             self.data_timer.start(100)  # Collect data every 100ms
             
             self.test_start_time = time.time()
-            self.logger.info("Test started")
+            self.logger.info("Data collection started")
             
         except Exception as e:
             self.logger.error(f"Error starting data collection: {str(e)}")

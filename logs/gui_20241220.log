@@ -1114,3 +1114,354 @@ AttributeError: type object 'Styles' has no attribute 'LOG_STYLE'. Did you mean:
 2024-12-20 23:33:15 - gui - [0;32mINFO[0m - VNA is connected
 2024-12-20 23:33:15 - gui - [0;32mINFO[0m - TILT is connected
 2024-12-20 23:33:15 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:38:03 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:38:03 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:38:03 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:38:03 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:38:03 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:38:04 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:38:04 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:38:04 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:38:05 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:38:09 - gui - [0;32mINFO[0m - [94mTilt angle: -3.1°[0m
+2024-12-20 23:38:09 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:09 - gui - [0;32mINFO[0m - [94mTilt angle: -3.1°[0m
+2024-12-20 23:38:09 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTilt angle: -3.2°[0m
+2024-12-20 23:38:10 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:13 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:38:13 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:38:13 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:38:14 - gui - [0;32mINFO[0m - [94mTilt angle: -3.1°[0m
+2024-12-20 23:38:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:38:14 - gui - [0;32mINFO[0m - [94mTilt angle: -3.1°[0m
+2024-12-20 23:38:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:40:19 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:40:19 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:40:19 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:40:19 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:40:19 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:40:20 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:40:20 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:40:20 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:40:21 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:40:25 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:25 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:25 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:40:26 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:29 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:40:29 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:40:29 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:40:30 - gui - [0;32mINFO[0m - [92mTilt angle: -3.9°[0m
+2024-12-20 23:40:30 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [92mTilt angle: -3.3°[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [92mTilt angle: 0.4°[0m
+2024-12-20 23:40:31 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:35 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:35 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:36 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:40 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:40 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:40:41 - gui - [0;32mINFO[0m - [94mTemperature: 34.0°C[0m
+2024-12-20 23:43:07 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:43:07 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:43:07 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:43:07 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:43:07 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:43:08 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:43:08 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:43:08 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:43:09 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:43:13 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:13 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:14 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:17 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:43:17 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:43:17 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:43:18 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:18 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:18 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:18 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [92mTilt angle: -3.3°[0m
+2024-12-20 23:43:19 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:43:23 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:23 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [92mTilt angle: -4.8°[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.5°[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [92mTilt angle: -2.9°[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.0°[0m
+2024-12-20 23:43:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:28 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:43:28 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.5°[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [92mTilt angle: -2.5°[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [92mTilt angle: -2.8°[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.8°C[0m
+2024-12-20 23:43:33 - gui - [0;32mINFO[0m - [92mTilt angle: -2.8°[0m
+2024-12-20 23:43:33 - gui - [0;32mINFO[0m - [94mTemperature: 33.2°C[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.3°[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.2°C[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.2°C[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.2°C[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:43:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.2°C[0m
+2024-12-20 23:45:12 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:45:12 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:45:12 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:45:13 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:45:13 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:45:15 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:49:21 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:49:21 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:49:21 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:49:21 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:49:21 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.0°[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:24 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:25 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:25 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:29 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:30 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:30 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:30 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:30 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:32 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:49:32 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:49:32 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [92mTilt angle: -2.9°[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.2°[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:34 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:35 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:35 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:49:35 - gui - [0;32mINFO[0m - [92mTilt angle: -3.1°[0m
+2024-12-20 23:49:35 - gui - [0;32mINFO[0m - [94mTemperature: 33.5°C[0m
+2024-12-20 23:50:01 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:50:01 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:50:01 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:50:01 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:50:01 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:50:02 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000°[0m
+2024-12-20 23:50:02 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:50:02 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:50:02 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-20 23:50:03 - gui - [0;32mINFO[0m - Waiting 5s for motor movement...
+2024-12-20 23:50:04 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:50:04 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:50:04 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:50:08 - gui - [0;32mINFO[0m - Waiting 15s for oil to level...
+2024-12-20 23:50:12 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:50:12 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:50:12 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:50:23 - gui - [0;32mINFO[0m - [92mTemperature: 33.8°C[0m
+2024-12-20 23:50:23 - gui - [0;32mINFO[0m - [93mVNA: Starting sweep at -30.0°...[0m
+2024-12-20 23:50:23 - gui - [0;32mINFO[0m - [93mVNA: Initiating sweep...[0m
+2024-12-20 23:50:23 - gui - [0;31mERROR[0m - [93mVNA: Failed to send key event: ord() expected a character, but string of length 2 found[0m
+2024-12-20 23:50:23 - gui - [0;32mINFO[0m - Waiting 10s for VNA sweep...
+2024-12-20 23:50:33 - gui - [0;31mERROR[0m - Error saving data point: dict contains fields not in fieldnames: 'Tilt_Angle'
+2024-12-20 23:50:33 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -29.0000°[0m
+2024-12-20 23:50:33 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -29.0000° (-145000 steps)[0m
+2024-12-20 23:50:34 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-20 23:50:34 - gui - [0;32mINFO[0m - Waiting 5s for motor movement...
+2024-12-20 23:50:39 - gui - [0;32mINFO[0m - Waiting 15s for oil to level...
+2024-12-20 23:51:43 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:51:43 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:51:43 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:51:43 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:51:43 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:51:44 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000°[0m
+2024-12-20 23:51:44 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:51:44 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:51:44 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Waiting 5s for motor movement...
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:51:45 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:51:50 - gui - [0;32mINFO[0m - Waiting 15s for oil to level...
+2024-12-20 23:51:53 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:51:53 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:51:53 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:55:54 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:55:54 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:55:54 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:55:54 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:55:54 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:55:55 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:55:55 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-20 23:55:55 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:55:55 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:55:56 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:56:01 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m
+2024-12-20 23:56:04 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:56:04 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:56:04 - gui - [0;32mINFO[0m - TEMP is connected
+2024-12-20 23:56:14 - gui - [0;31mERROR[0m - Error pausing/resuming test: 'MainController' object has no attribute 'test_running'
+2024-12-20 23:56:16 - gui - [0;31mERROR[0m - Error stopping test: 'MainController' object has no attribute 'test_running'
+2024-12-20 23:56:16 - gui - [0;32mINFO[0m - [92mTemperature: 33.8°C[0m
+2024-12-20 23:56:16 - gui - [0;32mINFO[0m - [93mVNA: Starting sweep at -30.0°...[0m
+2024-12-20 23:56:16 - gui - [0;32mINFO[0m - [93mVNA: Initiating sweep...[0m
+2024-12-20 23:56:16 - gui - [0;32mINFO[0m - [93mVNA: Sweep completed[0m
+2024-12-20 23:56:16 - gui - [0;32mINFO[0m - [37mWaiting 10s for VNA sweep...[0m
+2024-12-20 23:56:21 - gui - [0;31mERROR[0m - Failed to start test: Test already running
+2024-12-20 23:56:21 - gui - [0;31mERROR[0m - Failed to start test: Failed to start test
+2024-12-20 23:58:48 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:58:48 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:58:48 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:58:48 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:58:48 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:58:49 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:58:49 - gui - [0;32mINFO[0m - [95mTest started[0m
+2024-12-20 23:58:49 - gui - [0;32mINFO[0m - [95mMOTOR: Moving to -30.0000° (-150000 steps)[0m
+2024-12-20 23:58:49 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - [95mMOTOR: Movement initiated[0m
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - [37mWaiting 5s for motor movement...[0m
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:58:50 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:58:55 - gui - [0;32mINFO[0m - [37mWaiting 15s for oil to level...[0m

@@ -463,97 +463,48 @@ class MainWindow(QMainWindow):
         print("Configuration reset to defaults")
 
     def start_test(self):
-        """Start a new test with current configuration"""
+        """Start a new test"""
         try:
-            # Initialize plots window if needed
-            if not self.plots_window:
-                self.plots_window = PlotsWindow()
-            self.plots_window.show()
-            self.plots_window.clear_plots()
-            
-            # Get current test parameters
-            parameters = {
-                'tilt_increment': self.tilt_increment.value(),
-                'min_tilt': self.min_tilt.value(),
-                'max_tilt': self.max_tilt.value(),
-                'oil_level_time': self.oil_level_time.value()
-            }
-            
-            # Validate parameters
-            if not self._validate_test_parameters(parameters):
+            # Get test parameters
+            parameters = self._get_test_parameters()
+            if not parameters:
                 return
-                
-            # Disable start button and enable stop/pause
-            self.start_button.setEnabled(False)
-            self.stop_button.setEnabled(True)
-            self.pause_button.setEnabled(True)
             
-            # Show progress bar
-            self.progress_bar.setValue(0)
-            self.progress_bar.show()
-            
-            # Start test with parameters
+            # Start test - plots window will open after sequence dialog is closed
             if not self.controller.start_test(parameters):
-                raise Exception("Failed to start test")
-                
-            self.test_running = True
-            gui_logger.info("Test started successfully")
+                self.logger.error("Failed to start test")
+                return
             
         except Exception as e:
-            gui_logger.error(f"Failed to start test: {str(e)}")
-            self._handle_test_error()
-            if self.plots_window:
-                self.plots_window.close()
-                self.plots_window = None
+            self.logger.error(f"Error starting test: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to start test: {str(e)}")
+            return
 
-    def _validate_test_parameters(self, parameters):
-        """Validate test parameters
-        
-        Args:
-            parameters (dict): Test parameters to validate
-            
-        Returns:
-            bool: True if parameters are valid, False otherwise
-        """
-        try:
-            # Check tilt increment
-            if parameters['tilt_increment'] <= 0 or parameters['tilt_increment'] > 3.0:
-                gui_logger.error("Invalid tilt increment (must be between 0.1 and 3.0)")
-                return False
-                
-            # Check min/max tilt
-            if parameters['min_tilt'] >= parameters['max_tilt']:
-                gui_logger.error("Minimum tilt must be less than maximum tilt")
-                return False
-                
-            # Check oil level time
-            if parameters['oil_level_time'] < 5 or parameters['oil_level_time'] > 60:
-                gui_logger.error("Invalid oil level time (must be between 5 and 60 seconds)")
-                return False
-                
-            return True
-            
-        except Exception as e:
-            gui_logger.error(f"Parameter validation error: {str(e)}")
-            return False
-            
-    def _handle_test_error(self):
-        """Handle test error and reset UI state"""
-        # Reset button states
-        self.start_button.setEnabled(True)
-        self.stop_button.setEnabled(False)
-        self.pause_button.setEnabled(False)
-        
-        # Hide progress bar
-        self.progress_bar.hide()
-        
-        # Reset test state
-        self.test_running = False
-        
-        # Update status
-        self.connection_status.setText("Not Connected")
-        self.connection_status.setStyleSheet(Styles.STATUS_ERROR_STYLE)
+    def _get_test_parameters(self):
+        """Get test parameters from UI"""
+        return {
+            'tilt_increment': self.tilt_increment.value(),
+            'min_tilt': self.min_tilt.value(),
+            'max_tilt': self.max_tilt.value(),
+            'oil_level_time': self.oil_level_time.value()
+        }
 
+    def _handle_status_update(self, status):
+        """Handle status updates from controller"""
+        if 'message' in status:
+            self.logger.info(status['message'])
+        
+        # Only open plots window when test actually starts
+        if status.get('test_started', False):
+            self._show_plots_window()
+
+    def _show_plots_window(self):
+        """Show the plots window"""
+        if not hasattr(self, 'plots_window') or not self.plots_window:
+            from gui.plots_window import PlotsWindow
+            self.plots_window = PlotsWindow(self.controller)
+            self.plots_window.show()
+        
     def pause_test(self):
         """Pause the current test"""
         try:

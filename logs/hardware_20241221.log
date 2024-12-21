@@ -1,0 +1,42 @@
+2024-12-21 00:00:10 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:00:10 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:00:10 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:00:10 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:00:10 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:00:12 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:00:12 - hardware - [0;32mINFO[0m - Motor movement initiated: -150000 steps (-30.0000°)
+2024-12-21 00:01:33 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:01:33 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:01:33 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:01:33 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:01:33 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:01:35 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:01:35 - hardware - [0;32mINFO[0m - Motor movement initiated: -150000 steps (-30.0000°)
+2024-12-21 00:02:38 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:02:38 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:02:38 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:02:38 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:02:38 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:02:41 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:02:41 - hardware - [0;32mINFO[0m - Motor movement initiated: -150000 steps (-30.0000°)
+2024-12-21 00:07:30 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:07:30 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:07:30 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:07:30 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:07:30 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:07:32 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:07:32 - hardware - [0;32mINFO[0m - Motor movement initiated: -150000 steps (-30.0000°)
+2024-12-21 00:09:24 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:09:24 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:09:24 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:09:24 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:09:24 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:09:26 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:10:40 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-21 00:10:40 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-21 00:10:40 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-21 00:10:40 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-21 00:10:40 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-21 00:10:42 - hardware - [0;32mINFO[0m - Connection established
+2024-12-21 00:11:22 - hardware - [0;32mINFO[0m - Motor movement initiated: -150000 steps (-30.0000°)
+2024-12-21 00:11:52 - hardware - [0;32mINFO[0m - Motor movement initiated: -145000 steps (-29.0000°)
