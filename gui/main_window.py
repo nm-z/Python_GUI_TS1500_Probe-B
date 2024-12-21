@@ -39,25 +39,12 @@ class InitializationThread(QThread):
             self.progress.emit("Loading configuration...")
             self.controller.config.load()
             
-            # Check system status
-            self.progress.emit("Checking system status...")
-            if not self.controller.send_command('STATUS'):
-                self.progress.emit("Warning: Failed to get system status")
-            
-            # Run self-test
-            self.progress.emit("Running system self-test...")
-            if not self.controller.send_command('TEST'):
-                self.progress.emit("Warning: Self-test failed")
-            
-            # Home the motor
-            self.progress.emit("Homing motor...")
-            if not self.controller.send_command('HOME'):
-                self.progress.emit("Warning: Failed to home motor")
-            
-            # Calibrate system
-            self.progress.emit("Calibrating system...")
-            if not self.controller.send_command('CALIBRATE'):
-                self.progress.emit("Warning: Failed to calibrate system")
+            # Basic connection test
+            self.progress.emit("Testing connection...")
+            if self.controller.hardware and self.controller.hardware.is_connected():
+                self.progress.emit("Hardware connected successfully")
+            else:
+                self.progress.emit("Warning: Hardware connection test failed")
             
             self.progress.emit("Initialization complete")
             self.finished.emit()

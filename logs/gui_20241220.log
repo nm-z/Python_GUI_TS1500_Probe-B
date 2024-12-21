@@ -1050,3 +1050,67 @@ AttributeError: type object 'Styles' has no attribute 'LOG_STYLE'. Did you mean:
 2024-12-20 23:27:21 - gui - [0;32mINFO[0m - Initialization complete
 2024-12-20 23:27:21 - gui - [0;32mINFO[0m - Initialization complete
 2024-12-20 23:27:26 - gui - [0;31mERROR[0m - Error polling connections: No valid response received from Arduino
+2024-12-20 23:30:37 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:30:37 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:30:37 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:30:37 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:30:37 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:30:38 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:30:38 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Temperature: 33.8°C
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - System status: {'vna_connected': True, 'motor_homed': True, 'temperature': 33.75, 'current_angle': -3.24}
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - === Running System Self-Test ===
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - 1. Testing VNA connection...
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - VNA connection OK
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - 2. Testing motor movement...
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Moving motor 100 steps (0.0200°)
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Motor movement initiated
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Checking system status...
+2024-12-20 23:30:39 - gui - [0;32mINFO[0m - Running system self-test...
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Moving motor -100 steps (-0.0200°)
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Motor movement initiated
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Motor movement OK
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - 3. Testing temperature sensor...
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Temperature: 33.8°C
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Temperature sensor OK (33.75°C)
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - 4. Testing tilt sensor...
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Tilt sensor OK (-3.16°)
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - === Self-test completed successfully ===
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Starting motor homing sequence
+2024-12-20 23:30:40 - gui - [0;32mINFO[0m - Homing motor...
+2024-12-20 23:30:42 - gui - [0;31mERROR[0m - Failed to home motor
+2024-12-20 23:31:58 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:31:58 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:31:58 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:31:58 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:31:58 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:32:00 - gui - [0;31mERROR[0m - Failed to start test: 'MainController' object has no attribute '_test_running'
+2024-12-20 23:32:00 - gui - [0;31mERROR[0m - Failed to start test: Failed to start test
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:32:00 - gui - [0;31mERROR[0m - Initialization error: 'MainController' object has no attribute 'is_connected'
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Error during initialization: 'MainController' object has no attribute 'is_connected'
+2024-12-20 23:32:00 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:33:04 - gui - [0;32mINFO[0m - Configuration loaded successfully
+2024-12-20 23:33:04 - gui - [0;32mINFO[0m - Starting UI initialization...
+2024-12-20 23:33:04 - gui - [0;32mINFO[0m - MainWindow initialization complete
+2024-12-20 23:33:04 - gui - [0;32mINFO[0m - Theme updated to dark mode
+2024-12-20 23:33:04 - gui - [0;32mINFO[0m - Initializing hardware connections...
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Hardware initialized successfully
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Configuration reloaded successfully
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Loading configuration...
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Testing connection...
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Hardware connected successfully
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:33:07 - gui - [0;32mINFO[0m - Initialization complete
+2024-12-20 23:33:12 - gui - [0;32mINFO[0m - Test started
+2024-12-20 23:33:12 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:33:12 - gui - [0;32mINFO[0m - Test started successfully
+2024-12-20 23:33:15 - gui - [0;32mINFO[0m - VNA is connected
+2024-12-20 23:33:15 - gui - [0;32mINFO[0m - TILT is connected
+2024-12-20 23:33:15 - gui - [0;32mINFO[0m - TEMP is connected

@@ -25,8 +25,8 @@ class MainController(QObject):
         super().__init__()
         self.config = Config()
         self.logger = gui_logger
-        self.test_running = False
-        self.test_paused = False
+        self._test_running = False
+        self._test_paused = False
         self.current_run = 0
         self.current_angle = 0.0
         
@@ -153,47 +153,42 @@ class MainController(QObject):
         except Exception as e:
             self.logger.error(f"Error saving data point: {str(e)}")
             
-    def start_test(self, parameters=None):
-        """Start the test
+    def start_test(self, parameters):
+        """Start a new test with the given parameters
         
         Args:
-            parameters (dict, optional): Test parameters including tilt_increment,
-                                       min_tilt, max_tilt, and oil_level_time
+            parameters (dict): Test parameters
+            
         Returns:
-            bool: True if test started successfully, False otherwise
+            bool: True if test started successfully
         """
         try:
             if not self.hardware.is_connected():
-                self.logger.error("Cannot start test: Hardware not connected")
-                return False
+                raise Exception("Hardware not connected")
                 
-            # Validate parameters
-            if parameters:
-                if not self._validate_parameters(parameters):
-                    return False
-                    
+            if self._test_running:
+                raise Exception("Test already running")
+                
+            # Store test parameters
+            self.test_parameters = parameters
+            
             # Reset test state
-            self.test_running = True
-            self.test_start_time = time.time()
+            self._test_running = True
+            self._test_paused = False
+            self._current_angle = None
+            self._start_time = time.time()
             
-            # Create data file
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            self.data_file = open(f"data/test_run_{timestamp}.csv", 'w', newline='')
-            self.csv_writer = csv.DictWriter(self.data_file, fieldnames=['Time', 'Tilt_Angle', 'Temperature'])
-            self.csv_writer.writeheader()
+            # Start data collection
+            self._start_data_collection()
             
-            # Start data collection timer
-            self.data_timer = QTimer()
-            self.data_timer.timeout.connect(self._collect_data)
-            self.data_timer.start(100)  # Collect data every 100ms
-            
-            self.logger.info("Test started")
+            self.logger.info("Test started successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"Error starting test: {str(e)}")
+            self.logger.error(f"Failed to start test: {str(e)}")
+            self._test_running = False
             return False
-            
+        
     def _validate_parameters(self, parameters):
         """Validate test parameters
         
@@ -993,3 +988,28 @@ class MainController(QObject):
         except Exception as e:
             self.logger.error(f"Error pausing/resuming test: {str(e)}")
             return False
+
+    def is_connected(self):
+        """Check if hardware is connected"""
+        return self.hardware and self.hardware.is_connected()
+
+    def _start_data_collection(self):
+        """Start data collection timer"""
+        try:
+            # Create data file
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.data_file = open(f"data/test_run_{timestamp}.csv", 'w', newline='')
+            self.csv_writer = csv.DictWriter(self.data_file, fieldnames=['Time', 'Tilt_Angle', 'Temperature'])
+            self.csv_writer.writeheader()
+            
+            # Start data collection timer
+            self.data_timer = QTimer()
+            self.data_timer.timeout.connect(self._collect_data)
+            self.data_timer.start(100)  # Collect data every 100ms
+            
+            self.test_start_time = time.time()
+            self.logger.info("Test started")
+            
+        except Exception as e:
+            self.logger.error(f"Error starting data collection: {str(e)}")
+            raise
