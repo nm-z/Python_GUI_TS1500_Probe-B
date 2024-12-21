@@ -1,9 +1,25 @@
-matplotlib
-numpy
-scipy
-pyserial
-flask
-pyusb
-pillow
-pygame
+# GUI Dependencies
+PyQt6>=6.5.0
+pyserial==3.5
+pyqtgraph>=0.13.3
+
+# Data Processing & Scientific Libraries
+numpy>=1.26.0  # Updated for Python 3.12 compatibility
+matplotlib>=3.8.0  # Updated for numpy 1.26
+pandas>=2.1.0  # Updated for numpy 1.26
+scipy>=1.11.0  # Updated for numpy 1.26
+
+# Time Synchronization
+ntplib==0.4.0
+
+# Web Server
+flask==2.0.0
+
+# Utilities
+pillow>=10.0.0
+pyusb==1.2.0
+PyYAML==6.0.1
+keyboard==0.13.5
+python-dateutil==2.8.2
+pytz==2022.1
    

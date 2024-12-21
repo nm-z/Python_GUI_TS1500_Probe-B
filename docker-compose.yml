@@ -1,21 +1,21 @@
-version: '3'
-
 services:
   gui:
     build:
-      context: https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git#Beta
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ${HOME}/.Xauthority:/home/appuser/.Xauthority
-      - vna_exports:/home/nate/Desktop/Python_GUI_TS1500_Probe-B/VNA_Exports
-      - /dev:/dev
+      context: .
+      dockerfile: Dockerfile
+    container_name: ts1500-gui
     environment:
       - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
+      - QT_QPA_PLATFORM=xcb
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+      - DEBUG=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./:/app:rw
+      - /dev:/dev
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
     privileged: true
     network_mode: host
-
-volumes:
-  vna_exports:
+    restart: "no"

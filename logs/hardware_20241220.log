@@ -1,0 +1,591 @@
+2024-12-20 12:44:38 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 12:44:38 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:44:38 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:44:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:44:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:44:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:44:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:44:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:44:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:44:58 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:44:58 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:03 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:03 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:13 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:13 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:18 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:18 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:23 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:23 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:28 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:28 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:33 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:33 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:38 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:38 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:45:58 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:45:58 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:03 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:03 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:13 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:13 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:18 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:18 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:23 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:23 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:28 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:28 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:33 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:33 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:38 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:38 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:46:58 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:46:58 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:03 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:03 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:13 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:13 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:18 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:18 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:23 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:23 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:28 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:28 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:33 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:33 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:38 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:38 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:47:58 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:47:58 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:48:03 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:48:03 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:48:10 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 12:48:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:48:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:48:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:48:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 12:48:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 12:48:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:08:55 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:08:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:08:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:01 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:01 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:06 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:06 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:11 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:11 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:16 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:16 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:21 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:21 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:09:26 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:09:26 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:10:48 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:10:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:10:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:10:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:10:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:12:51 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:12:51 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:12:51 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:15:48 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:15:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:15:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:22:08 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:22:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:22:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:04 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 13:30:04 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:04 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:30:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:30:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:31:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:31:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:32:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:32:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:33:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:33:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:34:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:34:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:35:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:35:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:36:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:36:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:50 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:50 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:37:55 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:37:55 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:00 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:00 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:05 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:05 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:10 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:10 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:15 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:15 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:20 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:20 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:25 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:25 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:30 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:30 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:35 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:35 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:40 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:40 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 13:38:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 13:38:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:19:34 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 14:19:34 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:19:34 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:19:39 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:19:39 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:07 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 14:22:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:12 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:12 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:17 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:17 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:22 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:22 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:27 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:27 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:32 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:32 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:37 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:37 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:42 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:42 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:22:57 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:22:57 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:12 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:12 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:17 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:17 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:22 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:22 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:27 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:27 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:32 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:32 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:37 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:37 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:42 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:42 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:23:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:23:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:24:45 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 14:24:45 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:24:45 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:57:42 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 14:57:42 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:57:42 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:59:47 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 14:59:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:59:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 14:59:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 14:59:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:02:47 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:02:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:02:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:02:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:02:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:02:57 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:02:57 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:03:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:03:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:03:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:03:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:07:38 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:07:38 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:07:38 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:07:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:07:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:12:03 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:12:06 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:13:33 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:13:33 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:13:34 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:13:34 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:13:34 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:13:34 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:13:34 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:13:36 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:14:31 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:14:32 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:14:34 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:15:20 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:15:20 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:15:20 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:15:20 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:15:21 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:15:21 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:15:21 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:15:23 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.06 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:15:28 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.03 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:15:33 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.04 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:15:38 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.08 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:15:43 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.11 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:16:11 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:16:14 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.04 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:16:44 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:16:47 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.08 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:16:52 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.01 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:17:19 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:17:19 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:17:20 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:17:20 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:17:20 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:17:20 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:17:20 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:17:22 - hardware - [0;32mINFO[0m - [arduino] POS 0 ANGLE -4.01 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-20 15:17:57 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:17:57 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:17:58 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:17:58 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:17:58 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:17:58 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:17:58 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:18:26 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:18:27 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:19:12 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:19:44 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:19:44 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:19:44 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:19:44 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:19:45 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:19:45 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:19:45 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:21:07 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:21:07 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:21:07 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:21:07 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:21:08 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:21:08 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:21:08 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:21:31 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:21:31 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:21:32 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:21:32 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:21:32 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:21:32 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:21:32 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:21:42 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:21:42 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:21:42 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:21:42 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:21:42 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:21:43 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:21:43 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] Debug port initialized
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] Initializing MPU6050...
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] MPU6050 initialization successful
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] Temperature sensor initialized successfully
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] Initialization complete
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] READY
+2024-12-20 15:21:53 - hardware - [0;32mINFO[0m - [arduino] Connected successfully
+2024-12-20 15:30:19 - hardware - [0;33mWARNING[0m - [arduino] No response received
+2024-12-20 15:31:17 - hardware - [0;33mWARNING[0m - [arduino] No response received
+2024-12-20 16:05:47 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:05:47 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:05:47 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:05:47 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:05:47 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:06:06 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:06:06 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:06:06 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:06:06 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:06:06 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:06:09 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:06:09 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:06:13 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...
+2024-12-20 16:06:55 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:06:55 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:06:55 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:06:56 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:06:56 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:06:58 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:06:58 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:07:02 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...
+2024-12-20 16:07:31 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:07:31 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:07:31 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:07:32 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:07:32 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:07:34 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:07:34 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:07:38 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...
+2024-12-20 16:08:47 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:08:47 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:08:47 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:08:47 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:08:47 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:08:49 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:08:49 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:08:53 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...
+2024-12-20 16:09:29 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:09:29 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:09:29 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:09:30 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:09:30 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:09:31 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:09:31 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:09:35 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...
+2024-12-20 16:10:06 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:10:06 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:10:06 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:10:06 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:10:06 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:10:08 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 16:10:21 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:10:21 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:10:21 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:10:21 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:10:21 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:10:23 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 16:10:26 - hardware - [0;32mINFO[0m - Arduino: Debug port initialized
+2024-12-20 16:10:26 - hardware - [0;32mINFO[0m - Arduino: Temperature sensor initialized successfully
+2024-12-20 16:10:26 - hardware - [0;32mINFO[0m - Arduino: Initialization complete
+2024-12-20 16:10:26 - hardware - [0;32mINFO[0m - Arduino: READY
+2024-12-20 16:10:26 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 16:10:27 - hardware - [0;32mINFO[0m - Arduino: Starting calibration...
+2024-12-20 16:10:29 - hardware - [0;32mINFO[0m - Arduino: Calibration complete
+2024-12-20 16:10:30 - hardware - [0;32mINFO[0m - Arduino: Starting homing sequence...

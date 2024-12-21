@@ -1,0 +1,147 @@
+.
+├── Arduino_commands.md
+├── arduino_data_collection
+│   ├── arduino_data_collection.ino
+│   └── README.md
+├── components.md
+├── config.json
+├── config.yaml
+├── controllers
+│   ├── __init__.py
+│   ├── main_controller.py
+│   └── __pycache__
+│       ├── __init__.cpython-312.pyc
+│       └── main_controller.cpython-312.pyc
+├── data
+│   ├── fill_level.csv
+│   ├── results
+│   ├── temperature
+│   ├── temperature.csv
+│   ├── temperature_data
+│   │   └── temperature_log.csv
+│   ├── test_runs.csv
+│   ├── tilt_angle.csv
+│   ├── vna
+│   ├── vna_data
+│   │   └── vna_measurements.csv
+│   └── vna_data.csv
+├── data.csv
+├── docker-compose.yml
+├── Dockerfile
+├── gui
+│   ├── backup_management_dialog.py
+│   ├── components
+│   │   └── __pycache__
+│   │       ├── components.cpython-312.pyc
+│   │       ├── __init__.cpython-312.pyc
+│   │       ├── log_viewer.cpython-312.pyc
+│   │       ├── status_bar.cpython-312.pyc
+│   │       ├── status_indicators.cpython-312.pyc
+│   │       └── tilt_indicator.cpython-312.pyc
+│   ├── components.py
+│   ├── control_panel.py
+│   ├── dialogs
+│   │   └── __pycache__
+│   │       ├── backup_management_dialog.cpython-312.pyc
+│   │       ├── __init__.cpython-312.pyc
+│   │       ├── settings_dialog.cpython-312.pyc
+│   │       └── test_parameters_dialog.cpython-312.pyc
+│   ├── hardware_configuration_dialog.py
+│   ├── __init__.py
+│   ├── log_viewer.py
+│   ├── main_window.py
+│   ├── plots
+│   │   └── __pycache__
+│   │       ├── __init__.cpython-312.pyc
+│   │       └── real_time_plots.cpython-312.pyc
+│   ├── __pycache__
+│   │   ├── components.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── log_viewer.cpython-312.pyc
+│   │   ├── main_window.cpython-312.pyc
+│   │   ├── real_time_plots.cpython-312.pyc
+│   │   ├── settings_dialog.cpython-312.pyc
+│   │   └── styles.cpython-312.pyc
+│   ├── real_time_plots.py
+│   ├── settings_dialog.py
+│   ├── settings_panel.py
+│   ├── status_indicators.py
+│   ├── styles.py
+│   ├── test_parameters_dialog.py
+│   ├── tilt_indicator.py
+│   └── widgets.py
+├── hardware
+│   ├── arduino.py
+│   ├── controller.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── arduino.cpython-312.pyc
+│       ├── controller.cpython-312.pyc
+│       ├── __init__.cpython-312.pyc
+│       └── vna_controller.cpython-312.pyc
+├── icons
+│   ├── backup.png
+│   ├── components.png
+│   ├── export.png
+│   ├── hardware.png
+│   ├── help.png
+│   ├── issue.png
+│   ├── logs.png
+│   ├── open.png
+│   ├── params.png
+│   ├── pause.png
+│   ├── plots.png
+│   ├── reset.png
+│   ├── save.png
+│   ├── start.png
+│   ├── stop.png
+│   ├── sync.png
+│   ├── tilt.png
+│   └── upload.png
+├── __init__.py
+├── logs
+│   ├── app_20241210.log
+│   ├── archive.json
+│   ├── gui_20241209.log
+│   ├── gui_20241210.log
+│   ├── gui_20241211.log
+│   ├── gui.log
+│   ├── hardware_20241210.log
+│   └── hardware_20241211.log
+├── main.py
+├── models
+│   ├── data_model.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── data_model.cpython-312.pyc
+│       └── __init__.cpython-312.pyc
+├── Pin_config.md
+├── __pycache__
+│   ├── gui.cpython-312.pyc
+│   └── tilt_indicator.cpython-312.pyc
+├── README.md
+├── requirements.txt
+├── run.sh
+├── setup.py
+├── test_arduino.py
+├── TS1500-Probe.desktop
+├── utils
+│   ├── backup.py
+│   ├── config.py
+│   ├── generate_icons.py
+│   ├── __init__.py
+│   ├── keyboard_control.py
+│   ├── logger.py
+│   ├── __pycache__
+│   │   ├── backup.cpython-312.pyc
+│   │   ├── config.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── logger.cpython-312.pyc
+│   │   └── time_sync.cpython-312.pyc
+│   ├── text_handler.py
+│   └── time_sync.py
+└── views
+    ├── __init__.py
+    └── main_view.py
+
+28 directories, 117 files

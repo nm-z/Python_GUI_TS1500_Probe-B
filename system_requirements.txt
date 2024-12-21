@@ -1,0 +1,20 @@
+# System Dependencies for Linux
+# These packages are required for PyQt6 to function properly
+
+# Install using:
+# sudo apt install libxcb-cursor0 libxcb-xinerama0 libxcb-xfixes0 libxcb-shape0 libxcb-render-util0 libxcb-render0 libxcb-shm0 libxcb-keysyms1 libxcb-icccm4 libxcb-image0 libxcb-util1 libxcb-xkb1 libxkbcommon-x11-0
+
+Required packages:
+- libxcb-cursor0
+- libxcb-xinerama0
+- libxcb-xfixes0
+- libxcb-shape0
+- libxcb-render-util0
+- libxcb-render0
+- libxcb-shm0
+- libxcb-keysyms1
+- libxcb-icccm4
+- libxcb-image0
+- libxcb-util1
+- libxcb-xkb1
+- libxkbcommon-x11-0
