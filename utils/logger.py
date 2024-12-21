@@ -1,6 +1,8 @@
 import logging
 import os
 from datetime import datetime
+from PyQt6.QtWidgets import QTextEdit, QScrollBar
+from PyQt6.QtCore import Qt
 
 class ColoredFormatter(logging.Formatter):
     """Custom formatter with colored output"""
@@ -131,3 +133,38 @@ def log_hardware_event(component, level, message, **kwargs):
         message = f"{message} [{context_str}]"
     
     hardware_logger.log(level_num, f"[{component}] {message}")
+
+class QTextEditLogger(logging.Handler):
+    """Custom logging handler that writes to a QTextEdit widget"""
+    
+    def __init__(self, widget):
+        super().__init__()
+        self.widget = widget
+        self.widget.setReadOnly(True)
+        
+        # Define colors for different log levels
+        self.colors = {
+            logging.DEBUG: '#A0A0A0',    # Gray
+            logging.INFO: '#FFFFFF',     # White
+            logging.WARNING: '#FFA500',  # Orange
+            logging.ERROR: '#FF0000',    # Red
+            logging.CRITICAL: '#FF00FF'  # Magenta
+        }
+        
+    def emit(self, record):
+        """Write the log message to the QTextEdit with appropriate color"""
+        msg = self.format(record)
+        color = self.colors.get(record.levelno, '#FFFFFF')
+        
+        # Format message with HTML color
+        html_msg = f'<span style="color: {color};">{msg}</span><br>'
+        
+        # Append message to widget
+        self.widget.append(html_msg)
+        
+        # Auto-scroll to bottom
+        scrollbar = self.widget.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
+
+# Make QTextEditLogger available at module level
+__all__ = ['ColoredFormatter', 'setup_logger', 'log_test_results', 'log_hardware_event', 'QTextEditLogger', 'gui_logger', 'hardware_logger']

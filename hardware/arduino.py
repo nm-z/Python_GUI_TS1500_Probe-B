@@ -11,26 +11,91 @@ class ArduinoController(QObject):
         super().__init__()
         self.arduino = None
         self.arduino_connected = False
-
-    def connect(self, port='/dev/ttyACM0', baudrate=115200):
+        
+    @staticmethod
+    def find_arduino_port():
+        """Find the Arduino Due Native port"""
+        import serial.tools.list_ports
+        
+        # First try to find Arduino Due Native port
+        for port in serial.tools.list_ports.comports():
+            if "Arduino Due" in port.description and "Native" in port.description:
+                return port.device
+                
+        # If native port not found, try programming port as fallback
+        for port in serial.tools.list_ports.comports():
+            if "Arduino Due" in port.description and "Programming" in port.description:
+                return port.device
+                
+        # Last resort: try ttyACM ports
+        for port in serial.tools.list_ports.comports():
+            if "ttyACM" in port.device:
+                return port.device
+                
+        return None  # No suitable port found
+        
+    def connect(self, port=None, baudrate=250000):
         """Connect to Arduino"""
+        if port is None:
+            port = self.find_arduino_port()
+            
         try:
             if self.arduino and self.arduino.is_open:
                 self.arduino.close()
                 
+            log_hardware_event('arduino', 'INFO', f'Attempting to connect to {port} at {baudrate} baud')
             self.arduino = serial.Serial(
                 port=port,
                 baudrate=baudrate,
-                timeout=1
+                timeout=1,
+                write_timeout=1,
+                bytesize=serial.EIGHTBITS,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE
             )
             
-            time.sleep(2)  # Wait for Arduino reset
+            log_hardware_event('arduino', 'INFO', 'Serial port opened, waiting for reset...')
+            time.sleep(3)  # Due needs more time to reset
+            
+            # Clear any startup messages
             self.arduino.reset_input_buffer()
             self.arduino.reset_output_buffer()
             
-            # Test connection
-            response = self.send_command("TEST")
-            if response and not isinstance(response, dict):
+            # Send initial newline to clear any partial commands
+            self.arduino.write(b'\n')
+            time.sleep(0.1)
+            self.arduino.reset_input_buffer()
+            
+            # Wait for initialization messages and READY signal
+            start_time = time.time()
+            ready_received = False
+            init_messages = []
+            
+            while (time.time() - start_time) < 5:  # 5 second timeout
+                if self.arduino.in_waiting:
+                    try:
+                        line = self.arduino.readline().decode('utf-8').strip()
+                        if line:
+                            log_hardware_event('arduino', 'DEBUG', 'Init message received', message=line)
+                            init_messages.append(line)
+                            if line == "READY":
+                                ready_received = True
+                                break
+                    except UnicodeDecodeError:
+                        log_hardware_event('arduino', 'WARNING', 'Received non-text data during init')
+                time.sleep(0.1)
+            
+            if not ready_received:
+                log_hardware_event('arduino', 'ERROR', 'Never received READY signal', init_messages=init_messages)
+                return False
+            
+            log_hardware_event('arduino', 'INFO', 'READY signal received, testing connection...')
+            
+            # Now test the connection with a simple command
+            response = self.send_command("STATUS")
+            log_hardware_event('arduino', 'DEBUG', 'Status response', response=response)
+            
+            if response and isinstance(response, dict) and 'error' not in response:
                 self.arduino_connected = True
                 log_hardware_event('arduino', 'INFO', 'Connected successfully', port=port, baudrate=baudrate)
                 return True
@@ -53,10 +118,11 @@ class ArduinoController(QObject):
             # Clear input buffer
             self.arduino.reset_input_buffer()
             
-            # Send command
+            # Send command with newline
             log_hardware_event('arduino', 'DEBUG', 'Sending command', command=command)
             self.arduino.write(f"{command}\n".encode('utf-8'))
-            time.sleep(0.1)
+            self.arduino.flush()  # Ensure command is sent
+            time.sleep(0.1)  # Give Arduino time to process
             
             # Read response
             responses = []
@@ -65,28 +131,32 @@ class ArduinoController(QObject):
             
             while (time.time() - start_time) < 2:  # 2 second timeout
                 if self.arduino.in_waiting:
-                    line = self.arduino.readline().decode('utf-8').strip()
-                    if line:
-                        log_hardware_event('arduino', 'DEBUG', 'Received response', response=line)
-                        
-                        # Handle special cases
-                        if line == "START_TEST":
-                            in_test = True
-                            continue
-                        elif line == "END_TEST":
-                            in_test = False
-                            break
-                        elif line.startswith("ERROR"):
-                            log_hardware_event('arduino', 'ERROR', 'Error response received', error=line)
-                            return {"error": line}
-                        
-                        responses.append(line)
-                        
-                        # If not in a TEST command, break after first response
-                        if not in_test and command != "TEST":
-                            break
+                    try:
+                        line = self.arduino.readline().decode('utf-8').strip()
+                        if line:
+                            log_hardware_event('arduino', 'DEBUG', 'Received response', response=line)
                             
-                time.sleep(0.1)
+                            # Handle special cases
+                            if line == "START_TEST":
+                                in_test = True
+                                continue
+                            elif line == "END_TEST":
+                                in_test = False
+                                break
+                            elif line.startswith("ERROR"):
+                                log_hardware_event('arduino', 'ERROR', 'Error response received', error=line)
+                                return {"error": line}
+                            
+                            responses.append(line)
+                            
+                            # If not in a TEST command, break after first response
+                            if not in_test and command != "TEST":
+                                break
+                    except UnicodeDecodeError:
+                        log_hardware_event('arduino', 'WARNING', 'Received non-text data')
+                        continue
+                        
+                time.sleep(0.05)  # Shorter sleep to be more responsive
 
             if not responses:
                 log_hardware_event('arduino', 'WARNING', 'No response received', command=command)
@@ -102,28 +172,36 @@ class ArduinoController(QObject):
                 return result
             elif command == "STATUS":
                 # Parse status response: POS X ANGLE Y SPEED Z ACCEL W HOMED H E_STOP E
-                parts = responses[0].split()
                 try:
-                    angle = float(parts[3])
-                    self.angle_updated_signal.emit(angle)  # Emit angle update signal
+                    parts = responses[0].split()
+                    if len(parts) >= 12:  # Make sure we have all parts
+                        angle = float(parts[3])
+                        self.angle_updated_signal.emit(angle)  # Emit angle update signal
+                        return {
+                            "position": int(parts[1]),
+                            "angle": angle,
+                            "speed": float(parts[5]),
+                            "acceleration": float(parts[7]),
+                            "homed": parts[9] == "YES",
+                            "emergency_stop": parts[11] == "YES"
+                        }
+                    else:
+                        log_hardware_event('arduino', 'ERROR', 'Invalid status response format', response=responses[0])
+                        return {"error": "INVALID_FORMAT"}
                 except (IndexError, ValueError) as e:
                     log_hardware_event('arduino', 'ERROR', 'Failed to parse status response', 
                                      response=responses[0], error=str(e))
                     return {"error": "PARSE_ERROR"}
-                    
-                return {
-                    "position": int(parts[1]),
-                    "angle": float(parts[3]),
-                    "speed": float(parts[5]),
-                    "acceleration": float(parts[7]),
-                    "homed": parts[9] == "YES",
-                    "emergency_stop": parts[11] == "YES"
-                }
             elif command == "TEMP":
-                if responses[0].startswith("TEMP"):
-                    return {"temperature": float(responses[0].split()[1])}
-                log_hardware_event('arduino', 'WARNING', 'Invalid temperature response', response=responses[0])
-                return {"error": responses[0]}
+                try:
+                    if responses[0].startswith("TEMP "):
+                        return {"temperature": float(responses[0].split()[1])}
+                    log_hardware_event('arduino', 'WARNING', 'Invalid temperature response', response=responses[0])
+                    return {"error": responses[0]}
+                except (IndexError, ValueError) as e:
+                    log_hardware_event('arduino', 'ERROR', 'Failed to parse temperature', 
+                                     response=responses[0], error=str(e))
+                    return {"error": "PARSE_ERROR"}
             else:
                 return responses[0] if responses else None
             

@@ -2,205 +2,343 @@ from PyQt6.QtGui import QPalette, QColor, QFont, QIcon
 from PyQt6.QtWidgets import QApplication
 
 class Styles:
-    # Font configuration
-    FONT = QFont('Ubuntu')
-    FONT.setBold(True)
-    FONT_STYLE = "font-family: 'Ubuntu'; font-weight: bold;"
+    # Font settings
+    FONT = QFont("Ubuntu", 10, QFont.Weight.Bold)
     
-    # Theme colors
+    # Dark theme colors
     DARK_BG = "#121212"
-    PRIMARY = "#47A8E5"
-    PRIMARY_LIGHT = "#64B1E8"
-    PRIMARY_LIGHTER = "#7BBBEB"
-    SURFACE_DARK = "#1A1F24"
-    SURFACE = "#2F3438"
-    SURFACE_LIGHT = "#464A4E"
+    DARK_SURFACE = "#1F1F1F"
+    DARK_TEXT = "#FFFFFF"
+    DARK_BORDER = "#47A8E5"
+    DARK_HOVER = "#2F3438"
+    DARK_PRESSED = "#1A1F24"
     
-    # Graph colors
-    TILT_LINE_COLOR = "#FF073A"
-    TEMP_LINE_COLOR = "#0FFF50"
+    # Light theme colors
+    LIGHT_BG = "#FFFFFF"
+    LIGHT_SURFACE = "#F5F5F5"
+    LIGHT_TEXT = "#000000"
+    LIGHT_BORDER = "#47A8E5"
+    LIGHT_HOVER = "#F0F0F0"
+    LIGHT_PRESSED = "#E0E0E0"
     
-    # Styles
-    DIVIDER_STYLE = f"""
-        QSplitter::handle {{
-            background-color: {PRIMARY};
-            border: 1px solid {PRIMARY};
+    # Status colors
+    SUCCESS_COLOR = "#4CAF50"
+    ERROR_COLOR = "#F44336"
+    WARNING_COLOR = "#FFC107"
+    
+    # Dark theme styles
+    DARK_WINDOW_STYLE = f"""
+        QMainWindow, QDialog {{
+            background-color: {DARK_BG};
+            color: {DARK_TEXT};
         }}
-        QSplitter::handle:hover {{
-            background-color: {PRIMARY_LIGHT};
+        QWidget {{
+            background-color: {DARK_BG};
+            color: {DARK_TEXT};
+        }}
+        QGroupBox {{
+            border: 1px solid {DARK_BORDER};
+            border-radius: 3px;
+            margin-top: 0.5em;
+            padding-top: 0.5em;
+        }}
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 3px;
         }}
     """
     
-    BUTTON_STYLE = f"""
+    DARK_BUTTON_STYLE = f"""
         QPushButton {{
-            background-color: {SURFACE};
-            color: white;
-            border: 2px solid {PRIMARY};
-            border-radius: 5px;
-            padding: 8px;
-            {FONT_STYLE}
+            background-color: {DARK_SURFACE};
+            color: {DARK_TEXT};
+            border: 1px solid {DARK_BORDER};
+            padding: 5px;
+            border-radius: 3px;
         }}
         QPushButton:hover {{
-            background-color: {PRIMARY};
+            background-color: {DARK_HOVER};
         }}
         QPushButton:pressed {{
-            background-color: {PRIMARY_LIGHT};
+            background-color: {DARK_PRESSED};
         }}
         QPushButton:disabled {{
-            background-color: {SURFACE_DARK};
-            border-color: {SURFACE_LIGHT};
+            background-color: {DARK_BG};
             color: #666666;
+            border: 1px solid #666666;
         }}
     """
     
-    SPINBOX_STYLE = f"""
+    DARK_SPINBOX_STYLE = f"""
         QSpinBox, QDoubleSpinBox {{
-            background-color: {SURFACE};
-            color: white;
-            border: 2px solid {PRIMARY};
-            border-radius: 5px;
-            padding: 5px;
-            {FONT_STYLE}
-        }}
-        QSpinBox:focus, QDoubleSpinBox:focus {{
-            border-color: {PRIMARY_LIGHT};
+            background-color: {DARK_SURFACE};
+            color: {DARK_TEXT};
+            border: 1px solid {DARK_BORDER};
+            padding: 2px;
+            border-radius: 3px;
         }}
         QSpinBox::up-button, QDoubleSpinBox::up-button {{
-            background-color: {SURFACE_LIGHT};
+            background-color: {DARK_SURFACE};
             border: none;
-            border-left: 2px solid {PRIMARY};
-            border-bottom: 1px solid {PRIMARY};
-            border-top-right-radius: 3px;
+            border-left: 1px solid {DARK_BORDER};
+            border-bottom: 1px solid {DARK_BORDER};
         }}
         QSpinBox::down-button, QDoubleSpinBox::down-button {{
-            background-color: {SURFACE_LIGHT};
+            background-color: {DARK_SURFACE};
             border: none;
-            border-left: 2px solid {PRIMARY};
-            border-top: 1px solid {PRIMARY};
-            border-bottom-right-radius: 3px;
-        }}
-        QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
-        QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {{
-            background-color: {PRIMARY};
-        }}
-        QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {{
-            image: url(icons/up.png);
-            width: 10px;
-            height: 10px;
-        }}
-        QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {{
-            image: url(icons/down.png);
-            width: 10px;
-            height: 10px;
+            border-left: 1px solid {DARK_BORDER};
         }}
     """
     
-    COMBOBOX_STYLE = f"""
-        QComboBox {{
-            background-color: {SURFACE};
-            color: white;
-            border: 2px solid {PRIMARY};
-            border-radius: 5px;
+    DARK_LOG_STYLE = f"""
+        QTextEdit {{
+            background-color: {DARK_SURFACE};
+            color: {DARK_TEXT};
+            border: 1px solid {DARK_BORDER};
+            border-radius: 3px;
+        }}
+    """
+    
+    # Light theme styles
+    LIGHT_WINDOW_STYLE = f"""
+        QMainWindow, QDialog {{
+            background-color: {LIGHT_BG};
+            color: {LIGHT_TEXT};
+        }}
+        QWidget {{
+            background-color: {LIGHT_BG};
+            color: {LIGHT_TEXT};
+        }}
+        QGroupBox {{
+            border: 1px solid {LIGHT_BORDER};
+            border-radius: 3px;
+            margin-top: 0.5em;
+            padding-top: 0.5em;
+        }}
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 3px;
+        }}
+    """
+    
+    LIGHT_BUTTON_STYLE = f"""
+        QPushButton {{
+            background-color: {LIGHT_SURFACE};
+            color: {LIGHT_TEXT};
+            border: 1px solid {LIGHT_BORDER};
             padding: 5px;
-            {FONT_STYLE}
+            border-radius: 3px;
         }}
-        QComboBox:hover {{
-            border-color: {PRIMARY_LIGHT};
+        QPushButton:hover {{
+            background-color: {LIGHT_HOVER};
         }}
-        QComboBox:focus {{
-            border-color: {PRIMARY_LIGHT};
+        QPushButton:pressed {{
+            background-color: {LIGHT_PRESSED};
         }}
-        QComboBox::drop-down {{
-            border: none;
-            border-left: 2px solid {PRIMARY};
-            background-color: {SURFACE_LIGHT};
-            width: 20px;
-        }}
-        QComboBox::drop-down:hover {{
-            background-color: {PRIMARY};
-        }}
-        QComboBox::down-arrow {{
-            image: url(icons/down.png);
-            width: 10px;
-            height: 10px;
-        }}
-        QComboBox QAbstractItemView {{
-            background-color: {SURFACE};
-            color: white;
-            selection-background-color: {PRIMARY};
-            selection-color: white;
-            border: 2px solid {PRIMARY};
+        QPushButton:disabled {{
+            background-color: {LIGHT_BG};
+            color: #999999;
+            border: 1px solid #CCCCCC;
         }}
     """
     
+    LIGHT_SPINBOX_STYLE = f"""
+        QSpinBox, QDoubleSpinBox {{
+            background-color: {LIGHT_SURFACE};
+            color: {LIGHT_TEXT};
+            border: 1px solid {LIGHT_BORDER};
+            padding: 2px;
+            border-radius: 3px;
+        }}
+        QSpinBox::up-button, QDoubleSpinBox::up-button {{
+            background-color: {LIGHT_SURFACE};
+            border: none;
+            border-left: 1px solid {LIGHT_BORDER};
+            border-bottom: 1px solid {LIGHT_BORDER};
+        }}
+        QSpinBox::down-button, QDoubleSpinBox::down-button {{
+            background-color: {LIGHT_SURFACE};
+            border: none;
+            border-left: 1px solid {LIGHT_BORDER};
+        }}
+    """
+    
+    LIGHT_LOG_STYLE = f"""
+        QTextEdit {{
+            background-color: {LIGHT_SURFACE};
+            color: {LIGHT_TEXT};
+            border: 1px solid {LIGHT_BORDER};
+            border-radius: 3px;
+        }}
+    """
+    
+    # Emergency button style (always red)
+    EMERGENCY_BUTTON_STYLE = """
+        QPushButton {
+            background-color: #F44336;
+            color: white;
+            border: 2px solid #D32F2F;
+            padding: 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background-color: #D32F2F;
+        }
+        QPushButton:pressed {
+            background-color: #B71C1C;
+        }
+    """
+    
+    # Progress bar style
     PROGRESS_STYLE = f"""
         QProgressBar {{
-            border: 2px solid {PRIMARY};
-            border-radius: 5px;
+            border: 1px solid {DARK_BORDER};
+            border-radius: 3px;
             text-align: center;
-            {FONT_STYLE}
-            color: white;
-            background-color: {SURFACE_DARK};
         }}
         QProgressBar::chunk {{
-            background-color: {PRIMARY};
-            width: 10px;
-            margin: 0.5px;
+            background-color: {DARK_BORDER};
         }}
     """
     
-    LOGGER_STYLE = f"""
-        QTextEdit {{
-            background-color: {SURFACE_DARK};
-            color: white;
-            border: 2px solid {PRIMARY};
-            border-radius: 5px;
+    # Status styles
+    STATUS_ERROR_STYLE = f"""
+        QLabel {{
+            color: {ERROR_COLOR};
             padding: 5px;
-            {FONT_STYLE}
+            border-radius: 3px;
+            background-color: {DARK_SURFACE};
+            border: 1px solid {ERROR_COLOR};
         }}
     """
+    
+    STATUS_SUCCESS_STYLE = f"""
+        QLabel {{
+            color: {SUCCESS_COLOR};
+            padding: 5px;
+            border-radius: 3px;
+            background-color: {DARK_SURFACE};
+            border: 1px solid {SUCCESS_COLOR};
+        }}
+    """
+    
+    STATUS_WARNING_STYLE = f"""
+        QLabel {{
+            color: {WARNING_COLOR};
+            padding: 5px;
+            border-radius: 3px;
+            background-color: {DARK_SURFACE};
+            border: 1px solid {WARNING_COLOR};
+        }}
+    """
+    
+    @classmethod
+    def get_theme(cls, is_dark_mode=True):
+        """Get theme styles based on mode
+        
+        Args:
+            is_dark_mode (bool): Whether to use dark mode
+            
+        Returns:
+            dict: Dictionary of style strings
+        """
+        if is_dark_mode:
+            return {
+                'window': cls.DARK_WINDOW_STYLE,
+                'button': cls.DARK_BUTTON_STYLE,
+                'spinbox': cls.DARK_SPINBOX_STYLE,
+                'log': cls.DARK_LOG_STYLE,
+                'bg_color': cls.DARK_BG,
+                'text_color': cls.DARK_TEXT,
+                'border_color': cls.DARK_BORDER
+            }
+        else:
+            return {
+                'window': cls.LIGHT_WINDOW_STYLE,
+                'button': cls.LIGHT_BUTTON_STYLE,
+                'spinbox': cls.LIGHT_SPINBOX_STYLE,
+                'log': cls.LIGHT_LOG_STYLE,
+                'bg_color': cls.LIGHT_BG,
+                'text_color': cls.LIGHT_TEXT,
+                'border_color': cls.LIGHT_BORDER
+            }
     
     @staticmethod
     def setup_application_style(app):
-        """Apply global application style"""
+        """Set up global application style
+        
+        Args:
+            app (QApplication): Application instance
+        """
+        app.setStyle("Fusion")
+        
+        # Set default font
+        app.setFont(Styles.FONT)
+        
+        # Create dark palette
+        palette = QPalette()
+        palette.setColor(QPalette.ColorRole.Window, QColor(Styles.DARK_BG))
+        palette.setColor(QPalette.ColorRole.WindowText, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.Base, QColor(Styles.DARK_SURFACE))
+        palette.setColor(QPalette.ColorRole.AlternateBase, QColor(Styles.DARK_BG))
+        palette.setColor(QPalette.ColorRole.ToolTipBase, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.ToolTipText, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.Text, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.Button, QColor(Styles.DARK_SURFACE))
+        palette.setColor(QPalette.ColorRole.ButtonText, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.BrightText, QColor(Styles.DARK_TEXT))
+        palette.setColor(QPalette.ColorRole.Link, QColor(Styles.DARK_BORDER))
+        palette.setColor(QPalette.ColorRole.Highlight, QColor(Styles.DARK_BORDER))
+        palette.setColor(QPalette.ColorRole.HighlightedText, QColor(Styles.DARK_TEXT))
+        
+        # Set the dark palette
+        app.setPalette(palette)
+        
+        # Set global stylesheet for dark theme
         app.setStyleSheet(f"""
-            QMainWindow {{
+            QMainWindow, QDialog {{
                 background-color: {Styles.DARK_BG};
-                color: white;
-                {Styles.FONT_STYLE}
+                color: {Styles.DARK_TEXT};
             }}
             QWidget {{
                 background-color: {Styles.DARK_BG};
-                color: white;
-                {Styles.FONT_STYLE}
+                color: {Styles.DARK_TEXT};
             }}
             QGroupBox {{
-                border: 2px solid {Styles.PRIMARY};
-                border-radius: 5px;
-                margin-top: 1em;
-                padding-top: 1em;
+                border: 1px solid {Styles.DARK_BORDER};
+                border-radius: 3px;
+                margin-top: 6px;
+                padding-top: 10px;
             }}
             QGroupBox::title {{
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 3px 0 3px;
-                color: white;
+                padding: 0 3px;
             }}
-            QLabel {{
-                color: white;
+            QMenuBar {{
+                background-color: {Styles.DARK_SURFACE};
+                color: {Styles.DARK_TEXT};
+            }}
+            QMenuBar::item:selected {{
+                background-color: {Styles.DARK_HOVER};
+            }}
+            QMenu {{
+                background-color: {Styles.DARK_SURFACE};
+                color: {Styles.DARK_TEXT};
+                border: 1px solid {Styles.DARK_BORDER};
+            }}
+            QMenu::item:selected {{
+                background-color: {Styles.DARK_HOVER};
             }}
             QToolBar {{
-                background-color: {Styles.SURFACE_DARK};
-                border-bottom: 2px solid {Styles.PRIMARY};
-                spacing: 5px;
-            }}
-            QToolButton {{
-                background-color: transparent;
+                background-color: {Styles.DARK_SURFACE};
                 border: none;
-                padding: 5px;
             }}
-            QToolButton:hover {{
-                background-color: {Styles.PRIMARY};
-                border-radius: 3px;
+            QStatusBar {{
+                background-color: {Styles.DARK_SURFACE};
+                color: {Styles.DARK_TEXT};
             }}
         """)

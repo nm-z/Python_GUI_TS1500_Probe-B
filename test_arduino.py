@@ -19,7 +19,7 @@ def read_response(ser, timeout=2):
     
     return response
 
-def test_arduino(port='/dev/ttyACM0', baudrate=115200):
+def test_arduino(port='/dev/ttyACM0', baudrate=250000):
     try:
         # Open serial connection
         print(f"Opening {port} at {baudrate} baud...")

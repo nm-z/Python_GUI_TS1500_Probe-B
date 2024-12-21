@@ -308,14 +308,6 @@ float getCurrentAngle() {
 }
 
 void moveMotor(int32_t steps) {
-    if (!isCalibrated) {
-        Serial.println(F("ERROR: Movement rejected - not calibrated"));
-        return;
-    }
-    if (!isHomed) {
-        Serial.println(F("ERROR: Movement rejected - not homed"));
-        return;
-    }
     if (isEmergencyStopped) {
         Serial.println(F("ERROR: Movement rejected - emergency stop active"));
         return;

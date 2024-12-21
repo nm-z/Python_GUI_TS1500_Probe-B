@@ -5,7 +5,7 @@
     },
     "hardware": {
         "port": null,
-        "baudrate": 115200,
+        "baudrate": 250000,
         "timeout": 1.0
     },
     "web_server": {

@@ -1,0 +1,721 @@
+2024-12-20 15:17:51 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:17:51 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:17:51 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:17:56 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:17:56 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:18:01 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:18:01 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:18:06 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:18:06 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:18:52 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 15:18:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:18:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 15:18:57 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 15:18:57 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 18:58:43 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 18:58:43 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 18:58:43 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:03:03 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:03:03 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:03:03 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:03:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:03:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:04:48 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:04:48 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:04:48 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:04:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:04:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:14:53 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:14:53 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:14:53 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:02 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:18:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:12 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:12 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:17 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:17 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:22 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:22 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:27 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:27 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:32 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:32 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:37 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:37 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:42 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:42 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:18:57 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:18:57 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:12 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:12 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:17 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:17 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:22 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:22 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:27 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:27 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:32 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:32 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:37 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:37 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:42 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:42 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:47 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:47 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:52 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:52 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:19:57 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:19:57 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:20:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:20:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:20:07 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:20:07 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:20:12 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:20:12 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:20:17 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:20:17 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:20:59 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:20:59 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:20:59 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:21:04 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:21:04 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:22:14 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:22:14 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:22:14 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:23:34 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:23:34 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:23:34 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:23:39 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:23:39 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:23:44 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:23:44 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:23:49 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:23:49 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:23:54 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:23:54 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:25:14 - hardware - [0;31mERROR[0m - Error homing: Not connected to Arduino
+2024-12-20 19:25:14 - hardware - [0;31mERROR[0m - Error calibrating: Not connected to Arduino
+2024-12-20 19:25:18 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:25:18 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:25:18 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:25:23 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:25:23 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:25:28 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:25:28 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:25:28 - hardware - [0;31mERROR[0m - Error triggering emergency stop: Not connected to Arduino
+2024-12-20 19:25:29 - hardware - [0;31mERROR[0m - Error homing: Not connected to Arduino
+2024-12-20 19:25:29 - hardware - [0;31mERROR[0m - Error calibrating: Not connected to Arduino
+2024-12-20 19:57:58 - hardware - [0;31mERROR[0m - Error homing: Not connected to Arduino
+2024-12-20 19:57:58 - hardware - [0;31mERROR[0m - Error calibrating: Not connected to Arduino
+2024-12-20 19:58:02 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 19:58:02 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:58:02 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 19:58:08 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 19:58:08 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 20:03:15 - hardware - [0;31mERROR[0m - Error homing: Not connected to Arduino
+2024-12-20 20:03:15 - hardware - [0;31mERROR[0m - Error calibrating: Not connected to Arduino
+2024-12-20 20:03:18 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:03:18 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 20:03:18 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 20:05:29 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:05:29 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 20:05:29 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 20:05:33 - hardware - [0;31mERROR[0m - Error homing: Not connected to Arduino
+2024-12-20 20:05:33 - hardware - [0;31mERROR[0m - Error calibrating: Not connected to Arduino
+2024-12-20 20:05:34 - hardware - [0;31mERROR[0m - Error reading angle: Not connected to Arduino
+2024-12-20 20:05:34 - hardware - [0;31mERROR[0m - Error reading temperature: Not connected to Arduino
+2024-12-20 20:08:17 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Unexpected response from Arduino: Debug port initialized
+2024-12-20 20:08:43 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:08:48 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:08:48 - hardware - [0;32mINFO[0m - [tilt] Connection status: Connected
+2024-12-20 20:08:48 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-20 20:09:13 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:09:18 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:09:19 - hardware - [0;31mERROR[0m - Error reading angle: Invalid status response format
+2024-12-20 20:09:20 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid status response format
+2024-12-20 20:09:24 - hardware - [0;31mERROR[0m - Error reading angle: Invalid status response format
+2024-12-20 20:09:25 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid status response format
+2024-12-20 20:09:29 - hardware - [0;31mERROR[0m - Error reading angle: Invalid status response format
+2024-12-20 20:09:30 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid status response format
+2024-12-20 20:10:07 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:10:12 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:10:12 - hardware - [0;32mINFO[0m - [tilt] Connection status: Connected
+2024-12-20 20:10:12 - hardware - [0;32mINFO[0m - [temp] Connection status: Connected
+2024-12-20 20:10:19 - hardware - [0;31mERROR[0m - Error reading angle: Invalid tilt response format
+2024-12-20 20:10:19 - hardware - [0;32mINFO[0m - [tilt] Connection status: Not Connected
+2024-12-20 20:10:20 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid temperature response format
+2024-12-20 20:10:20 - hardware - [0;32mINFO[0m - [temp] Connection status: Not Connected
+2024-12-20 20:10:43 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:10:48 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:10:49 - hardware - [0;31mERROR[0m - Error reading angle: Invalid tilt response format
+2024-12-20 20:10:50 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid temperature response format
+2024-12-20 20:11:07 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:11:13 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:11:14 - hardware - [0;31mERROR[0m - Error reading angle: Invalid tilt response format: ''
+2024-12-20 20:11:15 - hardware - [0;31mERROR[0m - Error reading temperature: Invalid temperature response format: ''
+2024-12-20 20:11:34 - hardware - [0;32mINFO[0m - Connected to Arduino successfully
+2024-12-20 20:11:37 - hardware - [0;31mERROR[0m - Error sending command 'CALIBRATE': No response received from Arduino
+2024-12-20 20:11:37 - hardware - [0;31mERROR[0m - Error calibrating: No response received from Arduino
+2024-12-20 20:11:39 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:11:40 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No response received from Arduino
+2024-12-20 20:11:40 - hardware - [0;31mERROR[0m - Error reading angle: No response received from Arduino
+2024-12-20 20:11:41 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No response received from Arduino
+2024-12-20 20:11:41 - hardware - [0;31mERROR[0m - Error reading temperature: No response received from Arduino
+2024-12-20 20:13:24 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Never received READY signal
+2024-12-20 20:13:27 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No response received from Arduino
+2024-12-20 20:13:27 - hardware - [0;31mERROR[0m - Error homing: No response received from Arduino
+2024-12-20 20:13:28 - hardware - [0;31mERROR[0m - Error sending command 'CALIBRATE': No response received from Arduino
+2024-12-20 20:13:28 - hardware - [0;31mERROR[0m - Error calibrating: No response received from Arduino
+2024-12-20 20:13:30 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:13:31 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No response received from Arduino
+2024-12-20 20:13:31 - hardware - [0;31mERROR[0m - Error reading angle: No response received from Arduino
+2024-12-20 20:13:32 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No response received from Arduino
+2024-12-20 20:13:32 - hardware - [0;31mERROR[0m - Error reading temperature: No response received from Arduino
+2024-12-20 20:18:27 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:18:30 - hardware - [0;32mINFO[0m - Waiting for Arduino initialization...
+2024-12-20 20:18:35 - hardware - [0;31mERROR[0m - Arduino initialization messages:
+2024-12-20 20:18:35 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Never received READY signal
+2024-12-20 20:18:39 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:39 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:18:39 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:18:41 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:41 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:18:41 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:18:43 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:43 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:18:43 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:18:45 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:45 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:18:45 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:18:45 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:18:45 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:18:47 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:47 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:18:47 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:18:47 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:18:49 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:18:49 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:18:49 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:19:34 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:19:34 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:19:37 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:19:39 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:39 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:19:39 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:19:39 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:19:46 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:46 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:19:46 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:19:46 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:19:46 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:19:48 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:48 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:19:48 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:19:48 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:19:50 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:50 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:19:50 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:19:50 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:19:52 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:52 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:19:52 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:19:52 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:19:54 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:19:54 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:19:54 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:31:04 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:31:04 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:31:07 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:31:09 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:31:09 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:31:09 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:31:09 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:33:10 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:33:10 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:33:14 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:33:14 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:33:17 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:33:20 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:33:20 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:33:20 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:33:20 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:33:59 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:33:59 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:34:02 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:34:04 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:34:04 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:34:04 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:34:04 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:38:25 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:38:25 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:38:28 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:38:30 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:38:30 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:38:30 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:38:30 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:38:54 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:38:54 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:38:57 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:38:59 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:38:59 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:38:59 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:38:59 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:39:21 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:39:21 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:39:24 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:39:26 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:39:26 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:39:26 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:39:26 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:39:26 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:39:29 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:39:32 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:39:32 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:39:32 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:39:32 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:40:10 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:40:10 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:40:13 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:40:15 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:15 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:40:15 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:40:15 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:40:15 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:40:18 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:40:20 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:40:20 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:40:20 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:20 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:40:20 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:40:20 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:40:20 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:40:22 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:40:22 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:40:22 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:40:24 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - Error sending command 'MOVE 100': No valid response received from Arduino
+2024-12-20 20:40:26 - hardware - [0;31mERROR[0m - Error moving to angle 0.02: No valid response received from Arduino
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:40:28 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - Error sending command 'CALIBRATE': No valid response received from Arduino
+2024-12-20 20:40:30 - hardware - [0;31mERROR[0m - Error calibrating: No valid response received from Arduino
+2024-12-20 20:41:27 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:41:27 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:41:30 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:41:32 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:32 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:41:32 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:41:32 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:41:34 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:41:37 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:41:39 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:39 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:41:39 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:41:39 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:41:41 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:41:44 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:41:46 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:46 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:41:46 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:41:46 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:41:46 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:41:49 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:41:51 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:41:51 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:41:51 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:41:53 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:41:53 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:41:55 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:55 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:41:55 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:41:56 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:56 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:41:56 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:41:57 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:57 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:41:57 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:41:58 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:41:58 - hardware - [0;31mERROR[0m - Error sending command 'MOVE 100': No valid response received from Arduino
+2024-12-20 20:41:58 - hardware - [0;31mERROR[0m - Error moving to angle 0.02: No valid response received from Arduino
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:42:00 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:42:00 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:42:00 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:42:02 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - Error sending command 'CALIBRATE': No valid response received from Arduino
+2024-12-20 20:42:02 - hardware - [0;31mERROR[0m - Error calibrating: No valid response received from Arduino
+2024-12-20 20:42:31 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:42:31 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:42:34 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:42:36 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:36 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:42:36 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:42:36 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:42:38 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:42:41 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:42:43 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:43 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:42:43 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:42:43 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:42:45 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:42:48 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:42:50 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:50 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:42:50 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:42:50 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:42:50 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:42:53 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:42:54 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:54 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:42:54 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:42:54 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:42:55 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:55 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:42:55 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:42:55 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:42:55 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:42:56 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:56 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:42:56 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:42:56 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:42:57 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:42:57 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:42:57 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:42:57 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:42:58 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:42:58 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:42:58 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:42:58 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:44:43 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:44:43 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:44:46 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:44:48 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:44:48 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:44:48 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:44:48 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:44:50 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:44:53 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:44:56 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:44:56 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:44:56 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:44:56 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:44:58 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:45:01 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:45:03 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:03 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:45:03 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:45:03 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:45:03 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:45:06 - hardware - [0;32mINFO[0m - Testing communication...
+2024-12-20 20:45:08 - hardware - [0;32mINFO[0m - [vna] Connection status: Connected
+2024-12-20 20:45:08 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:08 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:08 - hardware - [0;31mERROR[0m - Error sending command 'STATUS': No valid response received from Arduino
+2024-12-20 20:45:08 - hardware - [0;33mWARNING[0m - Initial STATUS test failed: No valid response received from Arduino
+2024-12-20 20:45:08 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not establish communication on either port
+2024-12-20 20:45:08 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:10 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:10 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:10 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:12 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:12 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:13 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:14 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:14 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:14 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:14 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:15 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:15 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:15 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:15 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:16 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:16 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:16 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:17 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:17 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:17 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:18 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:18 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:18 - hardware - [0;31mERROR[0m - Error sending command 'MOVE 100': No valid response received from Arduino
+2024-12-20 20:45:18 - hardware - [0;31mERROR[0m - Error moving to angle 0.02: No valid response received from Arduino
+2024-12-20 20:45:18 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:20 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:20 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:20 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:22 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:23 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - Error sending command 'HOME': No valid response received from Arduino
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 20:45:25 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - Error sending command 'TILT': No valid response received from Arduino
+2024-12-20 20:45:25 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 20:45:25 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:45:27 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - Error sending command 'TEMP': No valid response received from Arduino
+2024-12-20 20:45:27 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 20:47:08 - hardware - [0;32mINFO[0m - Found Arduino Due on /dev/ttyACM0
+2024-12-20 20:47:08 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 20:47:08 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: [Errno 16] could not open port /dev/ttyACM0: [Errno 16] Device or resource busy: '/dev/ttyACM0'
+2024-12-20 21:04:08 - hardware - [0;32mINFO[0m - Found Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:04:08 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 21:04:08 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: [Errno 16] could not open port /dev/ttyACM0: [Errno 16] Device or resource busy: '/dev/ttyACM0'
+2024-12-20 21:04:08 - hardware - [0;32mINFO[0m - Found Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:04:08 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 21:04:08 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: [Errno 16] could not open port /dev/ttyACM0: [Errno 16] Device or resource busy: '/dev/ttyACM0'
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Found Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 21:05:44 - hardware - [0;33mWARNING[0m - Port /dev/ttyACM0 is busy, attempting to release...
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Found Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Connecting to Arduino on /dev/ttyACM0 at 250000 baud...
+2024-12-20 21:05:44 - hardware - [0;33mWARNING[0m - Port /dev/ttyACM0 is busy, attempting to release...
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Port release attempt result:  81631 84221
+2024-12-20 21:05:44 - hardware - [0;32mINFO[0m - Port release attempt result:  81631 84221
+2024-12-20 21:06:04 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/2)
+2024-12-20 21:06:04 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/2)
+2024-12-20 21:06:06 - hardware - [0;33mWARNING[0m - No valid response, retrying... (2/2)
+2024-12-20 21:06:06 - hardware - [0;33mWARNING[0m - No valid response, retrying... (2/2)
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Stopping motor...
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Final position: 0
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Motor stopped
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Stopping motor...
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Final position: 0
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m -   Motor stopped
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m - Command failed after 3 attempts: No valid response received from Arduino
+2024-12-20 21:06:08 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Arduino did not send READY signal
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m - Command failed after 3 attempts: 'NoneType' object has no attribute 'in_waiting'
+2024-12-20 21:06:08 - hardware - [0;31mERROR[0m - Error during disconnect: 'NoneType' object has no attribute 'reset_input_buffer'
+2024-12-20 21:11:45 - hardware - [0;32mINFO[0m - Found Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:11:47 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 21:18:19 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:18:19 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:24:15 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:24:15 - hardware - [0;32mINFO[0m - Found potential Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:24:15 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 21:24:16 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 21:27:08 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:27:08 - hardware - [0;32mINFO[0m - Found potential Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:27:08 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 21:27:09 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 21:33:08 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:33:08 - hardware - [0;32mINFO[0m - Found potential Arduino Due programming port on /dev/ttyACM0
+2024-12-20 21:33:08 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 21:33:09 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 21:41:39 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:41:39 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 21:41:39 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 21:41:40 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 21:42:01 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 21:42:01 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 21:42:01 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 21:42:02 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:13:07 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:13:07 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:13:07 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:13:07 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:15:20 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:15:20 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:15:20 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:15:21 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:16:22 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:16:22 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:16:22 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:16:23 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:16:46 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:16:46 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:16:46 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:16:46 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:17:33 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:17:33 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:17:33 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:17:34 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:17:47 - hardware - [0;32mINFO[0m - Disconnected from Arduino
+2024-12-20 23:17:47 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:17:47 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:17:47 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:13 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:19:13 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:13 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:20 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:19:20 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:21 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:24 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:24 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:27 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:28 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:44 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:19:44 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:45 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:47 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:48 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:19:51 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:19:51 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Could not acquire port /dev/ttyACM0
+2024-12-20 23:22:50 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:22:50 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:22:50 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-20 23:22:50 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-20 23:22:50 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-20 23:23:03 - hardware - [0;31mERROR[0m - Failed to connect to Arduino: Incomplete initialization. Missing: debug_port, mpu6050, temp_sensor, ready
+2024-12-20 23:23:05 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:23:05 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-20 23:23:05 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-20 23:23:05 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-20 23:24:10 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:24:10 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:24:10 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-20 23:24:10 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-20 23:24:10 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-20 23:25:48 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:25:48 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:25:48 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-20 23:25:48 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-20 23:25:48 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-20 23:27:06 - hardware - [0;32mINFO[0m - Found potential Arduino port on /dev/ttyACM0
+2024-12-20 23:27:06 - hardware - [0;32mINFO[0m - Attempting to connect to Arduino on /dev/ttyACM0
+2024-12-20 23:27:06 - hardware - [0;32mINFO[0m - Port permissions: crw-rw-rw-
+2024-12-20 23:27:06 - hardware - [0;32mINFO[0m - Attempting direct connection...
+2024-12-20 23:27:06 - hardware - [0;32mINFO[0m - Direct connection successful
+2024-12-20 23:27:08 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Connection established
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.15°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.09°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Motor movement initiated: 100 steps (0.0200°)
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.19°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.25°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.16°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Current angle: -3.10°
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:09 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:10 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:10 - hardware - [0;32mINFO[0m - Current angle: -3.13°
+2024-12-20 23:27:10 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:10 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:10 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:11 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Motor movement initiated: -100 steps (-0.0200°)
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Current angle: -3.13°
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Temperature: 33.25°C
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Current angle: -3.14°
+2024-12-20 23:27:11 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:12 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:13 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:13 - hardware - [0;31mERROR[0m - Error homing: No valid response received from Arduino
+2024-12-20 23:27:14 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:15 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:15 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 23:27:15 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:16 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:17 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:17 - hardware - [0;31mERROR[0m - Error calibrating: No valid response received from Arduino
+2024-12-20 23:27:18 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:19 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:19 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 23:27:19 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:20 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:21 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:21 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 23:27:21 - hardware - [0;32mINFO[0m - Reading tilt angle...
+2024-12-20 23:27:22 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:23 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:23 - hardware - [0;31mERROR[0m - Error reading angle: No valid response received from Arduino
+2024-12-20 23:27:23 - hardware - [0;32mINFO[0m - Reading temperature...
+2024-12-20 23:27:24 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:25 - hardware - [0;31mERROR[0m - No valid response received. All lines:
+2024-12-20 23:27:25 - hardware - [0;31mERROR[0m - Error reading temperature: No valid response received from Arduino
+2024-12-20 23:27:26 - hardware - [0;33mWARNING[0m - No valid response, retrying... (1/1)
+2024-12-20 23:27:26 - hardware - [0;31mERROR[0m - No valid response received. All lines:
