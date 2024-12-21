@@ -1,7 +1,7 @@
 import serial
 import time
 
-def read_response(ser, timeout=2):
+def read_response(ser, timeout=5):
     """Read response with timeout"""
     start_time = time.time()
     response = []
@@ -13,13 +13,15 @@ def read_response(ser, timeout=2):
                 if line:
                     print(f"← Received: {line}")
                     response.append(line)
+                    if line == "TEST_SUCCESS" or line == "READY":
+                        return response
             except UnicodeDecodeError:
                 print("← Received non-text data")
         time.sleep(0.1)
     
     return response
 
-def test_arduino(port='/dev/ttyACM0', baudrate=115200):
+def test_arduino(port='/dev/ttyACM0', baudrate=250000):
     try:
         # Open serial connection
         print(f"Opening {port} at {baudrate} baud...")
@@ -36,14 +38,15 @@ def test_arduino(port='/dev/ttyACM0', baudrate=115200):
         print("Connected! Waiting for Arduino reset...")
         time.sleep(3)  # Due needs more time to reset
         
-        # Clear any startup messages
+        # Wait for initialization messages and READY signal
+        responses = read_response(ser)
+        if not any("READY" in resp for resp in responses):
+            print("Error: Did not receive READY signal")
+            return
+            
+        # Clear buffers
         ser.reset_input_buffer()
         ser.reset_output_buffer()
-        
-        # Send initial newline to clear any partial commands
-        ser.write(b'\n')
-        time.sleep(0.1)
-        ser.reset_input_buffer()
         
         # Test commands
         commands = [
@@ -63,8 +66,10 @@ def test_arduino(port='/dev/ttyACM0', baudrate=115200):
             responses = read_response(ser)
             if not responses:
                 print("No response received!")
+            elif cmd == "TEST" and not any("TEST_SUCCESS" in resp for resp in responses):
+                print("Test command did not complete successfully")
             
-            time.sleep(1)  # Longer delay for Due
+            time.sleep(0.5)  # Short delay between commands
             
     except serial.SerialException as e:
         print(f"Serial Error: {str(e)}")

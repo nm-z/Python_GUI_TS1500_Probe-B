@@ -1,21 +1,18 @@
 /*
 Required Libraries:
 1. Wire.h (Built-in with Arduino IDE)
-2. MPU6050 by Electronic Cats (Install via Library Manager)
-3. MAX6675 (standard library)
-4. AccelStepper by Mike McCauley (Install via Library Manager)
+2. MAX6675 (standard library)
+3. AccelStepper by Mike McCauley (Install via Library Manager)
 
 Installation Instructions:
 1. Open Arduino IDE
 2. Go to Tools > Manage Libraries...
 3. Search for and install:
-   - "MPU6050" by Electronic Cats
    - "MAX6675" (standard library)
    - "AccelStepper" by Mike McCauley
 */
 
 #include <Wire.h>
-#include <MPU6050.h>
 #include <max6675.h>
 #include <AccelStepper.h>
 #include <SPI.h>
@@ -26,12 +23,6 @@ const uint8_t MOTOR_DIR_PIN = 8;     // Stepper DIR pin
 const uint8_t MOTOR_ENABLE_PIN = 7;  // Stepper ENABLE pin
 const uint8_t HOME_SWITCH_PIN = 3;   // Home switch pin
 const uint8_t EMERGENCY_STOP_PIN = 4; // Emergency stop pin
-
-// MPU6050 I2C Pins (defined by Wire library)
-// SDA -> Pin 20
-// SCL -> Pin 21
-// VCC -> 3.3V
-// GND -> GND
 
 // MAX6675 Thermocouple pins (Hardware SPI)
 const uint8_t THERMOCOUPLE_CS_PIN = 10;    // CS -> Pin 10
@@ -57,7 +48,6 @@ int queueHead = 0;
 int queueTail = 0;
 
 // Global Objects
-MPU6050 mpu;
 MAX6675 *thermocouple = NULL;
 AccelStepper stepper(AccelStepper::DRIVER, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 
@@ -68,12 +58,8 @@ volatile bool isHomed = false;
 unsigned long lastTempRead = 0;
 float lastValidTemp = 0.0f;
 bool tempSensorOk = false;
-bool mpuInitialized = false;
-
-// MPU6050 data
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
-float pitch, roll;
+float roll = 0.0;
+float pitch = 0.0;
 
 // Function declarations
 void reportStatus();
@@ -89,42 +75,14 @@ void logDiagnostic(const char* component, const char* message, bool isError = fa
 void logValue(const char* component, const char* valueName, float value);
 
 void calculateTilt() {
-    if (!mpuInitialized) {
-        Serial.println(F("TILT ERROR: MPU6050 not initialized"));
-        return;
-    }
-    
-    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    pitch = atan2(ay, sqrt(pow(ax, 2) + pow(az, 2))) * 180.0 / M_PI;
-    roll = atan2(-ax, sqrt(pow(ay, 2) + pow(az, 2))) * 180.0 / M_PI;
+    roll = 0.0;
+    pitch = 0.0;
 }
 
 void setup() {
     // Initialize serial port with higher baud rate
     Serial.begin(SERIAL_BAUD_RATE);
     Serial.println(F("Debug port initialized"));
-    
-    // Initialize I2C for MPU6050
-    Wire.begin();
-    delay(50);
-    
-    // Initialize MPU6050 with multiple attempts
-    Serial.println(F("Initializing MPU6050..."));
-    for(int attempt = 0; attempt < 3 && !mpuInitialized; attempt++) {
-        mpu.initialize();
-        if (mpu.testConnection()) {
-            mpuInitialized = true;
-            mpu.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);
-            mpu.setDLPFMode(MPU6050_DLPF_BW_5);
-            Serial.println(F("MPU6050 initialization successful"));
-        } else {
-            delay(100);
-        }
-    }
-    
-    if (!mpuInitialized) {
-        Serial.println(F("ERROR: MPU6050 initialization failed!"));
-    }
     
     // Initialize SPI for MAX6675
     SPI.begin();
@@ -268,17 +226,7 @@ void readTemperature() {
 }
 
 void performSelfTest() {
-    Serial.println("START_TEST");
-    
-    // Test MPU6050
-    if (mpuInitialized) {
-        Serial.println("MPU6050: OK");
-        calculateTilt();
-        Serial.print("TILT: "); 
-        Serial.println(roll, 2);
-    } else {
-        Serial.println("MPU6050: FAIL");
-    }
+    Serial.println("TEST_START");
     
     // Test MAX6675
     if (thermocouple != NULL) {
@@ -299,7 +247,7 @@ void performSelfTest() {
     Serial.print("MOTOR: ");
     Serial.println(motorEnabled ? "OK" : "FAIL");
     
-    Serial.println("END_TEST");
+    Serial.println("TEST_SUCCESS");
 }
 
 float getCurrentAngle() {
@@ -354,15 +302,9 @@ void calibrateSystem() {
     }
 
     Serial.println(F("Starting calibration..."));
-    
-    if (mpuInitialized) {
-        calculateTilt();
-        stepper.setCurrentPosition(0L);
-        isCalibrated = true;
-        Serial.println(F("Calibration complete"));
-    } else {
-        Serial.println(F("ERROR: Calibration failed - MPU6050 not initialized"));
-    }
+    stepper.setCurrentPosition(0L);
+    isCalibrated = true;
+    Serial.println(F("Calibration complete"));
 }
 
 void emergencyStop() {
@@ -448,15 +390,12 @@ void logValue(const char* component, const char* valueName, float value) {
 }
 
 void reportStatus() {
-    calculateTilt();
     int32_t pos = stepper.currentPosition();
     float speed = stepper.speed();
     float accel = MOTOR_ACCELERATION;
     
     Serial.print(F("POS "));
     Serial.print(pos);
-    Serial.print(F(" ANGLE "));
-    Serial.print(roll, 2);
     Serial.print(F(" SPEED "));
     Serial.print(speed);
     Serial.print(F(" ACCEL "));
