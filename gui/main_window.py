@@ -1,854 +1,238 @@
-import sys
-import os
 import logging
-import serial.tools.list_ports
+import traceback
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QSplitter, QProgressBar, QPushButton, QGroupBox,
-    QFormLayout, QSpinBox, QDoubleSpinBox, QLabel, QFileDialog, QMessageBox, QTextEdit
+    QFormLayout, QSpinBox, QDoubleSpinBox, QLabel, QFileDialog, QMessageBox, QTextEdit,
+    QStatusBar
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer
-from PyQt6.QtGui import QIcon
-from utils.logger import gui_logger, QTextEditLogger
-from gui.styles import Styles
-from .plots_window import PlotsWindow
-from .log_viewer import LogViewer
-from .settings_dialog import SettingsDialog
-import yaml
-import time
+from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer, QProcess, QMetaObject, Q_ARG, QObject, QEvent, QSettings
+from PyQt6.QtGui import QAction, QWindow, QColor
+from utils.logger import QTextEditLogger
+from hardware.controller import HardwareController
+from controllers.main_controller import MainController
 
-class InitializationThread(QThread):
-    finished = pyqtSignal()
-    progress = pyqtSignal(str)
-
-    def __init__(self, controller):
-        super().__init__()
-        self.controller = controller
-
-    def run(self):
-        """Run initialization tasks"""
+class WindowEventFilter(QObject):
+    """Event filter to track window events"""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.logger = logging.getLogger('gui')
+        
+    def eventFilter(self, obj, event):
+        """Filter window events"""
         try:
-            # Initialize hardware connections
-            self.progress.emit("Initializing hardware connections...")
-            if not self.controller.initialize_hardware():
-                self.progress.emit("Warning: Failed to initialize hardware")
-                self.finished.emit()
-                return
-            
-            # Load configuration
-            self.progress.emit("Loading configuration...")
-            self.controller.config.load()
-            
-            # Basic connection test
-            self.progress.emit("Testing connection...")
-            if self.controller.hardware and self.controller.hardware.is_connected():
-                self.progress.emit("Hardware connected successfully")
-            else:
-                self.progress.emit("Warning: Hardware connection test failed")
-            
-            self.progress.emit("Initialization complete")
-            self.finished.emit()
+            # Log specific events for debugging
+            if event.type() == QEvent.Type.WindowStateChange:
+                state = obj.windowState()
+                state_str = "Normal"
+                if state & Qt.WindowState.WindowMaximized:
+                    state_str = "Maximized"
+                elif state & Qt.WindowState.WindowMinimized:
+                    state_str = "Minimized"
+                elif state & Qt.WindowState.WindowFullScreen:
+                    state_str = "FullScreen"
+                self.logger.debug(f"Window state changed: {state_str}")
             
         except Exception as e:
-            self.progress.emit(f"Error during initialization: {str(e)}")
-            gui_logger.error(f"Initialization error: {str(e)}")
-            self.finished.emit()
+            self.logger.error(f"Error in event filter: {str(e)}\n{traceback.format_exc()}")
+            
+        return super().eventFilter(obj, event)
 
 class MainWindow(QMainWindow):
-    def __init__(self, controller):
-        """Initialize the main window
-        
-        Args:
-            controller (MainController): Application controller
-        """
+    """Main application window"""
+    def __init__(self):
+        """Main application window"""
         super().__init__()
-        self.controller = controller
-        self.plots_window = None  # Store reference to plots window
-        self.test_running = False
-        self.init_thread = None
         
-        # Set up logger first
-        self.logger = gui_logger
+        # Set up logging
+        self.logger = logging.getLogger('gui')
         
-        # Set up UI components
-        self.setup_ui()
+        # Initialize hardware controller in main thread
+        self.hardware = HardwareController()
+        self.controller = MainController(self.hardware)
         
-        # Connect signals after UI is set up
-        self.connect_signals()
-        
-        # Load last configuration
-        self.load_last_config()
-        
-        self.logger.info("MainWindow initialization complete")
-        
-        self.start_initialization()
-        
-    def setup_ui(self):
-        """Initialize the UI"""
-        self.logger.info("Starting UI initialization...")
-        
-        # Set window properties
+        # Set up UI
         self.setWindowTitle("TS1500 Probe Control")
-        self.resize(400, 800)  # Adjusted size for single panel
+        self.setGeometry(100, 100, 1200, 800)
         
-        # Set dark theme by default
-        self.dark_mode = True
-        theme = Styles.get_theme(self.dark_mode)
-        self.setStyleSheet(theme['window'])
-
         # Create central widget and layout
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout(central_widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-        layout.setSpacing(10)
-
-        # Create toolbar
-        toolbar = self.addToolBar("Main Toolbar")
-        toolbar.setMovable(False)
-        settings_action = toolbar.addAction("Settings")
-        settings_action.triggered.connect(self.show_settings)
-
-        # Add progress bar
-        self.progress_bar = QProgressBar()
-        self.progress_bar.setStyleSheet(Styles.PROGRESS_STYLE)
-        self.progress_bar.setTextVisible(True)
-        self.progress_bar.setFormat("%p% - %v/%m")
-        self.progress_bar.setRange(0, 100)
-        self.progress_bar.setValue(0)
-        self.progress_bar.hide()
-        layout.addWidget(self.progress_bar)
-
-        # Add configuration group
-        config_group = QGroupBox("Test Configuration")
-        config_group.setFont(Styles.FONT)
-        config_layout = QFormLayout()
-        config_layout.setSpacing(10)
-
-        # Tilt Increment
-        self.tilt_increment = QDoubleSpinBox()
-        self.tilt_increment.setRange(0.1, 3.0)
-        self.tilt_increment.setSingleStep(0.1)
-        self.tilt_increment.setValue(1.0)
-        self.tilt_increment.setDecimals(1)
-        self.tilt_increment.setStyleSheet(theme['spinbox'])
-        config_layout.addRow("Tilt Increment (°):", self.tilt_increment)
-
-        # Minimum Tilt
-        self.min_tilt = QDoubleSpinBox()
-        self.min_tilt.setRange(-30.0, 0.0)
-        self.min_tilt.setSingleStep(0.1)
-        self.min_tilt.setValue(-30.0)
-        self.min_tilt.setDecimals(1)
-        self.min_tilt.setStyleSheet(theme['spinbox'])
-        config_layout.addRow("Minimum Tilt (°):", self.min_tilt)
-
-        # Maximum Tilt
-        self.max_tilt = QDoubleSpinBox()
-        self.max_tilt.setRange(0.0, 30.0)
-        self.max_tilt.setSingleStep(0.1)
-        self.max_tilt.setValue(30.0)
-        self.max_tilt.setDecimals(1)
-        self.max_tilt.setStyleSheet(theme['spinbox'])
-        config_layout.addRow("Maximum Tilt (°):", self.max_tilt)
-
-        # Oil Level Time
-        self.oil_level_time = QSpinBox()
-        self.oil_level_time.setRange(5, 60)
-        self.oil_level_time.setSingleStep(1)
-        self.oil_level_time.setValue(15)
-        self.oil_level_time.setStyleSheet(theme['spinbox'])
-        config_layout.addRow("Oil Level Time (s):", self.oil_level_time)
-
-        config_group.setLayout(config_layout)
-        layout.addWidget(config_group)
-
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.layout = QVBoxLayout(self.central_widget)
+        
+        # Create main splitter
+        self.main_splitter = QSplitter(Qt.Orientation.Vertical)
+        self.layout.addWidget(self.main_splitter)
+        
+        # Create control panel
+        control_panel = QGroupBox("Control Panel")
+        control_layout = QVBoxLayout()
+        
+        # Add test parameters
+        params_layout = QFormLayout()
+        
+        self.start_pos = QSpinBox()
+        self.start_pos.setRange(-30, 30)  # Match SBIR requirements
+        params_layout.addRow("Start Position (°):", self.start_pos)
+        
+        self.end_pos = QSpinBox()
+        self.end_pos.setRange(-30, 30)  # Match SBIR requirements
+        params_layout.addRow("End Position (°):", self.end_pos)
+        
+        self.step_size = QDoubleSpinBox()
+        self.step_size.setRange(0.1, 3.0)  # Match SBIR requirements
+        self.step_size.setSingleStep(0.1)
+        self.step_size.setValue(1.0)
+        params_layout.addRow("Step Size (°):", self.step_size)
+        
+        self.dwell_time = QSpinBox()
+        self.dwell_time.setRange(5, 60)  # Match SBIR requirements
+        self.dwell_time.setValue(15)
+        params_layout.addRow("Dwell Time (s):", self.dwell_time)
+        
+        control_layout.addLayout(params_layout)
+        
         # Add control buttons
-        button_layout = QHBoxLayout()
+        self.start_button = QPushButton("Start")
+        self.start_button.setEnabled(True)  # Enable by default
+        control_layout.addWidget(self.start_button)
         
-        # Start button
-        self.start_button = QPushButton("Start Test")
-        self.start_button.setStyleSheet(theme['button'])
-        self.start_button.clicked.connect(self.start_test)
-        button_layout.addWidget(self.start_button)
-        
-        # Pause button
-        self.pause_button = QPushButton("Pause")
-        self.pause_button.setStyleSheet(theme['button'])
-        self.pause_button.clicked.connect(self.pause_test)
-        self.pause_button.setEnabled(False)
-        button_layout.addWidget(self.pause_button)
-        
-        # Stop button
         self.stop_button = QPushButton("Stop")
-        self.stop_button.setStyleSheet(theme['button'])
-        self.stop_button.clicked.connect(self.stop_test)
-        self.stop_button.setEnabled(False)
-        button_layout.addWidget(self.stop_button)
+        self.stop_button.setEnabled(False)  # Disabled until test starts
+        control_layout.addWidget(self.stop_button)
         
-        # Emergency Stop button
         self.emergency_button = QPushButton("EMERGENCY STOP")
-        self.emergency_button.setStyleSheet(Styles.EMERGENCY_BUTTON_STYLE)
-        self.emergency_button.clicked.connect(self.emergency_stop)
-        button_layout.addWidget(self.emergency_button)
+        self.emergency_button.setStyleSheet("""
+            QPushButton {
+                background-color: red;
+                color: white;
+                font-weight: bold;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: darkred;
+            }
+            QPushButton:pressed {
+                background-color: #800000;
+            }
+        """)
+        control_layout.addWidget(self.emergency_button)
         
-        layout.addLayout(button_layout)
-
-        # Add status indicators
-        status_group = QGroupBox("Status")
-        status_group.setFont(Styles.FONT)
-        status_layout = QVBoxLayout()
-
-        # Connection status
-        self.connection_status = QLabel("Not Connected")
-        self.connection_status.setStyleSheet(f"color: {Styles.ERROR_COLOR};")
-        status_layout.addWidget(self.connection_status)
-
-        # Current angle
-        self.angle_label = QLabel("Current Angle: 0.0°")
-        status_layout.addWidget(self.angle_label)
-
-        # Temperature
-        self.temp_label = QLabel("Temperature: --°C")
-        status_layout.addWidget(self.temp_label)
-
-        status_group.setLayout(status_layout)
-        layout.addWidget(status_group)
-
-        # Add logger widget
-        log_group = QGroupBox("Log")
-        log_group.setFont(Styles.FONT)
+        control_panel.setLayout(control_layout)
+        self.main_splitter.addWidget(control_panel)
+        
+        # Create log viewer
+        log_group = QGroupBox("Log Output")
         log_layout = QVBoxLayout()
-
+        
         self.log_text = QTextEdit()
         self.log_text.setReadOnly(True)
-        self.log_text.setStyleSheet(theme['log'])
         log_layout.addWidget(self.log_text)
-
-        log_group.setLayout(log_layout)
-        layout.addWidget(log_group)
-
-        # Set up the log handler
+        
+        # Set up log handler
         log_handler = QTextEditLogger(self.log_text)
-        log_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-        gui_logger.addHandler(log_handler)
-
-        # Add spacer
-        layout.addSpacing(20)
-
-        # Add configuration buttons
-        self.save_config_btn = QPushButton("Save Configuration")
-        self.load_config_btn = QPushButton("Load Configuration")
-        self.reset_config_btn = QPushButton("Reset to Defaults")
-
-        for btn in [self.save_config_btn, self.load_config_btn, self.reset_config_btn]:
-            btn.setStyleSheet(theme['button'])
-            btn.setMinimumHeight(40)
-            layout.addWidget(btn)
-
+        log_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+        logging.getLogger('gui').addHandler(log_handler)
+        logging.getLogger('hardware').addHandler(log_handler)
+        
+        log_group.setLayout(log_layout)
+        self.main_splitter.addWidget(log_group)
+        
+        # Set initial splitter sizes
+        self.main_splitter.setSizes([200, 600])
+        
+        # Connect signals
+        self._connect_signals()
+        
+        self.logger.info("Application initialized successfully")
+        
+    def closeEvent(self, event):
+        """Handle window close event"""
+        if hasattr(self, 'hardware'):
+            self.hardware.cleanup()
+        event.accept()
+        
+    def _connect_signals(self):
+        """Connect signals"""
+        # Connect hardware signals
+        self.hardware.connection_status.connect(self._handle_connection_status)
+        self.hardware.error_occurred.connect(self._handle_error)
+        self.hardware.temperature_updated.connect(self._handle_temperature)
+        self.hardware.tilt_updated.connect(self._handle_tilt)
+        
         # Connect button signals
-        self.save_config_btn.clicked.connect(self.save_config)
-        self.load_config_btn.clicked.connect(self.load_config)
-        self.reset_config_btn.clicked.connect(self.reset_config)
-
-        # Disable pause and stop buttons initially
-        self.pause_button.setEnabled(False)
-        self.stop_button.setEnabled(False)
+        self.start_button.clicked.connect(self._handle_start)
+        self.stop_button.clicked.connect(self._handle_stop)
+        self.emergency_button.clicked.connect(self._handle_emergency)
         
-    def update_theme(self, is_dark_mode=True):
-        """Update application theme
+    def _handle_connection_status(self, connected):
+        """Handle hardware connection status changes"""
+        if connected:
+            self.start_button.setEnabled(True)
+            self.stop_button.setEnabled(True)
+            self.emergency_button.setEnabled(True)
+        else:
+            self.start_button.setEnabled(False)
+            self.stop_button.setEnabled(False)
+            self.emergency_button.setEnabled(False)
+            
+    def _handle_error(self, error_msg):
+        """Handle hardware errors"""
+        self.logger.error(f"Hardware error: {error_msg}")
         
-        Args:
-            is_dark_mode (bool): Whether to use dark mode
-        """
+    def _handle_temperature(self, temperature):
+        """Handle temperature updates"""
+        pass  # Let the logger handle this
+        
+    def _handle_tilt(self, tilt):
+        """Handle tilt updates"""
+        pass  # Let the logger handle this
+        
+    def _handle_start(self):
+        """Handle Start button click"""
         try:
-            self.dark_mode = is_dark_mode
-            theme = Styles.get_theme(is_dark_mode)
-            
-            # Update window style
-            self.setStyleSheet(theme['window'])
-            
-            # Update spinboxes
-            for spinbox in [self.tilt_increment, self.min_tilt, self.max_tilt, self.oil_level_time]:
-                spinbox.setStyleSheet(theme['spinbox'])
-            
-            # Update buttons
-            for btn in [self.start_button, self.pause_button, self.stop_button,
-                       self.save_config_btn, self.load_config_btn, self.reset_config_btn]:
-                btn.setStyleSheet(theme['button'])
-            
-            # Emergency button keeps its style
-            self.emergency_button.setStyleSheet(Styles.EMERGENCY_BUTTON_STYLE)
-            
-            # Update log
-            self.log_text.setStyleSheet(theme['log'])
-            
-            # Update plots if they exist
-            if hasattr(self, 'plots_window') and self.plots_window:
-                self.plots_window.update_theme(is_dark_mode)
-            
-            gui_logger.info(f"Theme updated to {'dark' if is_dark_mode else 'light'} mode")
-            
-        except Exception as e:
-            gui_logger.error(f"Error updating theme: {str(e)}")
-            
-    def showEvent(self, event):
-        """Handle window show event"""
-        super().showEvent(event)
-        # Ensure theme is applied when window is shown
-        self.update_theme(self.dark_mode)
-
-    def connect_signals(self):
-        """Connect controller signals to UI updates"""
-        if self.controller:
-            # Connect test signals
-            self.controller.progress_updated.connect(self.update_progress)
-            self.controller.test_completed.connect(self.handle_test_completed)
-            
-            # Connect data signals
-            self.controller.data_collected_signal.connect(self.handle_data_collected)
-            
-            # Connect connection status signals
-            self.controller.connection_status_updated.connect(self.handle_connection_status)
-            
-            # Connect angle update signal
-            self.controller.angle_updated.connect(self.update_angle_display)
-            
-    def handle_connection_status(self, status_dict):
-        """Handle connection status updates"""
-        pass
-            
-    def handle_data_collected(self, data):
-        """Handle collected data updates"""
-        try:
-            if not self.plots_window:
-                return
-                
-            if 'time_point' in data:
-                if 'tilt_angle' in data:
-                    self.plots_window.update_tilt(data['time_point'], data['tilt_angle'])
-                    self.update_angle_display(data['tilt_angle'])
-                if 'temperature' in data:
-                    self.plots_window.update_temperature(data['time_point'], data['temperature'])
-                    self.update_temperature_display(data['temperature'])
-                    
-        except Exception as e:
-            gui_logger.error(f"Error handling data update: {str(e)}")
-            
-    def update_angle_display(self, angle):
-        """Update angle display in UI"""
-        try:
-            self.angle_label.setText(f"Current Angle: {angle:.1f}°")
-        except Exception as e:
-            gui_logger.error(f"Error updating angle display: {str(e)}")
-            
-    def update_temperature_display(self, temperature):
-        """Update temperature display in UI"""
-        try:
-            self.temp_label.setText(f"Temperature: {temperature:.1f}°C")
-        except Exception as e:
-            gui_logger.error(f"Error updating temperature display: {str(e)}")
-            
-    def handle_splitter_moved(self, pos, index):
-        """Handle splitter movement and snapping"""
-        splitter = self.sender()
-        if not isinstance(splitter, QSplitter):
-            return
-            
-        # Get splitter geometry
-        width = splitter.width()
-        height = splitter.height()
-        
-        # Get current sizes
-        sizes = list(splitter.sizes())  # Convert to list for modification
-        
-        # Calculate snap thresholds (10% of total size)
-        snap_threshold = int(width * 0.1) if splitter.orientation() == Qt.Orientation.Horizontal else int(height * 0.1)
-        
-        # Handle horizontal splitter (main splitter)
-        if splitter == self.main_splitter:
-            # Left panel has minimum and maximum widths
-            if sizes[0] < self.left_panel.minimumWidth():
-                sizes[0] = self.left_panel.minimumWidth()
-                sizes[1] = width - sizes[0]
-            elif sizes[0] > self.left_panel.maximumWidth():
-                sizes[0] = self.left_panel.maximumWidth()
-                sizes[1] = width - sizes[0]
-                
-            # Snap to edges
-            if sizes[0] < snap_threshold:
-                sizes[0] = 0
-                sizes[1] = width
-            elif sizes[1] < snap_threshold:
-                sizes[0] = width
-                sizes[1] = 0
-                
-        # Handle vertical splitter (right splitter)
-        elif splitter == self.right_splitter:
-            # Ensure minimum heights for plots and logger
-            min_plot_height = int(height * 0.3)  # 30% minimum for plots
-            min_logger_height = int(height * 0.2)  # 20% minimum for logger
-            
-            if sizes[0] < min_plot_height:
-                sizes[0] = min_plot_height
-                sizes[1] = height - sizes[0]
-            elif sizes[1] < min_logger_height:
-                sizes[1] = min_logger_height
-                sizes[0] = height - sizes[1]
-                
-        # Convert sizes to integers and apply
-        sizes = [int(size) for size in sizes]
-        splitter.setSizes(sizes)
-
-    def save_config(self):
-        """Save current configuration to YAML file"""
-        file_path, _ = QFileDialog.getSaveFileName(
-            self, "Save Configuration", "", "YAML Files (*.yaml);;All Files (*)"
-        )
-        
-        if file_path:
-            config = {
-                'tilt_increment': self.tilt_increment.value(),
-                'min_tilt': self.min_tilt.value(),
-                'max_tilt': self.max_tilt.value(),
-                'oil_level_time': self.oil_level_time.value()
+            # Collect test parameters from GUI
+            parameters = {
+                'min_tilt': float(self.start_pos.value()),
+                'max_tilt': float(self.end_pos.value()),
+                'tilt_increment': float(self.step_size.value()),
+                'dwell_time': float(self.dwell_time.value())
             }
             
-            try:
-                with open(file_path, 'w') as f:
-                    yaml.dump(config, f)
-                print("Configuration saved successfully")
-            except Exception as e:
-                print(f"Error saving configuration: {str(e)}")
-                
-    def load_config(self, file_path=None):
-        """Load configuration from YAML file"""
-        if not file_path:
-            file_path, _ = QFileDialog.getOpenFileName(
-                self, "Load Configuration", "", "YAML Files (*.yaml);;All Files (*)"
-            )
+            # Start test
+            if self.controller.start_test(parameters):
+                self.start_button.setEnabled(False)
+                self.stop_button.setEnabled(True)
+                self.logger.info("Test started with parameters:")
+                for key, value in parameters.items():
+                    self.logger.info(f"  {key}: {value}")
             
-        if file_path and os.path.exists(file_path):
-            try:
-                with open(file_path, 'r') as f:
-                    config = yaml.safe_load(f)
-                
-                self.tilt_increment.setValue(config.get('tilt_increment', 1.0))
-                self.min_tilt.setValue(config.get('min_tilt', -30.0))
-                self.max_tilt.setValue(config.get('max_tilt', 30.0))
-                self.oil_level_time.setValue(config.get('oil_level_time', 15))
-                
-                print("Configuration loaded successfully")
-            except Exception as e:
-                print(f"Error loading configuration: {str(e)}")
-                
-    def load_last_config(self):
-        """Load the last used configuration"""
-        try:
-            # Set default values
-            self.tilt_increment.setValue(1.0)
-            self.min_tilt.setValue(-30.0)
-            self.max_tilt.setValue(30.0)
-            self.oil_level_time.setValue(15)
-        except Exception as e:
-            print(f"Error loading last configuration: {str(e)}")
-            self.reset_config()
-            
-    def reset_config(self):
-        """Reset configuration to defaults"""
-        self.tilt_increment.setValue(1.0)
-        self.min_tilt.setValue(-30.0)
-        self.max_tilt.setValue(30.0)
-        self.oil_level_time.setValue(15)
-        print("Configuration reset to defaults")
-
-    def start_test(self):
-        """Start a new test"""
-        try:
-            # Get test parameters
-            parameters = self._get_test_parameters()
-            if not parameters:
-                return
-            
-            # Start test - plots window will open after sequence dialog is closed
-            if not self.controller.start_test(parameters):
-                self.logger.error("Failed to start test")
-                return
-            
+        except ValueError as e:
+            self.logger.error("Invalid parameter value. Please check all inputs are valid numbers.")
         except Exception as e:
             self.logger.error(f"Error starting test: {str(e)}")
-            QMessageBox.critical(self, "Error", f"Failed to start test: {str(e)}")
-            return
-
-    def _get_test_parameters(self):
-        """Get test parameters from UI"""
-        return {
-            'tilt_increment': self.tilt_increment.value(),
-            'min_tilt': self.min_tilt.value(),
-            'max_tilt': self.max_tilt.value(),
-            'oil_level_time': self.oil_level_time.value()
-        }
-
-    def _handle_status_update(self, status):
-        """Handle status updates from controller"""
-        if 'message' in status:
-            self.logger.info(status['message'])
-        
-        # Only open plots window when test actually starts
-        if status.get('test_started', False):
-            self._show_plots_window()
-
-    def _show_plots_window(self):
-        """Show the plots window"""
-        if not hasattr(self, 'plots_window') or not self.plots_window:
-            from gui.plots_window import PlotsWindow
-            self.plots_window = PlotsWindow(self.controller)
-            self.plots_window.show()
-        
-    def pause_test(self):
-        """Pause the current test"""
-        try:
-            if self.controller.pause_test():
-                self.pause_button.setText("Resume")
-            else:
-                self.pause_button.setText("Pause")
-                
-        except Exception as e:
-            print(f"[ERROR] Failed to pause test: {str(e)}")
             
-    def stop_test(self):
-        """Stop the test and close plots window"""
-        if self.plots_window:
-            self.plots_window.close()
-            self.plots_window = None
+    def _handle_stop(self):
+        """Handle Stop button click"""
         try:
             self.controller.stop_test()
             self.start_button.setEnabled(True)
-            self.pause_button.setEnabled(False)
             self.stop_button.setEnabled(False)
-            self.pause_button.setText("Pause")
-            
+            self.logger.info("Test stopped by user")
         except Exception as e:
-            print(f"[ERROR] Failed to stop test: {str(e)}")
+            self.logger.error(f"Error stopping test: {str(e)}")
             
-    def emergency_stop(self):
-        """Trigger emergency stop"""
+    def _handle_emergency(self):
+        """Handle emergency stop button click"""
         try:
-            self.controller.send_command("EMERGENCY_STOP")
-            self.start_button.setEnabled(True)
-            self.pause_button.setEnabled(False)
-            self.stop_button.setEnabled(False)
-            self.pause_button.setText("Pause")
-            
-        except Exception as e:
-            print(f"[ERROR] Failed to execute emergency stop: {str(e)}")
-            
-    def show_error(self, title, message):
-        """Print error message to terminal
-        
-        Args:
-            title (str): Error title
-            message (str): Error message
-        """
-        print(f"[ERROR] {title}: {message}")
-
-    def update_progress(self, value):
-        """Update progress bar value and log progress
-        
-        Args:
-            value (Union[int, str]): Progress value (0-100) or status message
-        """
-        try:
-            if isinstance(value, str):
-                # If value is a string, it's a status message
-                gui_logger.info(value)
-                return
-                
-            # Ensure value is an integer between 0 and 100
-            progress = max(0, min(100, int(value)))
-            self.progress_bar.setValue(progress)
-            
-            if progress % 10 == 0:  # Log every 10%
-                gui_logger.info(f"Test progress: {progress}%")
-                
-        except Exception as e:
-            gui_logger.error(f"Error updating progress: {str(e)}")
-
-    def handle_test_completed(self, results):
-        """Handle test completion
-        
-        Args:
-            results (dict): Test results data
-        """
-        self.test_running = False
-        self.start_button.setEnabled(True)
-        self.pause_button.setEnabled(False)
-        self.stop_button.setEnabled(False)
-        self.progress_bar.setValue(100)
-        
-        # Log results
-        print(f"[SUCCESS] Test completed - Run #{results['run_number']}")
-        print(f"[SUCCESS] Total Execution Time: {results['execution_time']}")
-        print(f"[SUCCESS] Data saved to: {results['data_files']['vna']}, {results['data_files']['temperature']}")
-        
-    def resizeEvent(self, event):
-        """Handle window resize events
-        
-        Args:
-            event: Resize event
-        """
-        try:
-            super().resizeEvent(event)
-            print(f"[DEBUG] Window resized to {self.width()}x{self.height()}")
-        except Exception as e:
-            import traceback
-            print(f"[ERROR] Resize error: {str(e)}")
-            print("[ERROR] Traceback:")
-            print(traceback.format_exc())
-            
-    def closeEvent(self, event):
-        """Handle window close event - force close regardless of state"""
-        try:
-            # Force terminate initialization thread if running
-            if hasattr(self, 'init_thread') and self.init_thread:
-                self.init_thread.terminate()
-                self.init_thread = None
-
-            # Force close plots window
-            if hasattr(self, 'plots_window') and self.plots_window:
-                self.plots_window.close()
-                self.plots_window = None
-
-            # Force cleanup controller
-            if hasattr(self, 'controller'):
-                try:
-                    self.controller.force_cleanup()
-                except:
-                    pass
-
-            # Remove log handlers immediately
-            if hasattr(self, 'log_text'):
-                for handler in gui_logger.handlers[:]:
-                    if isinstance(handler, QTextEditLogger):
-                        gui_logger.removeHandler(handler)
-
-        except:
-            pass  # Ignore any errors during force close
-        finally:
-            # Always accept the close event
-            event.accept()
-
-    def cleanup(self):
-        """Clean up resources before exit"""
-        try:
-            # Set a flag to prevent new operations
-            self._cleanup_in_progress = True
-
-            # Stop initialization thread first
-            if hasattr(self, 'init_thread') and self.init_thread:
-                try:
-                    self.init_thread.quit()
-                    # Only wait briefly for thread to finish
-                    if not self.init_thread.wait(100):  # 100ms timeout
-                        self.init_thread.terminate()
-                    self.init_thread = None
-                except:
-                    pass
-
-            # Close plots window if open
-            if hasattr(self, 'plots_window') and self.plots_window:
-                try:
-                    self.plots_window.close()
-                    self.plots_window = None
-                except:
-                    pass
-
-            # Clean up controller with timeout
-            if hasattr(self, 'controller'):
-                try:
-                    # Use a timer to prevent hanging
-                    from PyQt6.QtCore import QTimer
-                    cleanup_timer = QTimer()
-                    cleanup_timer.setSingleShot(True)
-                    cleanup_timer.timeout.connect(lambda: setattr(self, '_cleanup_timeout', True))
-                    cleanup_timer.start(500)  # 500ms timeout
-                    
-                    self.controller.force_cleanup()  # Use force cleanup instead of normal cleanup
-                    cleanup_timer.stop()
-                except:
-                    pass
-
-            # Remove log handlers
-            if hasattr(self, 'log_text'):
-                try:
-                    for handler in gui_logger.handlers[:]:
-                        if isinstance(handler, QTextEditLogger):
-                            gui_logger.removeHandler(handler)
-                except:
-                    pass
-
-        except:
-            pass  # Ignore all errors during cleanup
-        finally:
-            # Reset cleanup flag
-            self._cleanup_in_progress = False
-
-    def __del__(self):
-        """Destructor to ensure cleanup"""
-        self.cleanup()
-
-    def show_settings(self):
-        """Show settings dialog"""
-        dialog = SettingsDialog(self)
-        dialog.settings_updated.connect(self.apply_settings)
-        dialog.exec()
-        
-    def apply_settings(self, settings):
-        """Apply updated settings"""
-        # Update theme
-        is_dark_mode = settings['theme']['dark_mode']
-        self.plots.update_theme(is_dark_mode)
-        self.logger.update_theme(is_dark_mode)
-        
-        # Update font size
-        font = Styles.FONT
-        font.setPointSize(settings['theme']['font_size'])
-        self.setFont(font)
-        
-        # Update all widgets that need font size changes
-        for widget in self.findChildren(QWidget):
-            widget.setFont(font)
-
-    def start_initialization(self):
-        """Start hardware initialization in a separate thread"""
-        if self.init_thread and self.init_thread.isRunning():
-            self.logger.warning("Initialization already in progress")
-            return
-            
-        self.init_thread = InitializationThread(self.controller)
-        self.init_thread.finished.connect(self.on_initialization_complete)
-        self.init_thread.progress.connect(self.update_progress)
-        self.init_thread.start()
-
-    def on_initialization_complete(self):
-        """Handle initialization completion"""
-        try:
-            if hasattr(self, 'init_thread') and self.init_thread:
-                self.init_thread.quit()
-                self.init_thread.wait(1000)  # Wait up to 1 second
-                self.init_thread = None
-            self.logger.info("Initialization complete")
-        except Exception as e:
-            self.logger.error(f"Error during initialization completion: {str(e)}")
-
-    def _setup_plots(self):
-        """Set up plot window and connections"""
-        try:
-            # Create plots window
-            self.plots_window = PlotsWindow()
-            
-            # Connect data signals
-            self.controller.signals.tilt_angle_updated.connect(self.plots_window.update_tilt)
-            self.controller.signals.temperature_updated.connect(self.plots_window.update_temperature)
-            
-            # Show plots window
-            self.plots_window.show()
-            
-        except Exception as e:
-            self.logger.error(f"Error setting up plots: {str(e)}")
-            
-    def _setup_connections(self):
-        """Set up signal connections"""
-        try:
-            # Connect hardware status signals
-            self.controller.signals.hardware_connected.connect(self._on_hardware_connected)
-            self.controller.signals.hardware_disconnected.connect(self._on_hardware_disconnected)
-            self.controller.signals.hardware_error.connect(self._on_hardware_error)
-            
-            # Connect test control signals
-            self.start_button.clicked.connect(self._on_start_clicked)
-            self.stop_button.clicked.connect(self._on_stop_clicked)
-            
-            # Connect configuration signals
-            self.save_config_button.clicked.connect(self._on_save_config)
-            self.load_config_button.clicked.connect(self._on_load_config)
-            
-        except Exception as e:
-            self.logger.error(f"Error setting up connections: {str(e)}")
-            
-    def _on_start_clicked(self):
-        """Handle start button click"""
-        try:
-            if not self.controller.is_test_running():
-                # Get test parameters from UI
-                parameters = self._get_test_parameters()
-                if parameters:
-                    # Create plots window if needed
-                    if not hasattr(self, 'plots_window') or not self.plots_window.isVisible():
-                        self._setup_plots()
-                    else:
-                        self.plots_window.clear_plots()
-                    
-                    # Start test
-                    if self.controller.start_test(parameters):
-                        self.start_button.setText("Pause")
-                        self.stop_button.setEnabled(True)
-                        self.logger.info("Test started successfully")
-                    else:
-                        self.logger.error("Failed to start test")
-            else:
-                # Pause/resume test
-                if self.controller.pause_test():
-                    self.start_button.setText("Resume" if self.controller.is_test_paused() else "Pause")
-                
-        except Exception as e:
-            self.logger.error(f"Error handling start button: {str(e)}")
-            
-    def _on_stop_clicked(self):
-        """Handle stop button click"""
-        try:
-            if self.controller.stop_test():
-                self.start_button.setText("Start")
+            if self.controller.emergency_stop():
+                self.logger.warning("Emergency stop triggered")
+                self.start_button.setEnabled(True)
                 self.stop_button.setEnabled(False)
-                self.logger.info("Test stopped successfully")
             else:
-                self.logger.error("Failed to stop test")
+                self.logger.error("Emergency stop failed")
                 
         except Exception as e:
-            self.logger.error(f"Error handling stop button: {str(e)}")
-            
-    def _on_hardware_connected(self):
-        """Handle hardware connected event"""
-        try:
-            self.start_button.setEnabled(True)
-            self.status_label.setText("Hardware Connected")
-            self.status_label.setStyleSheet("color: green")
-            
-        except Exception as e:
-            self.logger.error(f"Error handling hardware connected: {str(e)}")
-            
-    def _on_hardware_disconnected(self):
-        """Handle hardware disconnected event"""
-        try:
-            self.start_button.setEnabled(False)
-            self.stop_button.setEnabled(False)
-            self.status_label.setText("Hardware Disconnected")
-            self.status_label.setStyleSheet("color: red")
-            
-        except Exception as e:
-            self.logger.error(f"Error handling hardware disconnected: {str(e)}")
-            
-    def _on_hardware_error(self, error_msg):
-        """Handle hardware error event
-        
-        Args:
-            error_msg (str): Error message
-        """
-        try:
-            self.status_label.setText(f"Hardware Error: {error_msg}")
-            self.status_label.setStyleSheet("color: red")
-            self.logger.error(f"Hardware error: {error_msg}")
-            
-        except Exception as e:
-            self.logger.error(f"Error handling hardware error: {str(e)}")
-            
+            self.logger.error(f"Error during emergency stop: {str(e)}")
+

@@ -4,44 +4,43 @@ import pyqtgraph as pg
 from .styles import Styles
 
 class RealTimePlots(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setup_ui()
         
     def setup_ui(self):
-        """Initialize the plots UI"""
+        """Initialize the UI components"""
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)
         
-        # Set up dark theme for plots
-        pg.setConfigOption('background', Styles.DARK_BG)
-        pg.setConfigOption('foreground', 'w')
-        
-        # Create tilt plot
+        # Create plots
         self.tilt_plot = pg.PlotWidget()
-        self.setup_plot(self.tilt_plot, "Tilt vs Time", "Tilt (degrees)", "Time (s)")
-        
-        # Add recenter button for tilt plot
-        tilt_layout = QHBoxLayout()
-        tilt_layout.addWidget(self.tilt_plot)
-        tilt_recenter_btn = QPushButton("Recenter")
-        tilt_recenter_btn.setStyleSheet(Styles.BUTTON_STYLE)
-        tilt_recenter_btn.clicked.connect(lambda: self.recenter_plot(self.tilt_plot))
-        tilt_recenter_btn.setMaximumWidth(100)
-        tilt_layout.addWidget(tilt_recenter_btn, alignment=Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
-        layout.addLayout(tilt_layout)
-        
-        # Create temperature plot
         self.temp_plot = pg.PlotWidget()
-        self.setup_plot(self.temp_plot, "Temperature vs Time", "Temperature (°C)", "Time (s)")
         
-        # Add recenter button for temperature plot
+        # Set dark theme
+        pg.setConfigOption('background', Styles.COLORS['background'])
+        pg.setConfigOption('foreground', Styles.COLORS['foreground'])
+        
+        # Configure tilt plot
+        self.tilt_plot.setTitle("Tilt Angle vs Time")
+        self.tilt_plot.setLabel('left', 'Tilt Angle', units='degrees')
+        self.tilt_plot.setLabel('bottom', 'Time', units='s')
+        self.tilt_plot.showGrid(x=True, y=True)
+        
+        # Configure temperature plot
+        self.temp_plot.setTitle("Temperature vs Time")
+        self.temp_plot.setLabel('left', 'Temperature', units='°C')
+        self.temp_plot.setLabel('bottom', 'Time', units='s')
+        self.temp_plot.showGrid(x=True, y=True)
+        
+        # Add plots to layout
+        layout.addWidget(self.tilt_plot)
+        
+        # Add temperature plot with recenter button
         temp_layout = QHBoxLayout()
         temp_layout.addWidget(self.temp_plot)
+        
         temp_recenter_btn = QPushButton("Recenter")
-        temp_recenter_btn.setStyleSheet(Styles.BUTTON_STYLE)
-        temp_recenter_btn.clicked.connect(lambda: self.recenter_plot(self.temp_plot))
+        temp_recenter_btn.clicked.connect(self.recenter_temp_plot)
         temp_recenter_btn.setMaximumWidth(100)
         temp_layout.addWidget(temp_recenter_btn, alignment=Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
         layout.addLayout(temp_layout)

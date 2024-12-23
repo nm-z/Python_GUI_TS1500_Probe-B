@@ -1,138 +1,12 @@
 import logging
 import os
 from datetime import datetime
-from PyQt6.QtWidgets import QTextEdit, QScrollBar
-from PyQt6.QtCore import Qt
-
-class ColoredFormatter(logging.Formatter):
-    """Custom formatter with colored output"""
-    
-    COLORS = {
-        'DEBUG': '\033[0;36m',     # Cyan
-        'INFO': '\033[0;32m',      # Green
-        'WARNING': '\033[0;33m',   # Yellow
-        'ERROR': '\033[0;31m',     # Red
-        'CRITICAL': '\033[0;35m',  # Magenta
-        'RESET': '\033[0m'         # Reset
-    }
-    
-    def format(self, record):
-        # Add color to the level name
-        record.levelname = f"{self.COLORS.get(record.levelname, self.COLORS['RESET'])}{record.levelname}{self.COLORS['RESET']}"
-        return super().format(record)
-
-def setup_logger(name, log_file=None, level=logging.INFO):
-    """Set up logger with file and console handlers
-    
-    Args:
-        name (str): Logger name
-        log_file (str, optional): Path to log file
-        level: Logging level
-        
-    Returns:
-        logging.Logger: Configured logger
-    """
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    
-    # Remove any existing handlers
-    for handler in logger.handlers[:]:
-        logger.removeHandler(handler)
-    
-    # Create formatters
-    console_formatter = ColoredFormatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-    
-    file_formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-    
-    # Create console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(console_formatter)
-    logger.addHandler(console_handler)
-    
-    # Create file handler if log file specified
-    if log_file:
-        # Ensure log directory exists
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setFormatter(file_formatter)
-        logger.addHandler(file_handler)
-    
-    return logger
-
-# Create log directory
-log_dir = "logs"
-os.makedirs(log_dir, exist_ok=True)
-
-# Create application loggers
-timestamp = datetime.now().strftime('%Y%m%d')
-gui_logger = setup_logger("gui", os.path.join(log_dir, f"gui_{timestamp}.log"))
-hardware_logger = setup_logger("hardware", os.path.join(log_dir, f"hardware_{timestamp}.log"))
-
-# Set logging levels for external libraries
-logging.getLogger('PIL').setLevel(logging.WARNING)
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-
-def log_test_results(results, run_number):
-    """Log test results to a results file
-    
-    Args:
-        results (dict): Test results data
-        run_number (int): Test run number
-    """
-    results_dir = "data/results"
-    os.makedirs(results_dir, exist_ok=True)
-    
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_file = os.path.join(results_dir, f"results_{timestamp}_run{run_number}.txt")
-    
-    try:
-        with open(results_file, 'w') as f:
-            f.write(f"Test Results - Run {run_number}\n")
-            f.write(f"Timestamp: {timestamp}\n")
-            f.write(f"Total Execution Time: {results['execution_time']}\n")
-            f.write(f"Configuration:\n")
-            f.write(f"  Tilt Increment: {results['config']['tilt_increment']}°\n")
-            f.write(f"  Minimum Tilt: {results['config']['min_tilt']}°\n")
-            f.write(f"  Maximum Tilt: {results['config']['max_tilt']}°\n")
-            f.write(f"  Oil Level Time: {results['config']['oil_level_time']}s\n")
-            f.write(f"\nData Files:\n")
-            f.write(f"  VNA Data: {results['data_files']['vna']}\n")
-            f.write(f"  Temperature Data: {results['data_files']['temperature']}\n")
-            f.write(f"\nAngles Tested:\n")
-            for angle in results['angles_tested']:
-                f.write(f"  {angle}°\n")
-                
-        gui_logger.info(f"Test results saved to {results_file}")
-        return results_file
-        
-    except Exception as e:
-        gui_logger.error(f"Error saving test results: {str(e)}")
-        return None
-
-def log_hardware_event(component, level, message, **kwargs):
-    """Log a hardware-related event with additional context
-    
-    Args:
-        component (str): Hardware component name (e.g., 'arduino', 'vna')
-        level (str): Log level ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
-        message (str): Log message
-        **kwargs: Additional context (command, response, parameters)
-    """
-    level_num = getattr(logging, level.upper())
-    
-    # Format the message with context if provided
-    if kwargs:
-        context_str = ', '.join(f"{k}={v}" for k, v in kwargs.items())
-        message = f"{message} [{context_str}]"
-    
-    hardware_logger.log(level_num, f"[{component}] {message}")
+from PyQt6.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt, Q_ARG
+from PyQt6.QtWidgets import QTextEdit
+from PyQt6.QtGui import QTextCursor
+import colorama
+from colorama import Fore, Style
+import traceback
 
 class QTextEditLogger(logging.Handler):
     """Custom logging handler that writes to a QTextEdit widget"""
@@ -140,31 +14,147 @@ class QTextEditLogger(logging.Handler):
     def __init__(self, widget):
         super().__init__()
         self.widget = widget
-        self.widget.setReadOnly(True)
-        
-        # Define colors for different log levels
-        self.colors = {
-            logging.DEBUG: '#A0A0A0',    # Gray
-            logging.INFO: '#FFFFFF',     # White
-            logging.WARNING: '#FFA500',  # Orange
-            logging.ERROR: '#FF0000',    # Red
-            logging.CRITICAL: '#FF00FF'  # Magenta
-        }
+        self.widget.setStyleSheet("""
+            QTextEdit {
+                background-color: #1e1e1e;
+                color: #ffffff;
+                font-family: monospace;
+            }
+        """)
         
     def emit(self, record):
-        """Write the log message to the QTextEdit with appropriate color"""
-        msg = self.format(record)
-        color = self.colors.get(record.levelno, '#FFFFFF')
-        
-        # Format message with HTML color
-        html_msg = f'<span style="color: {color};">{msg}</span><br>'
-        
-        # Append message to widget
-        self.widget.append(html_msg)
-        
-        # Auto-scroll to bottom
-        scrollbar = self.widget.verticalScrollBar()
-        scrollbar.setValue(scrollbar.maximum())
+        try:
+            msg = self.format(record)
+            color = self._get_color_for_level(record.levelno)
+            
+            # Format with HTML for color
+            formatted_msg = f'<div style="color: {color}">{msg}</div>'
+            
+            # Always use invokeMethod for thread safety
+            QMetaObject.invokeMethod(self.widget, 
+                                   "append",
+                                   Qt.ConnectionType.QueuedConnection,
+                                   Q_ARG(str, formatted_msg))
+                
+        except Exception as e:
+            print(f"Error in log handler: {str(e)}\n{traceback.format_exc()}")
+            
+    def _get_color_for_level(self, level):
+        """Get color for log level"""
+        if level >= logging.ERROR:
+            return "#ff0000"  # Red for errors
+        elif level >= logging.WARNING:
+            return "#ffa500"  # Orange for warnings
+        elif level >= logging.INFO:
+            return "#00ff00"  # Green for info
+        return "#808080"  # Gray for debug
 
-# Make QTextEditLogger available at module level
-__all__ = ['ColoredFormatter', 'setup_logger', 'log_test_results', 'log_hardware_event', 'QTextEditLogger', 'gui_logger', 'hardware_logger']
+def setup_logger(name, log_dir='logs'):
+    """Set up a logger with file and console handlers"""
+    try:
+        # Create logger
+        logger = logging.getLogger(name)
+        logger.setLevel(logging.DEBUG)
+        
+        # Create logs directory if it doesn't exist
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+            
+        # Create file handler
+        today = datetime.now().strftime('%Y%m%d')
+        log_file = os.path.join(log_dir, f'{name}_{today}.log')
+        
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(logging.DEBUG)
+        
+        # Create console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.DEBUG)  # Changed to DEBUG to show all messages
+        
+        # Create formatter
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        
+        # Add formatter to handlers
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        
+        # Add handlers to logger
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+        
+        return logger
+        
+    except Exception as e:
+        print(f"Error setting up logger: {str(e)}")
+        return None
+
+# Set up hardware logger
+hardware_logger = setup_logger('hardware')
+
+def log_hardware_event(component, level, message, **kwargs):
+    """Log a hardware event with additional context
+    
+    Args:
+        component (str): Hardware component (e.g., 'arduino', 'vna')
+        level (str): Log level ('DEBUG', 'INFO', 'WARNING', 'ERROR')
+        message (str): Main log message
+        **kwargs: Additional context to include in log
+    """
+    try:
+        # Format additional context
+        context = ', '.join(f"{k}={v}" for k, v in kwargs.items())
+        full_message = f"{message} - {context}" if context else message
+        
+        # Get logging level
+        log_level = getattr(logging, level.upper())
+        
+        # Log message
+        hardware_logger.log(log_level, f"[{component}] {full_message}")
+        
+    except Exception as e:
+        print(f"Error logging hardware event: {str(e)}")
+
+# Set up GUI logger
+gui_logger = setup_logger('gui')
+
+class ColoredFormatter(logging.Formatter):
+    """Custom formatter for colored console output"""
+    
+    COLORS = {
+        logging.DEBUG: Fore.WHITE,
+        logging.INFO: Fore.GREEN,
+        logging.WARNING: Fore.YELLOW,
+        logging.ERROR: Fore.RED,
+        logging.CRITICAL: Fore.RED + Style.BRIGHT
+    }
+    
+    def format(self, record):
+        # Add color to the level name
+        color = self.COLORS.get(record.levelno, Fore.WHITE)
+        record.levelname = f"{color}{record.levelname}{Style.RESET_ALL}"
+        
+        # Add color to the message based on level
+        record.msg = f"{color}{record.msg}{Style.RESET_ALL}"
+        
+        return super().format(record)
+
+def setup_cli_logger(name):
+    """Set up a logger for CLI mode"""
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    
+    # Create console handler with color formatting
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)  # Changed to DEBUG to show all messages
+    
+    # Create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(formatter)
+    
+    # Add handler to logger
+    logger.addHandler(console_handler)
+    
+    return logger
