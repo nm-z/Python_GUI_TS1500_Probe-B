@@ -21,6 +21,7 @@ class QTextEditLogger(logging.Handler):
                 font-family: monospace;
             }
         """)
+        self.widget.document().setMaximumBlockCount(1000)  # Limit number of lines
         
     def emit(self, record):
         try:
@@ -35,9 +36,14 @@ class QTextEditLogger(logging.Handler):
                                    "append",
                                    Qt.ConnectionType.QueuedConnection,
                                    Q_ARG(str, formatted_msg))
-                
+            
+            # Move cursor to end
+            cursor = self.widget.textCursor()
+            cursor.movePosition(QTextCursor.MoveOperation.End)
+            self.widget.setTextCursor(cursor)
+            
         except Exception as e:
-            print(f"Error in log handler: {str(e)}\n{traceback.format_exc()}")
+            print(f"Error in log handler: {str(e)}")
             
     def _get_color_for_level(self, level):
         """Get color for log level"""
@@ -55,6 +61,9 @@ def setup_logger(name, log_dir='logs'):
         # Create logger
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
+        
+        # Remove any existing handlers
+        logger.handlers = []
         
         # Create logs directory if it doesn't exist
         if not os.path.exists(log_dir):
@@ -91,13 +100,11 @@ def setup_logger(name, log_dir='logs'):
         print(f"Error setting up logger: {str(e)}")
         return None
 
-# Set up hardware logger
-hardware_logger = setup_logger('hardware')
-
-def log_hardware_event(component, level, message, **kwargs):
+def log_hardware_event(logger, component, level, message, **kwargs):
     """Log a hardware event with additional context
     
     Args:
+        logger (logging.Logger): Logger instance to use
         component (str): Hardware component (e.g., 'arduino', 'vna')
         level (str): Log level ('DEBUG', 'INFO', 'WARNING', 'ERROR')
         message (str): Main log message
@@ -112,7 +119,7 @@ def log_hardware_event(component, level, message, **kwargs):
         log_level = getattr(logging, level.upper())
         
         # Log message
-        hardware_logger.log(log_level, f"[{component}] {full_message}")
+        logger.log(log_level, f"[{component}] {full_message}")
         
     except Exception as e:
         print(f"Error logging hardware event: {str(e)}")
@@ -145,6 +152,9 @@ def setup_cli_logger(name):
     """Set up a logger for CLI mode"""
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
+    
+    # Remove any existing handlers
+    logger.handlers = []
     
     # Create console handler with color formatting
     console_handler = logging.StreamHandler()

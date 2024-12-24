@@ -1,42 +1,83 @@
+import sys
+import os
 import logging
-import traceback
+from datetime import datetime
 from PyQt6.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QSplitter, QProgressBar, QPushButton, QGroupBox,
-    QFormLayout, QSpinBox, QDoubleSpinBox, QLabel, QFileDialog, QMessageBox, QTextEdit,
-    QStatusBar
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
+    QLabel, QTextEdit, QDialog, QMessageBox, QMenuBar, QMenu, QStatusBar
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer, QProcess, QMetaObject, Q_ARG, QObject, QEvent, QSettings
-from PyQt6.QtGui import QAction, QWindow, QColor
-from utils.logger import QTextEditLogger
+from PyQt6.QtCore import Qt, QTimer
 from hardware.controller import HardwareController
 from controllers.main_controller import MainController
+from utils.config import Config
 
-class WindowEventFilter(QObject):
-    """Event filter to track window events"""
-    def __init__(self, parent=None):
+class TestFunctionalityDialog(QDialog):
+    """Test Functionality Dialog"""
+    def __init__(self, controller, parent=None):
         super().__init__(parent)
+        self.controller = controller
         self.logger = logging.getLogger('gui')
+        self.setup_ui()
         
-    def eventFilter(self, obj, event):
-        """Filter window events"""
+        self.setWindowTitle("Test Functionality")
+        self.setModal(False)
+        
+        layout = QVBoxLayout()
+        
+        # Motor control buttons
+        motor_group = QGroupBox("Motor Control")
+        motor_layout = QHBoxLayout()
+        
+        self.plus_one_btn = QPushButton("+1°")
+        self.minus_one_btn = QPushButton("-1°")
+        
+        motor_layout.addWidget(self.minus_one_btn)
+        motor_layout.addWidget(self.plus_one_btn)
+        motor_group.setLayout(motor_layout)
+        layout.addWidget(motor_group)
+        
+        # VNA sweep button
+        self.sweep_btn = QPushButton("Sweep VNA in 5s")
+        layout.addWidget(self.sweep_btn)
+        
+        self.setLayout(layout)
+        
+        # Connect signals
+        self.plus_one_btn.clicked.connect(self._move_plus_one)
+        self.minus_one_btn.clicked.connect(self._move_minus_one)
+        self.sweep_btn.clicked.connect(self._sweep_vna)
+        
+    def _move_plus_one(self):
+        """Move motor +1 degree"""
         try:
-            # Log specific events for debugging
-            if event.type() == QEvent.Type.WindowStateChange:
-                state = obj.windowState()
-                state_str = "Normal"
-                if state & Qt.WindowState.WindowMaximized:
-                    state_str = "Maximized"
-                elif state & Qt.WindowState.WindowMinimized:
-                    state_str = "Minimized"
-                elif state & Qt.WindowState.WindowFullScreen:
-                    state_str = "FullScreen"
-                self.logger.debug(f"Window state changed: {state_str}")
-            
+            self.controller.move_motor(1)
+            self.logger.info("Moving motor +1 degree")
         except Exception as e:
-            self.logger.error(f"Error in event filter: {str(e)}\n{traceback.format_exc()}")
+            self.logger.error(f"Error moving motor: {str(e)}")
             
-        return super().eventFilter(obj, event)
+    def _move_minus_one(self):
+        """Move motor -1 degree"""
+        try:
+            self.controller.move_motor(-1)
+            self.logger.info("Moving motor -1 degree")
+        except Exception as e:
+            self.logger.error(f"Error moving motor: {str(e)}")
+            
+    def _sweep_vna(self):
+        """Trigger VNA sweep"""
+        try:
+            self.logger.warning("Please click into the VNA.J window to focus it")
+            QTimer.singleShot(5000, self._do_sweep)
+        except Exception as e:
+            self.logger.error(f"Error triggering VNA sweep: {str(e)}")
+            
+    def _do_sweep(self):
+        """Execute VNA sweep after delay"""
+        try:
+            self.controller.trigger_vna_sweep()
+            self.logger.info("VNA sweep triggered")
+        except Exception as e:
+            self.logger.error(f"Error during VNA sweep: {str(e)}")
 
 class MainWindow(QMainWindow):
     """Main application window"""
@@ -55,6 +96,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("TS1500 Probe Control")
         self.setGeometry(100, 100, 1200, 800)
         
+        # Create menu bar
+        self._create_menu_bar()
+        
         # Create central widget and layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -72,33 +116,35 @@ class MainWindow(QMainWindow):
         params_layout = QFormLayout()
         
         self.start_pos = QSpinBox()
-        self.start_pos.setRange(-30, 30)  # Match SBIR requirements
+        self.start_pos.setRange(-30, 30)
+        self.start_pos.setValue(-17)  # Default value
         params_layout.addRow("Start Position (°):", self.start_pos)
         
         self.end_pos = QSpinBox()
-        self.end_pos.setRange(-30, 30)  # Match SBIR requirements
+        self.end_pos.setRange(-30, 30)
+        self.end_pos.setValue(17)  # Default value
         params_layout.addRow("End Position (°):", self.end_pos)
         
         self.step_size = QDoubleSpinBox()
-        self.step_size.setRange(0.1, 3.0)  # Match SBIR requirements
+        self.step_size.setRange(0.1, 3.0)
         self.step_size.setSingleStep(0.1)
-        self.step_size.setValue(1.0)
+        self.step_size.setValue(1.0)  # Default value
         params_layout.addRow("Step Size (°):", self.step_size)
         
         self.dwell_time = QSpinBox()
-        self.dwell_time.setRange(5, 60)  # Match SBIR requirements
-        self.dwell_time.setValue(15)
+        self.dwell_time.setRange(5, 60)
+        self.dwell_time.setValue(15)  # Default value
         params_layout.addRow("Dwell Time (s):", self.dwell_time)
         
         control_layout.addLayout(params_layout)
         
         # Add control buttons
-        self.start_button = QPushButton("Start")
-        self.start_button.setEnabled(True)  # Enable by default
+        self.start_button = QPushButton("Start Test")
+        self.start_button.setEnabled(True)
         control_layout.addWidget(self.start_button)
         
         self.stop_button = QPushButton("Stop")
-        self.stop_button.setEnabled(False)  # Disabled until test starts
+        self.stop_button.setEnabled(False)
         control_layout.addWidget(self.stop_button)
         
         self.emergency_button = QPushButton("EMERGENCY STOP")
@@ -130,9 +176,9 @@ class MainWindow(QMainWindow):
         self.log_text.setReadOnly(True)
         log_layout.addWidget(self.log_text)
         
-        # Set up log handler
+        # Set up log handler with modified behavior
         log_handler = QTextEditLogger(self.log_text)
-        log_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+        log_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
         logging.getLogger('gui').addHandler(log_handler)
         logging.getLogger('hardware').addHandler(log_handler)
         
@@ -147,6 +193,22 @@ class MainWindow(QMainWindow):
         
         self.logger.info("Application initialized successfully")
         
+    def _create_menu_bar(self):
+        """Create the menu bar"""
+        menubar = self.menuBar()
+        
+        # Test Components menu
+        test_menu = menubar.addMenu('Test Components')
+        test_action = QAction('Test Functionality', self)
+        test_action.triggered.connect(self._show_test_dialog)
+        test_menu.addAction(test_action)
+        
+    def _show_test_dialog(self):
+        """Show the test functionality dialog"""
+        if not hasattr(self, 'test_dialog'):
+            self.test_dialog = TestFunctionalityDialog(self.controller, self)
+        self.test_dialog.show()
+        
     def closeEvent(self, event):
         """Handle window close event"""
         if hasattr(self, 'hardware'):
@@ -156,7 +218,6 @@ class MainWindow(QMainWindow):
     def _connect_signals(self):
         """Connect signals"""
         # Connect hardware signals
-        self.hardware.connection_status.connect(self._handle_connection_status)
         self.hardware.error_occurred.connect(self._handle_error)
         self.hardware.temperature_updated.connect(self._handle_temperature)
         self.hardware.tilt_updated.connect(self._handle_tilt)
@@ -166,17 +227,6 @@ class MainWindow(QMainWindow):
         self.stop_button.clicked.connect(self._handle_stop)
         self.emergency_button.clicked.connect(self._handle_emergency)
         
-    def _handle_connection_status(self, connected):
-        """Handle hardware connection status changes"""
-        if connected:
-            self.start_button.setEnabled(True)
-            self.stop_button.setEnabled(True)
-            self.emergency_button.setEnabled(True)
-        else:
-            self.start_button.setEnabled(False)
-            self.stop_button.setEnabled(False)
-            self.emergency_button.setEnabled(False)
-            
     def _handle_error(self, error_msg):
         """Handle hardware errors"""
         self.logger.error(f"Hardware error: {error_msg}")

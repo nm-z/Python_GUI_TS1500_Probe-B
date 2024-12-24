@@ -1,0 +1,106 @@
+2024-12-24 12:28:21 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:28:21 - gui - INFO - Application initialized successfully
+2024-12-24 12:29:53 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:29:53 - gui - INFO - Application initialized successfully
+2024-12-24 12:34:22 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:34:22 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:34:22 - gui - ERROR - Failed to set up data directories: 'MainController' object has no attribute 'setup_data_directories'
+2024-12-24 12:34:22 - gui - ERROR - Failed to set up data directories: 'MainController' object has no attribute 'setup_data_directories'
+2024-12-24 12:34:22 - gui - INFO - Application initialized successfully
+2024-12-24 12:34:22 - gui - INFO - Application initialized successfully
+2024-12-24 12:34:25 - gui - ERROR - Error starting test: 'MainController' object has no attribute '_handle_error'
+2024-12-24 12:34:25 - gui - ERROR - Error starting test: 'MainController' object has no attribute '_handle_error'
+2024-12-24 12:34:27 - gui - ERROR - Error during emergency stop: Failed to emergency stop: Emergency stop engaged
+2024-12-24 12:34:27 - gui - ERROR - Error during emergency stop: Failed to emergency stop: Emergency stop engaged
+2024-12-24 12:34:27 - gui - ERROR - Emergency stop failed
+2024-12-24 12:34:27 - gui - ERROR - Emergency stop failed
+2024-12-24 12:35:05 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:35:05 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:35:05 - gui - INFO - Application initialized successfully
+2024-12-24 12:35:05 - gui - INFO - Application initialized successfully
+2024-12-24 12:35:08 - gui - INFO - Test started with parameters:
+2024-12-24 12:35:08 - gui - INFO - Starting test routine
+2024-12-24 12:35:08 - gui - INFO - Test started with parameters:
+2024-12-24 12:35:08 - gui - INFO - Starting test routine
+2024-12-24 12:35:08 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:35:08 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:35:08 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:35:08 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:35:08 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:35:08 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:35:08 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:35:08 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:35:08 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:35:08 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:35:09 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 0
+2024-12-24 12:35:09 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 0
+2024-12-24 12:35:14 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:35:14 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:38:31 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:38:31 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:38:31 - gui - INFO - Application initialized successfully
+2024-12-24 12:38:31 - gui - INFO - Application initialized successfully
+2024-12-24 12:38:34 - gui - INFO - Test started with parameters:
+2024-12-24 12:38:34 - gui - INFO - Test started with parameters:
+2024-12-24 12:38:34 - gui - INFO - Starting test routine
+2024-12-24 12:38:34 - gui - INFO - Starting test routine
+2024-12-24 12:38:34 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:38:34 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:38:34 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:38:34 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:38:34 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:38:34 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:38:34 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:38:34 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:38:34 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:38:34 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:38:34 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 10
+2024-12-24 12:38:34 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 10
+2024-12-24 12:38:39 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:38:39 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:40:58 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:40:58 - gui - INFO - Configuration loaded successfully
+2024-12-24 12:40:58 - gui - INFO - Application initialized successfully
+2024-12-24 12:40:58 - gui - INFO - Application initialized successfully
+2024-12-24 12:41:01 - gui - INFO - Test started with parameters:
+2024-12-24 12:41:01 - gui - INFO - Starting test routine
+2024-12-24 12:41:01 - gui - INFO - Test started with parameters:
+2024-12-24 12:41:01 - gui - INFO - Starting test routine
+2024-12-24 12:41:01 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:41:01 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:41:01 - gui - INFO -   min_tilt: -17.0
+2024-12-24 12:41:01 - gui - INFO - Moving to angle 0.0
+2024-12-24 12:41:01 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:41:01 - gui - INFO -   max_tilt: 17.0
+2024-12-24 12:41:01 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:41:01 - gui - INFO -   tilt_increment: 1.0
+2024-12-24 12:41:01 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:41:01 - gui - INFO -   dwell_time: 15.0
+2024-12-24 12:41:01 - gui - INFO - Move response: Moving steps: 10
+2024-12-24 12:41:01 - gui - INFO - Move response: Moving steps: 10
+2024-12-24 12:41:06 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:41:06 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:41:16 - gui - INFO - Triggering VNA sweep
+2024-12-24 12:41:16 - gui - INFO - Triggering VNA sweep
+2024-12-24 12:41:16 - gui - INFO - VNA sweep response: Movement started
+2024-12-24 12:41:16 - gui - INFO - VNA sweep response: Movement started
+2024-12-24 12:41:26 - gui - INFO - Temperature response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:26 - gui - INFO - Temperature response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:26 - gui - INFO - Moving to angle 1.0
+2024-12-24 12:41:26 - gui - INFO - Moving to angle 1.0
+2024-12-24 12:41:26 - gui - INFO - Move response: TEMP 33.50
+2024-12-24 12:41:26 - gui - INFO - Move response: TEMP 33.50
+2024-12-24 12:41:31 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:41:31 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:41:41 - gui - INFO - Triggering VNA sweep
+2024-12-24 12:41:41 - gui - INFO - Triggering VNA sweep
+2024-12-24 12:41:41 - gui - INFO - VNA sweep response: Moving steps: 10
+2024-12-24 12:41:41 - gui - INFO - VNA sweep response: Moving steps: 10
+2024-12-24 12:41:51 - gui - INFO - Temperature response: Movement started
+2024-12-24 12:41:51 - gui - INFO - Temperature response: Movement started
+2024-12-24 12:41:51 - gui - INFO - Moving to angle 2.0
+2024-12-24 12:41:51 - gui - INFO - Moving to angle 2.0
+2024-12-24 12:41:51 - gui - INFO - Move response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:51 - gui - INFO - Move response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:56 - gui - INFO - Waiting for oil tilt level to stabilize
+2024-12-24 12:41:56 - gui - INFO - Waiting for oil tilt level to stabilize

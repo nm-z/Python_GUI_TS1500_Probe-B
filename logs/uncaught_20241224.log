@@ -1,0 +1,17 @@
+2024-12-24 12:33:33,828 - hardware - ERROR - [arduino] Failed to parse status response: Debug port initialized (Error: Missing POS field)
+2024-12-24 12:33:33,828 - hardware - ERROR - [arduino] Failed connection test
+2024-12-24 12:34:22,958 - gui - ERROR - Failed to set up data directories: 'MainController' object has no attribute 'setup_data_directories'
+2024-12-24 12:34:25,787 - gui - ERROR - Error starting test: 'MainController' object has no attribute '_handle_error'
+2024-12-24 12:34:27,895 - gui - ERROR - Error during emergency stop: Failed to emergency stop: Emergency stop engaged
+2024-12-24 12:34:27,895 - gui - ERROR - Emergency stop failed
+2024-12-24 12:35:09,144 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 0
+2024-12-24 12:38:34,313 - gui - ERROR - Error moving motor: Failed to move motor: Moving steps: 10
+2024-12-24 12:40:58,527 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:45:14,216 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:45:34,663 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:45:57,083 - hardware - ERROR - [arduino] Failed to connect - error='HardwareController' object has no attribute '_find_arduino_port'
+2024-12-24 12:46:35,410 - hardware - ERROR - [arduino] Failed to connect - invalid status response: Debug port initialized
+2024-12-24 12:49:05,581 - hardware - ERROR - [arduino] Failed to connect - invalid status response: Debug port initialized
+2024-12-24 12:49:36,150 - hardware - ERROR - [arduino] Failed to connect - invalid status response: Debug port initialized
+2024-12-24 13:00:13,364 - gui - ERROR - Failed to trigger VNA sweep with F12: You must be root to use this library on linux.
+2024-12-24 13:00:21,366 - gui - ERROR - Failed to trigger VNA sweep with F12: You must be root to use this library on linux.

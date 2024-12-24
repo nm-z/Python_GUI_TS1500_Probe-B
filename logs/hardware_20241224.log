@@ -1,0 +1,156 @@
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:28:21 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:28:25 - hardware - INFO - [arduino] Disconnected
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:29:53 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:29:56 - hardware - INFO - [arduino] Disconnected
+2024-12-24 12:33:33 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:33:33 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:33:33 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:33:33 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:33:33 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:33:33 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:33:33 - hardware - ERROR - [arduino] Failed to parse status response: Debug port initialized (Error: Missing POS field)
+2024-12-24 12:33:33 - hardware - ERROR - [arduino] Failed to parse status response: Debug port initialized (Error: Missing POS field)
+2024-12-24 12:33:33 - hardware - ERROR - [arduino] Failed connection test
+2024-12-24 12:33:33 - hardware - ERROR - [arduino] Failed connection test
+2024-12-24 12:34:20 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:34:20 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:34:20 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:34:20 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:34:22 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:34:22 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:34:22 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.70 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:34:22 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.70 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:34:22 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:34:22 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:34:27 - hardware - DEBUG - Sending command: EMERGENCY_STOP
+2024-12-24 12:34:27 - hardware - DEBUG - Sending command: EMERGENCY_STOP
+2024-12-24 12:35:02 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:35:02 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:35:02 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:35:02 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:35:04 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:35:04 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:35:05 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.71 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:35:05 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.71 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:35:05 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:35:05 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:35:08 - hardware - DEBUG - Sending command: MOVE steps=10
+2024-12-24 12:35:08 - hardware - DEBUG - Sending command: MOVE steps=10
+2024-12-24 12:37:48 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:37:48 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:37:50 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:37:51 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.68 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:37:51 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:37:52 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:37:52 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.61 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:38:16 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:38:16 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:38:18 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:38:19 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.64 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:38:19 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:38:20 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:38:21 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.68 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:38:29 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:38:29 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:38:29 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:38:29 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:38:31 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:38:31 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:38:31 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.65 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:38:31 - hardware - DEBUG - Cleaned status response: POS 0 ANGLE 4.65 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:38:31 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:38:31 - hardware - INFO - [arduino] Connected successfully - port=/dev/ttyACM0, baudrate=250000
+2024-12-24 12:38:34 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:38:34 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:40:54 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:40:56 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:40:56 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:40:56 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:40:56 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:40:58 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:40:58 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:40:58 - hardware - DEBUG - Response: POS 10 ANGLE 4.60 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:40:58 - hardware - DEBUG - Response: POS 10 ANGLE 4.60 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:40:58 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:40:58 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:41:01 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:01 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:01 - hardware - DEBUG - Response: Moving steps: 10
+2024-12-24 12:41:01 - hardware - DEBUG - Response: Moving steps: 10
+2024-12-24 12:41:16 - hardware - DEBUG - Sending command: VNA_SWEEP
+2024-12-24 12:41:16 - hardware - DEBUG - Sending command: VNA_SWEEP
+2024-12-24 12:41:16 - hardware - DEBUG - Response: Movement started
+2024-12-24 12:41:16 - hardware - DEBUG - Response: Movement started
+2024-12-24 12:41:26 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:41:26 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:41:26 - hardware - DEBUG - Response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:26 - hardware - DEBUG - Response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:26 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:26 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:26 - hardware - DEBUG - Response: TEMP 33.50
+2024-12-24 12:41:26 - hardware - DEBUG - Response: TEMP 33.50
+2024-12-24 12:41:41 - hardware - DEBUG - Sending command: VNA_SWEEP
+2024-12-24 12:41:41 - hardware - DEBUG - Sending command: VNA_SWEEP
+2024-12-24 12:41:41 - hardware - DEBUG - Response: Moving steps: 10
+2024-12-24 12:41:41 - hardware - DEBUG - Response: Moving steps: 10
+2024-12-24 12:41:51 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:41:51 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:41:51 - hardware - DEBUG - Response: Movement started
+2024-12-24 12:41:51 - hardware - DEBUG - Response: Movement started
+2024-12-24 12:41:51 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:51 - hardware - DEBUG - Sending command: MOVE 10
+2024-12-24 12:41:51 - hardware - DEBUG - Response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:41:51 - hardware - DEBUG - Response: ERROR: Unknown command: VNA_SWEEP
+2024-12-24 12:45:12 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:45:12 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:45:14 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:45:14 - hardware - DEBUG - Response: Debug port initialized
+2024-12-24 12:45:14 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:45:15 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:45:15 - hardware - DEBUG - Response: Initializing MPU6050...
+2024-12-24 12:45:21 - hardware - DEBUG - Sending command: TILT
+2024-12-24 12:45:21 - hardware - DEBUG - Response: MPU6050 initialization successful
+2024-12-24 12:45:28 - hardware - DEBUG - Sending command: TILT
+2024-12-24 12:45:28 - hardware - DEBUG - Response: Temperature sensor initialized successfully
+2024-12-24 12:45:32 - hardware - INFO - [arduino] Attempting to connect to /dev/ttyACM0 at 250000 baud
+2024-12-24 12:45:32 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:45:34 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:45:34 - hardware - DEBUG - Response: POS 0 ANGLE 4.64 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:45:34 - hardware - ERROR - [arduino] Failed to connect - error='str' object has no attribute 'get'
+2024-12-24 12:45:35 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:45:35 - hardware - DEBUG - Response: POS 0 ANGLE 4.63 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:45:53 - hardware - DEBUG - Sending command: MOVE 2
+2024-12-24 12:45:53 - hardware - DEBUG - Response: Moving steps: 2
+2024-12-24 12:45:57 - hardware - ERROR - [arduino] Failed to connect - error='HardwareController' object has no attribute '_find_arduino_port'
+2024-12-24 12:45:58 - hardware - WARNING - Cannot send command - not connected
+2024-12-24 12:46:11 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:46:13 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:46:13 - hardware - DEBUG - Response: POS 2 ANGLE 4.60 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:46:14 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:46:14 - hardware - DEBUG - Response: POS 2 ANGLE 4.60 SPEED 0.00 ACCEL 500.00 HOMED NO E_STOP NO
+2024-12-24 12:46:27 - hardware - DEBUG - Sending command: MOVE 2
+2024-12-24 12:46:27 - hardware - DEBUG - Response: Moving steps: 2
+2024-12-24 12:46:33 - hardware - INFO - [arduino] Serial port opened
+2024-12-24 12:46:35 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:46:35 - hardware - DEBUG - Response: Debug port initialized
+2024-12-24 12:46:35 - hardware - ERROR - [arduino] Failed to connect - invalid status response: Debug port initialized
+2024-12-24 12:46:36 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:46:36 - hardware - DEBUG - Response: Initializing MPU6050...
+2024-12-24 12:46:36 - hardware - DEBUG - Sending command: STATUS
+2024-12-24 12:46:36 - hardware - DEBUG - Response: MPU6050 initialization successful
+2024-12-24 12:46:36 - hardware - DEBUG - Sending command: TEMP
+2024-12-24 12:46:36 - hardware - DEBUG - Response: Temperature sensor initialized successfully
+2024-12-24 12:46:36 - hardware - DEBUG - Sending command: TILT
+2024-12-24 12:46:36 - hardware - DEBUG - Response: Initialization complete
+2024-12-24 12:46:36 - hardware - DEBUG - Sending command: MOVE 100
+2024-12-24 12:46:36 - hardware - DEBUG - Response: READY
