@@ -154,37 +154,47 @@ class HardwareController(QObject):
             self.logger.error('Error cleaning response', extra={'error': str(e), 'response': response})
             return None
 
-    def send_command(self, command, args=None):
-        """Send command to Arduino and log response"""
-        if not self._arduino or not self._arduino.is_open:
-            self.logger.warning('Cannot send command - not connected')
-            return None
-            
+    def send_command(self, command, params=None):
+        """Send a command to the Arduino"""
         try:
-            # Format command
-            cmd_str = command
-            if args:
-                if isinstance(args, dict):
-                    cmd_str = f"{command} {' '.join(str(v) for v in args.values())}"
-                else:
-                    cmd_str = f"{command} {args}"
+            if command == "HOME":
+                # Send home command
+                self._arduino.write(b"HOME\n")
                 
-            # Send command
-            self.logger.debug(f'Sending command: {cmd_str}')
-            self._arduino.write(f"{cmd_str}\n".encode('utf-8'))
-            self._arduino.flush()
-            
-            # Read response
+                # Wait for "Starting homing sequence..." message
+                response = self._arduino.readline().decode('utf-8').strip()
+                if "Starting homing sequence" not in response:
+                    return f"ERROR: Unexpected response: {response}"
+                    
+                # Wait for "Homing complete" or error message
+                while True:
+                    response = self._arduino.readline().decode('utf-8').strip()
+                    if "Homing complete" in response:
+                        return "Homing complete"
+                    elif "ERROR" in response:
+                        return response
+                    elif "Home switch triggered" in response:
+                        # This is an expected intermediate message
+                        continue
+                    # Keep waiting for valid response
+                    
+            elif command == "MOVE":
+                if params and "steps" in params:
+                    self._arduino.write(f"MOVE {params['steps']}\n".encode())
+                else:
+                    return "ERROR: MOVE requires steps parameter"
+            else:
+                # Send other commands directly
+                self._arduino.write(f"{command}\n".encode())
+                
+            # Read and return response
             response = self._arduino.readline().decode('utf-8').strip()
-            self.logger.debug(f'Response: {response}')
-            
-            # Return raw response string
             return response
             
         except Exception as e:
-            self.logger.error(f'Command failed: {str(e)}')
-            return None
-            
+            self.logger.error(f"Error sending command {command}: {str(e)}")
+            return f"ERROR: {str(e)}"
+
     def is_connected(self):
         """Check if Arduino is connected and responding"""
         if not self._arduino or not self._arduino.is_open:
