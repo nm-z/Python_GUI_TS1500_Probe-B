@@ -1,0 +1,28 @@
+2024-12-27 11:15:48,229 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 11:15:48,229 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 11:15:48,229 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-27 11:19:17,561 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 11:19:17,561 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 12:14:46,562 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 12:14:46,562 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 12:14:56,991 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 12:14:56,991 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 12:14:57,786 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 12:14:57,786 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 12:14:58,656 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 12:14:58,656 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 12:42:13,128 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 12:42:13,128 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 13:32:59,629 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 13:32:59,629 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 13:49:34,013 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-27 13:49:34,013 - hardware - ERROR - [arduino] No Arduino found
+2024-12-27 14:55:13,127 - hardware - ERROR - Error sending command HOME: device reports readiness to read but returned no data (device disconnected or multiple access on port?)

@@ -166,6 +166,11 @@ def run_test_routine(controller, params):
 def cli_mode(controller, gui_logger, hardware_logger):
     """Run the application in CLI mode"""
     try:
+        # Check if Arduino is connected
+        if not controller or not controller._arduino:
+            print("\033[91mError: No Arduino connected - some functionality will be limited\033[0m")
+            return 1
+
         # Wait for Arduino to initialize
         if not wait_for_ready(controller):
             print("\033[91mError: Arduino not ready\033[0m")
@@ -252,8 +257,13 @@ def main():
         # Set up exception handler
         sys.excepthook = handle_exception
         
-        # Initialize hardware controller
-        controller = HardwareController(hardware_logger)
+        try:
+            # Initialize hardware controller
+            controller = HardwareController(hardware_logger)
+        except Exception as e:
+            print(f"\033[91mWarning: Failed to initialize hardware controller: {str(e)}\033[0m")
+            print("\033[91mContinuing in limited functionality mode...\033[0m")
+            controller = None
         
         # Run in CLI mode
         exit_code = cli_mode(controller, gui_logger, hardware_logger)

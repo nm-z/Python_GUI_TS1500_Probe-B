@@ -15,3 +15,71 @@
 2024-12-24 12:49:36,150 - hardware - ERROR - [arduino] Failed to connect - invalid status response: Debug port initialized
 2024-12-24 13:00:13,364 - gui - ERROR - Failed to trigger VNA sweep with F12: You must be root to use this library on linux.
 2024-12-24 13:00:21,366 - gui - ERROR - Failed to trigger VNA sweep with F12: You must be root to use this library on linux.
+2024-12-24 17:00:31,083 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:00:31,083 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:00:31,083 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 17:00:37,635 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:00:37,635 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:00:37,635 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 17:01:07,637 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:01:07,637 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:01:07,637 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 17:29:28,810 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:29:28,810 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:29:28,810 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 17:29:42,864 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:29:42,865 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:29:42,865 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 17:30:29,788 - hardware - ERROR - [arduino] No available Arduino ports found
+2024-12-24 17:30:29,788 - hardware - ERROR - [arduino] No Arduino found
+2024-12-24 17:30:29,788 - hardware - CRITICAL - Critical error in CLI mode: 'NoneType' object has no attribute 'readline'
+Traceback (most recent call last):
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 170, in cli_mode
+    if not wait_for_ready(controller):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/nate/Python_GUI_TS1500_Probe-B/main.py", line 64, in wait_for_ready
+    response = controller._arduino.readline().decode('utf-8').strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'readline'
+2024-12-24 18:16:12,196 - hardware - ERROR - Error sending command /HOME/NATE/PYTHON_GUI_TS1500_PROBE-B/VENV/BIN/PYTHON /HOME/NATE/PYTHON_GUI_TS1500_PROBE-B/MAIN.PY: write failed: [Errno 5] Input/output error
+2024-12-24 18:16:24,228 - hardware - ERROR - Error sending command CLEAER: write failed: [Errno 5] Input/output error

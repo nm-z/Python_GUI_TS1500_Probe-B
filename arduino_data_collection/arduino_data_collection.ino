@@ -43,9 +43,11 @@ const uint8_t THERMOCOUPLE_SO_PIN = 12;    // SO/MISO -> Pin 12 (Hardware SPI MI
 // Constants
 const float STEPS_PER_REV = 200.0;
 const float STEPS_PER_DEGREE = STEPS_PER_REV / 360.0;
-const int32_t MOTOR_MAX_SPEED = 1000;
-const int32_t MOTOR_DEFAULT_SPEED = 200;
-const int32_t MOTOR_ACCELERATION = 500;
+const int32_t MOTOR_MAX_SPEED = 100;
+const int32_t MOTOR_DEFAULT_SPEED = 100;
+const int32_t MOTOR_HOMING_SPEED = -100;  // Negative speed for downward homing movement
+const int32_t MOTOR_CLEARING_SPEED = 50;   // Positive speed for upward clearing movement
+const int32_t MOTOR_ACCELERATION = 100;
 const uint32_t SERIAL_BAUD_RATE = 250000;  // Increased baud rate
 const uint16_t STRING_BUFFER_SIZE = 200;
 const uint16_t TEMP_READ_DELAY = 250;
@@ -65,6 +67,8 @@ AccelStepper stepper(AccelStepper::DRIVER, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 volatile bool isEmergencyStopped = false;
 volatile bool isCalibrated = false;
 volatile bool isHomed = false;
+volatile bool isLevel = false;
+volatile bool isCleared = false;
 unsigned long lastTempRead = 0;
 float lastValidTemp = 0.0f;
 bool tempSensorOk = false;
@@ -87,6 +91,7 @@ void emergencyStop();
 void enableMotor(bool enable);
 void logDiagnostic(const char* component, const char* message, bool isError = false);
 void logValue(const char* component, const char* valueName, float value);
+void level();
 
 void calculateTilt() {
     if (!mpuInitialized) {
@@ -226,6 +231,21 @@ void processCommand(const String& command) {
         Serial.print(F("TILT "));
         Serial.println(roll, 2);
     }
+    else if (command == "LEVEL") {
+        if (!isHomed) {
+            Serial.println(F("ERROR: Must home before leveling"));
+            return;
+        }
+        // Calculate steps for 16.8 degrees (STEPS_PER_DEGREE * 16.8)
+        long steps = (long)(2895);
+        stepper.setMaxSpeed(MOTOR_MAX_SPEED);
+        stepper.setSpeed(MOTOR_DEFAULT_SPEED);
+        stepper.moveTo(steps);
+        while (stepper.currentPosition() != steps && !isEmergencyStopped) {
+            stepper.run();
+        }
+        Serial.println(F("Leveling complete"));
+    }
     else if (command.startsWith("MOVE ")) {
         String stepsStr = command.substring(5);
         int32_t steps = stepsStr.toInt();
@@ -308,6 +328,10 @@ float getCurrentAngle() {
 }
 
 void moveMotor(int32_t steps) {
+    if (!isHomed) {
+        Serial.println(F("ERROR: Movement rejected - not homed"));
+        return;
+    }
     if (isEmergencyStopped) {
         Serial.println(F("ERROR: Movement rejected - emergency stop active"));
         return;
@@ -315,10 +339,37 @@ void moveMotor(int32_t steps) {
 
     Serial.print(F("Moving steps: "));
     Serial.println(steps);
-    stepper.move(steps);
-    Serial.println(F("Movement started"));
+    
+    // Calculate target position
+    long targetPos = stepper.currentPosition() + steps;
+    
+    // Set speeds for movement
+    if (steps < 0) {
+        stepper.setMaxSpeed(MOTOR_MAX_SPEED);
+        stepper.setSpeed(-MOTOR_DEFAULT_SPEED);
+    } else {
+        stepper.setMaxSpeed(MOTOR_MAX_SPEED);
+        stepper.setSpeed(MOTOR_DEFAULT_SPEED);
+    }
+    
+    // Move to position
+    stepper.moveTo(targetPos);
+    
+    while (stepper.currentPosition() != targetPos) {
+        stepper.runSpeedToPosition();
+    }
+    
+    Serial.println(F("Movement complete"));
 }
 
+//=============================================================================
+// WARNING: DO NOT MODIFY THIS FUNCTION - IT IS WORKING CORRECTLY
+// This implementation has been tested and verified to:
+// 1. Move down to home switch
+// 2. Clear the switch correctly
+// 3. Move exactly 2715 steps at 150 speed to level position
+// ANY changes to speeds, steps, or logic will break the calibrated movement
+//=============================================================================
 void homeMotor() {
     if (isEmergencyStopped) {
         Serial.println(F("ERROR: Homing rejected - emergency stop active"));
@@ -326,17 +377,53 @@ void homeMotor() {
     }
 
     Serial.println(F("Starting homing sequence..."));
+    // Move down until home switch is hit
     while (digitalRead(HOME_SWITCH_PIN) == HIGH && !isEmergencyStopped) {
-        stepper.moveTo(-1000000L);
-        stepper.run();
+        stepper.setSpeed(MOTOR_HOMING_SPEED);  // downward toward homing switch
+        stepper.runSpeed();
+        delay(10);  // simulates debouncing
     }
-    
+
     if (!isEmergencyStopped) {
-        Serial.println(F("Home switch triggered"));
-        stepper.setCurrentPosition(0L);
+        stepper.stop();  // Stop motor movement
+        delay(1000);     // Wait 1 second after hitting switch
+
+        // Clear the switch by moving up until switch is released
+        Serial.println(F("Clearing home switch..."));
+        while (digitalRead(HOME_SWITCH_PIN) == LOW && !isEmergencyStopped) {
+            stepper.setSpeed(MOTOR_CLEARING_SPEED);  // Upward
+            stepper.runSpeed();
+            delay(5);  // debouncing
+        }
+        
+        stepper.stop();
+        delay(1000);  // Wait 1 second after clearing
+
+        // Now move to level position
+        stepper.setCurrentPosition(0);  // Set cleared position as 0
+        stepper.setMaxSpeed(150);      // Much higher max speed
+        stepper.setSpeed(150);         // Much faster constant speed for linear movement
+        stepper.moveTo(2715);           // Move exactly 2820 steps up
+        
+        while (stepper.currentPosition() != 2715 && !isEmergencyStopped) {
+            stepper.run();              // Use run() for full speed
+        }
+
         isHomed = true;
-        Serial.println(F("Homing complete"));
+        Serial.println(F("Homing and leveling complete"));
     }
+}
+
+void clearHomeMotor() {
+    //========= Clear the tilt limit switch ====================================================
+    while (digitalRead(HOME_SWITCH_PIN) == LOW) {
+        stepper.setSpeed(MOTOR_CLEARING_SPEED);  // Upward
+        stepper.runSpeed();
+        delay(5);  // this delay simulate debouncing
+    }
+    isCleared = true;
+    Serial.println("Homing switch has been cleared");
+    delay(1000);
 }
 
 void calibrateSystem() {
@@ -465,10 +552,28 @@ void printHelp() {
     Serial.println(F("  STATUS        - Show current system status"));
     Serial.println(F("  TEMP          - Read current temperature"));
     Serial.println(F("  TILT          - Read current tilt angle"));
+    Serial.println(F("  LEVEL         - Move to 16.8 degree position"));
     Serial.println(F("  MOVE <steps>  - Move stepper motor"));
     Serial.println(F("  HOME          - Home the stepper motor"));
     Serial.println(F("  STOP          - Stop motor movement"));
     Serial.println(F("  CALIBRATE     - Calibrate the system"));
     Serial.println(F("  EMERGENCY_STOP - Toggle emergency stop"));
     Serial.println(F("  HELP          - Show this help message"));
+}
+
+void level() {
+    //Print out Instructions on the Serial Monitor at Start
+    Serial.println("Turn off power to the motor");
+    Serial.println("Place a level sensor on the Tilt Platform");
+    Serial.println("Manually adjust the platform until level sensor reads 0 +/- 0.1 degrees");
+    Serial.println("Toggle the Home Switch to start the test (5 second safety delay)");
+
+    // stay in while loop until switch is read as a low
+    while (digitalRead(HOME_SWITCH_PIN) == HIGH) {
+        delay(10);
+    }
+    Serial.println("Switch Toggled --- LEVELED |||  Turn on power to the motor");
+    isLevel = true;
+    stepper.setCurrentPosition(0);  // Set level as current and safe position
+    delay(5000);
 }
