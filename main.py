@@ -76,18 +76,21 @@ def run_test_setup():
         print("\033[93mDefaults shown in [brackets]\033[0m\n")
         
         step_increment = float(input("\033[96mSteps per increment \033[93m[200 steps]\033[96m: \033[0m").strip() or "200")
-        num_increments = int(input("\033[96mNumber of increments \033[93m[24]\033[96m: \033[0m").strip() or "24")
-        vna_dwell = float(input("\033[96mVNA dwell time \033[93m[6 seconds]\033[96m: \033[0m").strip() or "6")
-        oil_dwell = float(input("\033[96mOil settling time \033[93m[2 seconds]\033[96m: \033[0m").strip() or "2")
+        num_steps = int(input("\033[96mNumber of steps \033[93m[25]\033[96m: \033[0m").strip() or "25")
+        num_loops = int(input("\033[96mNumber of loops \033[93m[1]\033[96m: \033[0m").strip() or "1")
+        vna_dwell = float(input("\033[96mVNA dwell time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
+        oil_dwell = float(input("\033[96mOil settling time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
         
         # Calculate min and max steps
-        max_steps = (num_increments // 2) * step_increment
+        max_steps = (num_steps // 2) * step_increment
         min_steps = -max_steps
         
         return {
             'min_steps': min_steps,
             'max_steps': max_steps,
             'step_increment': step_increment,
+            'num_steps': num_steps,
+            'num_loops': num_loops,
             'vna_dwell': vna_dwell,
             'oil_dwell': oil_dwell
         }
@@ -111,7 +114,7 @@ def run_test_routine(controller, params):
             
         print("\n\033[92mTest started!\033[0m")
 
-        # First move to minimum position
+        # Move to minimum position ONCE at start
         print(f"\033[95mMoving to initial position: {params['min_steps']} steps\033[0m")
         controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
         while True:
@@ -122,18 +125,26 @@ def run_test_routine(controller, params):
                     break
                 elif "ERROR" in response:
                     raise Exception(f"Movement error: {response}")
-        
-        # Calculate number of steps
-        total_points = int((params['max_steps'] - params['min_steps']) / params['step_increment']) + 1
-        
-        # Now do relative movements
-        for i in range(total_points):
-            progress = (i / total_points) * 100
-            print(f"\033[96mProgress: {progress:.1f}%\033[0m")
+
+        total_measurements = int(params['num_steps']) * int(params['num_loops'])
+        current_measurement = 0
+
+        for loop in range(params['num_loops']):
+            print(f"\n\033[95mStarting loop {loop + 1} of {params['num_loops']}\033[0m")
             
-            if i > 0:  # Don't move on first iteration since we just moved to min_steps
-                print(f"\033[95mMoving +{params['step_increment']} steps\033[0m")
-                controller._arduino.write(f"MOVE {params['step_increment']}\n".encode())
+            # Alternate increment sign for each loop
+            increment = params['step_increment'] if loop % 2 == 0 else -params['step_increment']
+            print(f"\033[95mUsing increment of {increment} steps for this loop\033[0m")
+            
+            # Do measurements
+            for i in range(int(params['num_steps'])):
+                current_measurement += 1
+                progress = (current_measurement / total_measurements) * 100
+                print(f"\033[96mProgress: {progress:.1f}% (Loop {loop + 1}/{params['num_loops']})\033[0m")
+                
+                # Move motor
+                print(f"\033[95mMoving {increment} steps\033[0m")
+                controller._arduino.write(f"MOVE {increment}\n".encode())
                 while True:
                     response = controller._arduino.readline().decode('utf-8').strip()
                     if response:
@@ -142,32 +153,32 @@ def run_test_routine(controller, params):
                             break
                         elif "ERROR" in response:
                             raise Exception(f"Movement error: {response}")
-            
-            # Wait for oil to settle
-            print(f"\033[93mWaiting {params['oil_dwell']}s for oil to settle...\033[0m")
-            time.sleep(params['oil_dwell'])
-            
-            # Trigger VNA sweep
-            print("\033[93mTriggering VNA sweep...\033[0m")
-            try:
-                pyautogui.press('f12')
-            except Exception as e:
-                print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
-                print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
-                input("\033[93mPress Enter after pressing F12...\033[0m")
-            
-            # Wait for VNA
-            print(f"\033[93mWaiting {params['vna_dwell']}s for VNA sweep...\033[0m")
-            time.sleep(params['vna_dwell'])
-            
-            # Get temperature and tilt readings
-            controller._arduino.write(b"TEMP\n")
-            temp_response = controller._arduino.readline().decode('utf-8').strip()
-            print(f"\033[92mTemperature: {temp_response}\033[0m")
-            
-            controller._arduino.write(b"TILT\n")
-            tilt_response = controller._arduino.readline().decode('utf-8').strip()
-            print(f"\033[92mTilt: {tilt_response}\033[0m")
+                
+                # Wait for oil to settle
+                print(f"\033[93mWaiting {params['oil_dwell']}s for oil to settle...\033[0m")
+                time.sleep(params['oil_dwell'])
+                
+                # Trigger VNA sweep
+                print("\033[93mTriggering VNA sweep...\033[0m")
+                try:
+                    pyautogui.press('f12')
+                except Exception as e:
+                    print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
+                    print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
+                    input("\033[93mPress Enter after pressing F12...\033[0m")
+                
+                # Wait for VNA
+                print(f"\033[93mWaiting {params['vna_dwell']}s for VNA sweep...\033[0m")
+                time.sleep(params['vna_dwell'])
+                
+                # Get temperature and tilt readings
+                controller._arduino.write(b"TEMP\n")
+                temp_response = controller._arduino.readline().decode('utf-8').strip()
+                print(f"\033[92mTemperature: {temp_response}\033[0m")
+                
+                controller._arduino.write(b"TILT\n")
+                tilt_response = controller._arduino.readline().decode('utf-8').strip()
+                print(f"\033[92mTilt: {tilt_response}\033[0m")
             
         print("\n\033[92mTest completed successfully!\033[0m")
         return True
