@@ -340,26 +340,23 @@ void moveMotor(int32_t steps) {
     Serial.print(F("Moving steps: "));
     Serial.println(steps);
     
-    // Calculate target position
-    long targetPos = stepper.currentPosition() + steps;
+    stepper.setMaxSpeed(150);
+    stepper.setSpeed(150);
+    stepper.move(-steps);  // Negate steps to swap direction
     
-    // Set speeds for movement
-    if (steps < 0) {
-        stepper.setMaxSpeed(MOTOR_MAX_SPEED);
-        stepper.setSpeed(-MOTOR_DEFAULT_SPEED);
+    Serial.println(F("Movement started"));
+    
+    while (stepper.distanceToGo() != 0 && !isEmergencyStopped) {
+        stepper.run();
+    }
+    
+    stepper.stop();
+    
+    if (isEmergencyStopped) {
+        Serial.println(F("ERROR: Movement interrupted by emergency stop"));
     } else {
-        stepper.setMaxSpeed(MOTOR_MAX_SPEED);
-        stepper.setSpeed(MOTOR_DEFAULT_SPEED);
+        Serial.println(F("Movement complete"));
     }
-    
-    // Move to position
-    stepper.moveTo(targetPos);
-    
-    while (stepper.currentPosition() != targetPos) {
-        stepper.runSpeedToPosition();
-    }
-    
-    Serial.println(F("Movement complete"));
 }
 
 //=============================================================================
@@ -399,18 +396,35 @@ void homeMotor() {
         stepper.stop();
         delay(1000);  // Wait 1 second after clearing
 
-        // Now move to level position
-        stepper.setCurrentPosition(0);  // Set cleared position as 0
-        stepper.setMaxSpeed(150);      // Much higher max speed
-        stepper.setSpeed(150);         // Much faster constant speed for linear movement
-        stepper.moveTo(2715);           // Move exactly 2820 steps up
+        // Move to level position first
+        stepper.setCurrentPosition(0);  // Set current position as 0
+        stepper.setMaxSpeed(150);       // Set max speed to 150
+        stepper.setSpeed(150);          // Set speed to 150
+        stepper.moveTo(2735);           // Move to level position
         
-        while (stepper.currentPosition() != 2715 && !isEmergencyStopped) {
+        Serial.println(F("Moving to level position..."));
+        while (stepper.currentPosition() != 2735 && !isEmergencyStopped) {
             stepper.run();              // Use run() for full speed
         }
 
-        isHomed = true;
-        Serial.println(F("Homing and leveling complete"));
+        // Now that we're at level position, wait for confirmation
+        Serial.println(F("Waiting for level confirmation..."));
+        bool wasEmergencyStopped = isEmergencyStopped;  // Store current state
+        isEmergencyStopped = false;  // Temporarily disable emergency stop
+        
+        while (digitalRead(4) == HIGH) {
+            delay(10);  // Check every 10ms
+        }
+
+        if (!wasEmergencyStopped) {  // Only complete if it wasn't stopped before
+            isHomed = true;
+            isEmergencyStopped = false;  // Ensure emergency stop is off after successful homing
+            digitalWrite(MOTOR_ENABLE_PIN, LOW);  // Re-enable motor
+            Serial.println(F("Homing and leveling complete"));
+        } else {
+            isEmergencyStopped = true;  // Restore emergency stop if it was active
+            digitalWrite(MOTOR_ENABLE_PIN, HIGH);  // Keep motor disabled
+        }
     }
 }
 

@@ -74,16 +74,20 @@ def run_test_setup():
     try:
         print("\n\033[93mTest Setup (press Enter to use default value):\033[0m")
         print("\033[93mDefaults shown in [brackets]\033[0m\n")
-        min_angle = float(input("\033[96mMinimum angle \033[93m[-13 degrees]\033[96m: \033[0m").strip() or "-13")
-        max_angle = float(input("\033[96mMaximum angle \033[93m[13 degrees]\033[96m: \033[0m").strip() or "13")
-        increment = float(input("\033[96mAngle increment \033[93m[1 degree]\033[96m: \033[0m").strip() or "1")
+        
+        step_increment = float(input("\033[96mSteps per increment \033[93m[200 steps]\033[96m: \033[0m").strip() or "200")
+        num_increments = int(input("\033[96mNumber of increments \033[93m[24]\033[96m: \033[0m").strip() or "24")
         vna_dwell = float(input("\033[96mVNA dwell time \033[93m[6 seconds]\033[96m: \033[0m").strip() or "6")
         oil_dwell = float(input("\033[96mOil settling time \033[93m[2 seconds]\033[96m: \033[0m").strip() or "2")
         
+        # Calculate min and max steps
+        max_steps = (num_increments // 2) * step_increment
+        min_steps = -max_steps
+        
         return {
-            'min_angle': min_angle,
-            'max_angle': max_angle,
-            'increment': increment,
+            'min_steps': min_steps,
+            'max_steps': max_steps,
+            'step_increment': step_increment,
             'vna_dwell': vna_dwell,
             'oil_dwell': oil_dwell
         }
@@ -102,29 +106,42 @@ def run_test_routine(controller, params):
         
         # Countdown
         for i in range(3, 0, -1):
-            print(f"\033[93mStarting in {i}...\033[0m\n")
+            print(f"\033[93mStarting test in {i}...\033[0m\n")
             time.sleep(1)
             
         print("\n\033[92mTest started!\033[0m")
+
+        # First move to minimum position
+        print(f"\033[95mMoving to initial position: {params['min_steps']} steps\033[0m")
+        controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
+        while True:
+            response = controller._arduino.readline().decode('utf-8').strip()
+            if response:
+                print(f"\033[95m{response}\033[0m")
+                if "Movement complete" in response:
+                    break
+                elif "ERROR" in response:
+                    raise Exception(f"Movement error: {response}")
         
-        # Calculate number of steps for progress
-        current_angle = params['min_angle']
-        total_steps = int((params['max_angle'] - params['min_angle']) / params['increment']) + 1
-        step = 0
+        # Calculate number of steps
+        total_points = int((params['max_steps'] - params['min_steps']) / params['step_increment']) + 1
         
-        while current_angle <= params['max_angle']:
-            # Show progress
-            progress = (step / total_steps) * 100
-            print(f"\033[96mProgress: {progress:.1f}% (Angle: {current_angle:.1f}°)\033[0m")
+        # Now do relative movements
+        for i in range(total_points):
+            progress = (i / total_points) * 100
+            print(f"\033[96mProgress: {progress:.1f}%\033[0m")
             
-            # Move to angle
-            steps = int(current_angle * 5)  # Convert angle to steps (5 steps per degree)
-            print(f"\033[95mMoving to {current_angle:.1f}°\033[0m")
-            response = controller.send_command("MOVE", {"steps": steps})
-            print(f"\033[95m{response}\033[0m")
-            
-            # Wait fixed time for movement (1 second is enough for any movement)
-            time.sleep(1)
+            if i > 0:  # Don't move on first iteration since we just moved to min_steps
+                print(f"\033[95mMoving +{params['step_increment']} steps\033[0m")
+                controller._arduino.write(f"MOVE {params['step_increment']}\n".encode())
+                while True:
+                    response = controller._arduino.readline().decode('utf-8').strip()
+                    if response:
+                        print(f"\033[95m{response}\033[0m")
+                        if "Movement complete" in response:
+                            break
+                        elif "ERROR" in response:
+                            raise Exception(f"Movement error: {response}")
             
             # Wait for oil to settle
             print(f"\033[93mWaiting {params['oil_dwell']}s for oil to settle...\033[0m")
@@ -144,14 +161,13 @@ def run_test_routine(controller, params):
             time.sleep(params['vna_dwell'])
             
             # Get temperature and tilt readings
-            temp_response = controller.send_command("TEMP")
-            tilt_response = controller.send_command("TILT")
+            controller._arduino.write(b"TEMP\n")
+            temp_response = controller._arduino.readline().decode('utf-8').strip()
             print(f"\033[92mTemperature: {temp_response}\033[0m")
-            print(f"\033[92mTilt: {tilt_response}\033[0m")
             
-            # Move to next angle
-            current_angle += params['increment']
-            step += 1
+            controller._arduino.write(b"TILT\n")
+            tilt_response = controller._arduino.readline().decode('utf-8').strip()
+            print(f"\033[92mTilt: {tilt_response}\033[0m")
             
         print("\n\033[92mTest completed successfully!\033[0m")
         return True
@@ -214,14 +230,106 @@ def cli_mode(controller, gui_logger, hardware_logger):
                         print("\n\033[92mTest parameters:\033[0m")
                         for key, value in params.items():
                             print(f"  \033[93m{key}:\033[0m {value}")
-                        run_test_routine(controller, params)
+                            
+                        # Calculate and show test summary
+                        positions = []
+                        current_steps = params['min_steps']
+                        while current_steps <= params['max_steps']:
+                            positions.append(int(current_steps))
+                            current_steps += params['step_increment']
+                        
+                        total_points = len(positions)
+                        total_time = total_points * (params['vna_dwell'] + params['oil_dwell'] + 2)  # 2 seconds for movement
+                        minutes = int(total_time // 60)
+                        seconds = int(total_time % 60)
+                        
+                        print("\n\033[95mTest Sequence Summary:\033[0m")
+                        print(f"  \033[93mTotal test points:\033[0m {total_points}")
+                        print(f"  \033[93mStep size:\033[0m {params['step_increment']} steps")
+                        print(f"  \033[93mRange:\033[0m {params['min_steps']} to {params['max_steps']} steps")
+                        print(f"  \033[93mStep sequence:\033[0m")
+                        
+                        # Show positions in a more readable format
+                        pos_str = ""
+                        for i, pos in enumerate(positions):
+                            pos_str += f"{pos:6d}"
+                            if (i + 1) % 8 == 0:  # New line every 8 positions
+                                pos_str += "\n                 "
+                        print(f"                 {pos_str}")
+                        
+                        print(f"  \033[93mEstimated time:\033[0m {minutes} minutes {seconds} seconds")
+                        print("\n\033[95mSequence will:\033[0m")
+                        print(f"  1. Move to first position ({positions[0]} steps)")
+                        print(f"  2. At each position:")
+                        print(f"     - Wait {params['oil_dwell']}s for oil to settle")
+                        print(f"     - Trigger VNA sweep")
+                        print(f"     - Wait {params['vna_dwell']}s for VNA")
+                        print(f"     - Record temperature and tilt")
+                        print(f"  3. Move to next position (+{params['step_increment']} steps)")
+                        print("  4. Repeat until complete")
+                        
+                        # Ask for confirmation
+                        confirm = input("\n\033[93mStart test? (y/n): \033[0m").strip().lower()
+                        if confirm == 'y':
+                            run_test_routine(controller, params)
+                        else:
+                            print("\033[91mTest cancelled\033[0m")
                 elif command.startswith("MOVE "):
                     try:
-                        steps = int(command.split()[1])
-                        response = controller.send_command("MOVE", {"steps": steps})
-                        print(f"\033[92m{response}\033[0m")
+                        # Get target steps from user
+                        target_steps = int(command.split()[1])
+                        print(f"\033[93mMoving to position: {target_steps} steps\033[0m")
+                        
+                        # Send move command
+                        controller._arduino.write(f"MOVE {target_steps}\n".encode())
+                        
+                        # Wait for movement completion
+                        while True:
+                            response = controller._arduino.readline().decode('utf-8').strip()
+                            if response:
+                                print(f"\033[92m{response}\033[0m")
+                                if "Movement complete" in response:
+                                    break
+                                elif "ERROR" in response:
+                                    break
                     except (IndexError, ValueError):
                         print("\033[91mError: MOVE command requires steps argument (integer)\033[0m")
+                        print("\033[93mUsage: MOVE <steps> - Move to absolute position in steps\033[0m")
+                        print("\033[93mExample: MOVE 200  - Move to +200 steps\033[0m")
+                        print("\033[93mExample: MOVE -200 - Move to -200 steps\033[0m")
+                elif command == "HOME":
+                    try:
+                        # Send home command
+                        controller._arduino.write(b"HOME\n")
+                        
+                        # Read and display messages until homing is complete
+                        while True:
+                            response = controller._arduino.readline().decode('utf-8').strip()
+                            if response:
+                                print(f"\033[92m{response}\033[0m")
+                                
+                                # Show appropriate messages based on Arduino state
+                                if "Starting homing sequence" in response:
+                                    print("\033[93mMoving down to find home switch...\033[0m")
+                                elif "Clearing home switch" in response:
+                                    print("\033[93mMoving up to clear home switch...\033[0m")
+                                elif "Moving to final position" in response:
+                                    print("\n\033[93mMoving to level position (2735 steps)...\033[0m")
+                                elif "Waiting for level confirmation" in response:
+                                    print("\n\033[93mIMPORTANT: Platform is now at level position\033[0m")
+                                    print("1. Check the level sensor reading")
+                                    print("2. If level sensor confirms position is level, press the leveling button (Pin 4)")
+                                    print("3. If not level, press Ctrl+C to abort and adjust manually")
+                                    print("\033[93mWaiting for level confirmation button press...\033[0m")
+                                elif "Homing and leveling complete" in response:
+                                    break
+                                elif "ERROR" in response:
+                                    break
+                                    
+                    except KeyboardInterrupt:
+                        print("\n\033[91mHoming interrupted by user\033[0m")
+                    except Exception as e:
+                        print(f"\033[91mError during homing: {str(e)}\033[0m")
                 else:
                     # Send command directly to Arduino
                     response = controller.send_command(command)
