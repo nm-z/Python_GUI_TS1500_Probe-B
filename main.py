@@ -107,6 +107,27 @@ def run_test_routine(controller, params):
         # Import pyautogui here to avoid startup delay
         pyautogui.FAILSAFE = False  # Disable fail-safe
         
+        # Create temperature log directory if it doesn't exist
+        temp_log_dir = "/home/nate/Desktop/TEMP_export"
+        if not os.path.exists(temp_log_dir):
+            os.makedirs(temp_log_dir)
+            
+        # Get next test run number
+        run_counter_file = os.path.join(temp_log_dir, ".run_counter")
+        if os.path.exists(run_counter_file):
+            with open(run_counter_file, 'r') as f:
+                run_number = int(f.read().strip()) + 1
+        else:
+            run_number = 1
+        
+        # Create CSV file with timestamp and run number in name
+        timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+        temp_log_file = os.path.join(temp_log_dir, f"test_run_{run_number:03d}_{timestamp}_temp.csv")
+        
+        # Create CSV file with headers
+        with open(temp_log_file, 'w') as f:
+            f.write("timestamp,temperature,tilt\n")
+        
         # Countdown
         for i in range(3, 0, -1):
             print(f"\033[93mStarting test in {i}...\033[0m\n")
@@ -175,6 +196,16 @@ def run_test_routine(controller, params):
                 controller._arduino.write(b"TILT\n")
                 tilt_response = controller._arduino.readline().decode('utf-8').strip()
                 print(f"\033[92mTilt: {tilt_response}\033[0m")
+                
+                # Log temperature and tilt to CSV
+                try:
+                    temp_value = float(temp_response.split()[-1])  # Extract numeric value
+                    tilt_value = float(tilt_response.split()[-1])  # Extract numeric value
+                    timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                    with open(temp_log_file, 'a') as f:
+                        f.write(f"{timestamp},{temp_value:.2f},{tilt_value:.2f}\n")
+                except Exception as e:
+                    print(f"\033[91mError logging temperature: {str(e)}\033[0m")
             
             # After measurements, move double min steps to reset tilt
             if loop < params['num_loops'] - 1:  # Don't do this on last loop
@@ -204,6 +235,12 @@ def run_test_routine(controller, params):
                     raise Exception(f"Movement error: {response}")
             
         print("\n\033[92mTest completed successfully!\033[0m")
+        print(f"\033[92mTemperature log saved to: {temp_log_file}\033[0m")
+        
+        # Save the run counter for next time
+        with open(run_counter_file, 'w') as f:
+            f.write(str(run_number))
+            
         return True
         
     except KeyboardInterrupt:
