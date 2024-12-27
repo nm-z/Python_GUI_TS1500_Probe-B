@@ -114,7 +114,7 @@ def run_test_routine(controller, params):
             
         print("\n\033[92mTest started!\033[0m")
 
-        # Move to minimum position ONCE at start
+        # Move to minimum position at start
         print(f"\033[95mMoving to initial position: {params['min_steps']} steps\033[0m")
         controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
         while True:
@@ -132,19 +132,15 @@ def run_test_routine(controller, params):
         for loop in range(params['num_loops']):
             print(f"\n\033[95mStarting loop {loop + 1} of {params['num_loops']}\033[0m")
             
-            # Alternate increment sign for each loop
-            increment = params['step_increment'] if loop % 2 == 0 else -params['step_increment']
-            print(f"\033[95mUsing increment of {increment} steps for this loop\033[0m")
-            
-            # Do measurements
+            # Do measurements with +200 steps
             for i in range(int(params['num_steps'])):
                 current_measurement += 1
                 progress = (current_measurement / total_measurements) * 100
                 print(f"\033[96mProgress: {progress:.1f}% (Loop {loop + 1}/{params['num_loops']})\033[0m")
                 
-                # Move motor
-                print(f"\033[95mMoving {increment} steps\033[0m")
-                controller._arduino.write(f"MOVE {increment}\n".encode())
+                # Move motor +200
+                print(f"\033[95mMoving +{params['step_increment']} steps\033[0m")
+                controller._arduino.write(f"MOVE {params['step_increment']}\n".encode())
                 while True:
                     response = controller._arduino.readline().decode('utf-8').strip()
                     if response:
@@ -179,6 +175,33 @@ def run_test_routine(controller, params):
                 controller._arduino.write(b"TILT\n")
                 tilt_response = controller._arduino.readline().decode('utf-8').strip()
                 print(f"\033[92mTilt: {tilt_response}\033[0m")
+            
+            # After measurements, move double min steps to reset tilt
+            if loop < params['num_loops'] - 1:  # Don't do this on last loop
+                double_min = params['min_steps'] * 2
+                reset_move = double_min - params['step_increment']  # Add extra increment to prevent drift
+                print(f"\033[95mResetting tilt position: {reset_move} steps\033[0m")
+                controller._arduino.write(f"MOVE {reset_move}\n".encode())
+                while True:
+                    response = controller._arduino.readline().decode('utf-8').strip()
+                    if response:
+                        print(f"\033[95m{response}\033[0m")
+                        if "Movement complete" in response:
+                            break
+                        elif "ERROR" in response:
+                            raise Exception(f"Movement error: {response}")
+        
+        # After all loops, move back to 0
+        print(f"\033[95mMoving back to 0: {params['min_steps']} steps\033[0m")
+        controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
+        while True:
+            response = controller._arduino.readline().decode('utf-8').strip()
+            if response:
+                print(f"\033[95m{response}\033[0m")
+                if "Movement complete" in response:
+                    break
+                elif "ERROR" in response:
+                    raise Exception(f"Movement error: {response}")
             
         print("\n\033[92mTest completed successfully!\033[0m")
         return True
