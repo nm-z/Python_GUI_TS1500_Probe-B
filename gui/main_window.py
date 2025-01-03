@@ -138,32 +138,24 @@ class MainWindow(QMainWindow):
         
         control_layout.addLayout(params_layout)
         
-        # Add control buttons
-        self.start_button = QPushButton("Start Test")
-        self.start_button.setEnabled(True)
-        control_layout.addWidget(self.start_button)
+        # Create control buttons
+        self.home_button = QPushButton("HOME")
+        self.stop_button = QPushButton("STOP")
+        self.test_button = QPushButton("RUN TEST")
         
-        self.stop_button = QPushButton("Stop")
-        self.stop_button.setEnabled(False)
+        # Add buttons to control layout
+        control_layout = QHBoxLayout()
+        control_layout.addWidget(self.home_button)
         control_layout.addWidget(self.stop_button)
+        control_layout.addWidget(self.test_button)
         
-        self.emergency_button = QPushButton("EMERGENCY STOP")
-        self.emergency_button.setStyleSheet("""
-            QPushButton {
-                background-color: red;
-                color: white;
-                font-weight: bold;
-                padding: 10px;
-                border-radius: 5px;
-            }
-            QPushButton:hover {
-                background-color: darkred;
-            }
-            QPushButton:pressed {
-                background-color: #800000;
-            }
-        """)
-        control_layout.addWidget(self.emergency_button)
+        # Connect button signals
+        self.home_button.clicked.connect(self._handle_home)
+        self.stop_button.clicked.connect(self._handle_stop)
+        self.test_button.clicked.connect(self._handle_test)
+        
+        # Add control layout to main layout
+        main_layout.addLayout(control_layout)
         
         control_panel.setLayout(control_layout)
         self.main_splitter.addWidget(control_panel)
@@ -264,25 +256,38 @@ class MainWindow(QMainWindow):
             self.logger.error(f"Error starting test: {str(e)}")
             
     def _handle_stop(self):
-        """Handle Stop button click"""
+        """Handle stop button click"""
         try:
-            self.controller.stop_test()
-            self.start_button.setEnabled(True)
-            self.stop_button.setEnabled(False)
-            self.logger.info("Test stopped by user")
-        except Exception as e:
-            self.logger.error(f"Error stopping test: {str(e)}")
-            
-    def _handle_emergency(self):
-        """Handle emergency stop button click"""
-        try:
-            if self.controller.emergency_stop():
-                self.logger.warning("Emergency stop triggered")
-                self.start_button.setEnabled(True)
-                self.stop_button.setEnabled(False)
+            if self.controller.stop():
+                self.logger.warning("Motor stopped")
             else:
-                self.logger.error("Emergency stop failed")
-                
+                self.logger.error("Failed to stop motor")
         except Exception as e:
-            self.logger.error(f"Error during emergency stop: {str(e)}")
+            self.logger.error(f"Error during stop: {str(e)}")
+            
+    def _handle_test(self):
+        """Handle test button click"""
+        try:
+            # Get test parameters
+            params = self._get_test_params()
+            if not params:
+                return
+                
+            # Run test
+            if self.controller.run_test(params):
+                self.logger.info("Test completed successfully")
+            else:
+                self.logger.error("Test failed")
+        except Exception as e:
+            self.logger.error(f"Error during test: {str(e)}")
+            
+    def _handle_home(self):
+        """Handle home button click"""
+        try:
+            if self.controller.home():
+                self.logger.info("Homing successful")
+            else:
+                self.logger.error("Homing failed")
+        except Exception as e:
+            self.logger.error(f"Error during homing: {str(e)}")
 

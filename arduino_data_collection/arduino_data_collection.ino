@@ -111,43 +111,48 @@ void setup() {
     
     // Initialize I2C for MPU6050
     Wire.begin();
-    delay(50);
+    Wire.setClock(400000); // Set I2C clock to 400kHz for better stability
+    delay(100); // Increased delay for I2C stability
     
     // Initialize MPU6050 with multiple attempts
     Serial.println(F("Initializing MPU6050..."));
     for(int attempt = 0; attempt < 3 && !mpuInitialized; attempt++) {
         mpu.initialize();
+        delay(50);
+        
         if (mpu.testConnection()) {
             mpuInitialized = true;
             mpu.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);
             mpu.setDLPFMode(MPU6050_DLPF_BW_5);
             Serial.println(F("MPU6050 initialization successful"));
         } else {
-            delay(100);
+            Wire.begin();
+            delay(200);
         }
     }
     
     if (!mpuInitialized) {
         Serial.println(F("ERROR: MPU6050 initialization failed!"));
+        Serial.println(F("Check I2C connections and power supply"));
     }
     
     // Initialize SPI for MAX6675
     SPI.begin();
+    SPI.setClockDivider(SPI_CLOCK_DIV4); // Set SPI clock for stability
     pinMode(THERMOCOUPLE_CS_PIN, OUTPUT);
     digitalWrite(THERMOCOUPLE_CS_PIN, HIGH);
     delay(100);
     
     // Initialize MAX6675
     thermocouple = new MAX6675(THERMOCOUPLE_SCK_PIN, THERMOCOUPLE_CS_PIN, THERMOCOUPLE_SO_PIN);
-    delay(500);
+    delay(500);  // Give the MAX6675 time to stabilize
     
     // Test temperature sensor
-    float temp = readTemperatureSafe();
-    if (!isnan(temp) && temp >= 0.0f && temp <= 150.0f) {
+    float temp = thermocouple->readCelsius();
+    if (!isnan(temp) && temp > 0.0f && temp <= 150.0f) {
         tempSensorOk = true;
-        Serial.println(F("Temperature sensor initialized successfully"));
     } else {
-        Serial.println(F("ERROR: Temperature sensor initialization failed!"));
+        Serial.println(F("ERROR: Temperature sensor initialization failed"));
     }
     
     // Configure stepper
@@ -170,11 +175,6 @@ void setup() {
 }
 
 void loop() {
-    // Check emergency stop
-    if (digitalRead(EMERGENCY_STOP_PIN) == LOW && !isEmergencyStopped) {
-        emergencyStop();
-    }
-    
     // Process serial commands with queue
     while (Serial.available()) {
         String command = Serial.readStringUntil('\n');
@@ -241,7 +241,7 @@ void processCommand(const String& command) {
         stepper.setMaxSpeed(MOTOR_MAX_SPEED);
         stepper.setSpeed(MOTOR_DEFAULT_SPEED);
         stepper.moveTo(steps);
-        while (stepper.currentPosition() != steps && !isEmergencyStopped) {
+        while (stepper.currentPosition() != steps) {
             stepper.run();
         }
         Serial.println(F("Leveling complete"));
@@ -252,16 +252,19 @@ void processCommand(const String& command) {
         moveMotor(steps);
     }
     else if (command == "HOME") {
-        homeMotor();
+        homeMotor();  // Original tilt home
+    }
+    else if (command == "FILL_HOME") {
+        fillHome();   // New fill home
+    }
+    else if (command == "TILT_HOME") {
+        homeMotor();  // Explicit tilt home
     }
     else if (command == "STOP") {
         stopMotor();
     }
     else if (command == "CALIBRATE") {
         calibrateSystem();
-    }
-    else if (command == "EMERGENCY_STOP") {
-        emergencyStop();
     }
     else if (command == "HELP") {
         printHelp();
@@ -273,53 +276,44 @@ void processCommand(const String& command) {
 }
 
 void readTemperature() {
-    if (thermocouple == NULL) {
-        Serial.println(F("TEMP ERROR: Thermocouple not initialized"));
-        return;
-    }
-
-    float temp = thermocouple->readCelsius();
-    if (!isnan(temp) && temp >= 0.0f && temp <= 150.0f) {
-        Serial.print(F("TEMP "));
-        Serial.println(temp, 2);
-    } else {
-        Serial.println(F("TEMP ERROR: Invalid reading"));
-    }
+    Serial.println(thermocouple->readCelsius());
 }
 
 void performSelfTest() {
-    Serial.println("START_TEST");
+    Serial.println(F("START_TEST"));
     
     // Test MPU6050
     if (mpuInitialized) {
-        Serial.println("MPU6050: OK");
+        Serial.println(F("MPU6050: OK"));
         calculateTilt();
-        Serial.print("TILT: "); 
+        Serial.print(F("TILT ")); 
         Serial.println(roll, 2);
     } else {
-        Serial.println("MPU6050: FAIL");
+        Serial.println(F("MPU6050: FAIL"));
     }
     
     // Test MAX6675
     if (thermocouple != NULL) {
         float temp = thermocouple->readCelsius();
-        if (!isnan(temp)) {
-            Serial.print("TEMP: ");
+        if (!isnan(temp) && temp >= 0.0f && temp <= 150.0f) {
+            Serial.print(F("TEMP "));
             Serial.println(temp, 2);
-            Serial.println("MAX6675: OK");
+            Serial.println(F("MAX6675: OK"));
         } else {
-            Serial.println("MAX6675: FAIL");
+            Serial.println(F("MAX6675: FAIL - Invalid reading"));
+            Serial.print(F("Raw value: "));
+            Serial.println(temp);
         }
     } else {
-        Serial.println("MAX6675: FAIL");
+        Serial.println(F("MAX6675: FAIL - Not initialized"));
     }
     
     // Test motor
     bool motorEnabled = (digitalRead(MOTOR_ENABLE_PIN) == LOW);
-    Serial.print("MOTOR: ");
-    Serial.println(motorEnabled ? "OK" : "FAIL");
+    Serial.print(F("MOTOR: "));
+    Serial.println(motorEnabled ? F("OK") : F("FAIL"));
     
-    Serial.println("END_TEST");
+    Serial.println(F("END_TEST"));
 }
 
 float getCurrentAngle() {
@@ -458,19 +452,6 @@ void calibrateSystem() {
     }
 }
 
-void emergencyStop() {
-    if (isEmergencyStopped) {
-        isEmergencyStopped = false;
-        digitalWrite(MOTOR_ENABLE_PIN, LOW);
-        Serial.println(F("Emergency stop released"));
-    } else {
-        stepper.stop();
-        isEmergencyStopped = true;
-        digitalWrite(MOTOR_ENABLE_PIN, HIGH);
-        Serial.println(F("Emergency stop engaged"));
-    }
-}
-
 void enableMotor(bool enable) {
     digitalWrite(MOTOR_ENABLE_PIN, enable ? LOW : HIGH);
     logDiagnostic("MOTOR", enable ? "Motor enabled" : "Motor disabled");
@@ -486,26 +467,18 @@ void stopMotor() {
 }
 
 float readTemperatureSafe() {
-    static unsigned long lastTempRead = 0;
-    static float lastValidTemp = 0.0f;
-    
     if (thermocouple == NULL) {
-        return lastValidTemp;
+        return 0.0f;
     }
     
-    if (millis() - lastTempRead >= TEMP_READ_DELAY) {
-        float temp = thermocouple->readCelsius();
-        lastTempRead = millis();
-        
-        if (!isnan(temp) && temp >= 0.0f && temp <= 150.0f) {
-            lastValidTemp = temp;
-            tempSensorOk = true;
-            return temp;
-        } else {
-            tempSensorOk = false;
-        }
+    float temp = thermocouple->readCelsius();
+    if (!isnan(temp) && temp >= 0.0f && temp <= 150.0f) {
+        tempSensorOk = true;
+        return temp;
+    } else {
+        tempSensorOk = false;
+        return 0.0f;
     }
-    return lastValidTemp;
 }
 
 void displayCommands() {
@@ -555,9 +528,7 @@ void reportStatus() {
     Serial.print(F(" ACCEL "));
     Serial.print(accel);
     Serial.print(F(" HOMED "));
-    Serial.print(isHomed ? F("YES") : F("NO"));
-    Serial.print(F(" E_STOP "));
-    Serial.println(isEmergencyStopped ? F("YES") : F("NO"));
+    Serial.println(isHomed ? F("YES") : F("NO"));
 }
 
 void printHelp() {
@@ -568,10 +539,11 @@ void printHelp() {
     Serial.println(F("  TILT          - Read current tilt angle"));
     Serial.println(F("  LEVEL         - Move to 16.8 degree position"));
     Serial.println(F("  MOVE <steps>  - Move stepper motor"));
-    Serial.println(F("  HOME          - Home the stepper motor"));
+    Serial.println(F("  HOME          - Home the stepper motor (same as TILT_HOME)"));
+    Serial.println(F("  TILT_HOME     - Home and move to level position"));
+    Serial.println(F("  FILL_HOME     - Home without moving to level"));
     Serial.println(F("  STOP          - Stop motor movement"));
     Serial.println(F("  CALIBRATE     - Calibrate the system"));
-    Serial.println(F("  EMERGENCY_STOP - Toggle emergency stop"));
     Serial.println(F("  HELP          - Show this help message"));
 }
 
@@ -590,4 +562,48 @@ void level() {
     isLevel = true;
     stepper.setCurrentPosition(0);  // Set level as current and safe position
     delay(5000);
+}
+
+void fillHome() {
+    if (isEmergencyStopped) {
+        Serial.println(F("ERROR: Homing rejected - emergency stop active"));
+        return;
+    }
+
+    Serial.println(F("Starting fill home sequence..."));
+    
+    // Enable motor and set speeds
+    digitalWrite(MOTOR_ENABLE_PIN, LOW);  // Enable motor
+    stepper.setMaxSpeed(450);  // 3x faster
+    stepper.setSpeed(MOTOR_CLEARING_SPEED * 3);  // Use positive speed for upward movement, 3x faster
+    
+    Serial.println(F("Moving up to find home switch..."));
+    // Move up until home switch is hit
+    while (digitalRead(HOME_SWITCH_PIN) == HIGH && !isEmergencyStopped) {
+        stepper.runSpeed();
+        delay(10);  // simulates debouncing
+    }
+
+    if (!isEmergencyStopped) {
+        stepper.stop();  // Stop motor movement
+        delay(1000);     // Wait 1 second after hitting switch
+
+        // Clear the switch by moving down until switch is released
+        Serial.println(F("Clearing home switch..."));
+        while (digitalRead(HOME_SWITCH_PIN) == LOW && !isEmergencyStopped) {
+            stepper.setSpeed(MOTOR_HOMING_SPEED * 3);  // Use negative speed for downward movement, 3x faster
+            stepper.runSpeed();
+            delay(5);  // debouncing
+        }
+        
+        stepper.stop();
+        delay(1000);  // Wait 1 second after clearing
+
+        // Set current position as 0
+        stepper.setCurrentPosition(0);
+        isHomed = true;
+        Serial.println(F("Fill home complete - Position set to 0"));
+    } else {
+        Serial.println(F("ERROR: Fill home interrupted by emergency stop"));
+    }
 }

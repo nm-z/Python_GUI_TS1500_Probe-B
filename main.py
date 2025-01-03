@@ -72,27 +72,47 @@ def wait_for_ready(controller, timeout=30):
 def run_test_setup():
     """Get test parameters from user"""
     try:
-        print("\n\033[93mTest Setup (press Enter to use default value):\033[0m")
+        print("\n\033[93mTest Setup\033[0m")
+        print("\033[93m==========\033[0m\n")
+        
+        # First select test type
+        print("\033[96mSelect Test Type:\033[0m")
+        print("  1. \033[93mTilt Test\033[0m - Starts at min position, increments up")
+        print("  2. \033[93mFill Test\033[0m - Uses position 0 as first point")
+        while True:
+            test_type = input("\n\033[96mEnter test type (1/2): \033[0m").strip()
+            if test_type in ["1", "2"]:
+                break
+            print("\033[91mInvalid choice. Please enter 1 for Tilt Test or 2 for Fill Test\033[0m")
+        
+        print(f"\n\033[92mSelected: {'Tilt' if test_type == '1' else 'Fill'} Test\033[0m")
+        print("\n\033[93mTest Parameters (press Enter to use default value):\033[0m")
         print("\033[93mDefaults shown in [brackets]\033[0m\n")
         
-        step_increment = float(input("\033[96mSteps per increment \033[93m[200 steps]\033[96m: \033[0m").strip() or "200")
-        num_steps = int(input("\033[96mNumber of steps \033[93m[25]\033[96m: \033[0m").strip() or "25")
-        num_loops = int(input("\033[96mNumber of loops \033[93m[1]\033[96m: \033[0m").strip() or "1")
-        vna_dwell = float(input("\033[96mVNA dwell time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
-        oil_dwell = float(input("\033[96mOil settling time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
-        
-        # Calculate min and max steps
-        max_steps = (num_steps // 2) * step_increment
-        min_steps = -max_steps
+        # Use different defaults based on test type
+        if test_type == "2":  # Fill Test
+            step_increment = float(input("\033[96mSteps per increment \033[93m[520 steps]\033[96m: \033[0m").strip() or "520")
+            num_steps = int(input("\033[96mNumber of steps \033[93m[21]\033[96m: \033[0m").strip() or "21")
+            num_loops = int(input("\033[96mNumber of loops \033[93m[20]\033[96m: \033[0m").strip() or "20")
+            vna_dwell = float(input("\033[96mVNA dwell time \033[93m[10 seconds]\033[96m: \033[0m").strip() or "10")
+            oil_dwell = float(input("\033[96mOil settling time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
+            drain_delay = float(input("\033[96mDrain delay time \033[93m[20 seconds]\033[96m: \033[0m").strip() or "20")
+        else:  # Tilt Test
+            step_increment = float(input("\033[96mSteps per increment \033[93m[200 steps]\033[96m: \033[0m").strip() or "200")
+            num_steps = int(input("\033[96mNumber of steps \033[93m[25]\033[96m: \033[0m").strip() or "25")
+            num_loops = int(input("\033[96mNumber of loops \033[93m[1]\033[96m: \033[0m").strip() or "1")
+            vna_dwell = float(input("\033[96mVNA dwell time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
+            oil_dwell = float(input("\033[96mOil settling time \033[93m[3 seconds]\033[96m: \033[0m").strip() or "3")
+            drain_delay = float(input("\033[96mDrain delay time \033[93m[20 seconds]\033[96m: \033[0m").strip() or "20")
         
         return {
-            'min_steps': min_steps,
-            'max_steps': max_steps,
+            'test_type': test_type,
             'step_increment': step_increment,
             'num_steps': num_steps,
             'num_loops': num_loops,
             'vna_dwell': vna_dwell,
-            'oil_dwell': oil_dwell
+            'oil_dwell': oil_dwell,
+            'drain_delay': drain_delay
         }
     except ValueError as e:
         print(f"\033[91mInvalid input: {str(e)}\033[0m")
@@ -108,7 +128,7 @@ def run_test_routine(controller, params):
         pyautogui.FAILSAFE = False  # Disable fail-safe
         
         # Create temperature log directory if it doesn't exist
-        temp_log_dir = "/home/nate/Desktop/TEMP_export"
+        temp_log_dir = "/home/nate/Desktop/TEMP_Export_Tilt-Test_001"
         if not os.path.exists(temp_log_dir):
             os.makedirs(temp_log_dir)
             
@@ -126,7 +146,7 @@ def run_test_routine(controller, params):
         
         # Create CSV file with headers
         with open(temp_log_file, 'w') as f:
-            f.write("timestamp,temperature,tilt\n")
+            f.write("timestamp,temperature\n")
         
         # Countdown
         for i in range(3, 0, -1):
@@ -135,17 +155,41 @@ def run_test_routine(controller, params):
             
         print("\n\033[92mTest started!\033[0m")
 
-        # Move to minimum position at start
-        print(f"\033[95mMoving to initial position: {params['min_steps']} steps\033[0m")
-        controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
-        while True:
-            response = controller._arduino.readline().decode('utf-8').strip()
-            if response:
-                print(f"\033[95m{response}\033[0m")
-                if "Movement complete" in response:
-                    break
-                elif "ERROR" in response:
-                    raise Exception(f"Movement error: {response}")
+        # For fill test, take first measurement at current position (after homing)
+        if params['test_type'] == "2":  # Fill Test
+            print("\033[93mFill Test: Taking first measurement at home position...\033[0m")
+            time.sleep(params['oil_dwell'])
+            
+            # Take initial measurement (point 1)
+            print("\033[93mTaking measurement at home position (point 1)...\033[0m")
+            try:
+                pyautogui.press('f12')
+            except Exception as e:
+                print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
+                print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
+                input("\033[93mPress Enter after pressing F12...\033[0m")
+            
+            # Wait for VNA
+            print(f"\033[93mWaiting {params['vna_dwell']}s for VNA sweep...\033[0m")
+            time.sleep(params['vna_dwell'])
+            
+            # Get temperature and tilt readings
+            controller._arduino.write(b"TEMP\n")
+            temp_response = controller._arduino.readline().decode('utf-8').strip()
+            print(f"\033[92mTemperature: {temp_response}\033[0m")
+            
+            controller._arduino.write(b"TILT\n")
+            tilt_response = controller._arduino.readline().decode('utf-8').strip()
+            print(f"\033[92mTilt: {tilt_response}\033[0m")
+            
+            # Log temperature to CSV
+            try:
+                temp_value = float(temp_response.split()[-1])
+                timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                with open(temp_log_file, 'a') as f:
+                    f.write(f"{timestamp},{temp_value:.2f}\n")
+            except Exception as e:
+                print(f"\033[91mError logging temperature: {str(e)}\033[0m")
 
         total_measurements = int(params['num_steps']) * int(params['num_loops'])
         current_measurement = 0
@@ -153,13 +197,13 @@ def run_test_routine(controller, params):
         for loop in range(params['num_loops']):
             print(f"\n\033[95mStarting loop {loop + 1} of {params['num_loops']}\033[0m")
             
-            # Do measurements with +200 steps
+            # Do measurements with step increments
             for i in range(int(params['num_steps'])):
                 current_measurement += 1
                 progress = (current_measurement / total_measurements) * 100
                 print(f"\033[96mProgress: {progress:.1f}% (Loop {loop + 1}/{params['num_loops']})\033[0m")
                 
-                # Move motor +200
+                # Move motor by step increment
                 print(f"\033[95mMoving +{params['step_increment']} steps\033[0m")
                 controller._arduino.write(f"MOVE {params['step_increment']}\n".encode())
                 while True:
@@ -197,22 +241,19 @@ def run_test_routine(controller, params):
                 tilt_response = controller._arduino.readline().decode('utf-8').strip()
                 print(f"\033[92mTilt: {tilt_response}\033[0m")
                 
-                # Log temperature and tilt to CSV
+                # Log temperature to CSV
                 try:
-                    temp_value = float(temp_response.split()[-1])  # Extract numeric value
-                    tilt_value = float(tilt_response.split()[-1])  # Extract numeric value
+                    temp_value = float(temp_response.split()[-1])
                     timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
                     with open(temp_log_file, 'a') as f:
-                        f.write(f"{timestamp},{temp_value:.2f},{tilt_value:.2f}\n")
+                        f.write(f"{timestamp},{temp_value:.2f}\n")
                 except Exception as e:
                     print(f"\033[91mError logging temperature: {str(e)}\033[0m")
             
-            # After measurements, move double min steps to reset tilt
+            # After measurements, move back to home position
             if loop < params['num_loops'] - 1:  # Don't do this on last loop
-                double_min = params['min_steps'] * 2
-                reset_move = double_min - params['step_increment']  # Add extra increment to prevent drift
-                print(f"\033[95mResetting tilt position: {reset_move} steps\033[0m")
-                controller._arduino.write(f"MOVE {reset_move}\n".encode())
+                print(f"\033[95mMoving back to home position\033[0m")
+                controller._arduino.write(f"MOVE {-params['step_increment'] * params['num_steps']}\n".encode())
                 while True:
                     response = controller._arduino.readline().decode('utf-8').strip()
                     if response:
@@ -221,10 +262,43 @@ def run_test_routine(controller, params):
                             break
                         elif "ERROR" in response:
                             raise Exception(f"Movement error: {response}")
+                
+                # Add drain delay after the large reset move
+                print(f"\033[93mWaiting {params['drain_delay']}s for oil to drain...\033[0m")
+                time.sleep(params['drain_delay'])
+                
+                # For fill test, if there are more loops, take measurement at 0 (this becomes point 1 of next loop)
+                if params['test_type'] == "2":  # Fill Test
+                    print("\033[93mTaking measurement at home position (point 1 of next loop)...\033[0m")
+                    try:
+                        pyautogui.press('f12')
+                    except Exception as e:
+                        print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
+                        print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
+                        input("\033[93mPress Enter after pressing F12...\033[0m")
+                    
+                    time.sleep(params['vna_dwell'])
+                    
+                    # Get temperature and tilt readings
+                    controller._arduino.write(b"TEMP\n")
+                    temp_response = controller._arduino.readline().decode('utf-8').strip()
+                    print(f"\033[92mTemperature: {temp_response}\033[0m")
+                    
+                    controller._arduino.write(b"TILT\n")
+                    tilt_response = controller._arduino.readline().decode('utf-8').strip()
+                    print(f"\033[92mTilt: {tilt_response}\033[0m")
+                    
+                    try:
+                        temp_value = float(temp_response.split()[-1])
+                        timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                        with open(temp_log_file, 'a') as f:
+                            f.write(f"{timestamp},{temp_value:.2f}\n")
+                    except Exception as e:
+                        print(f"\033[91mError logging temperature: {str(e)}\033[0m")
         
-        # After all loops, move back to 0
-        print(f"\033[95mMoving back to 0: {params['min_steps']} steps\033[0m")
-        controller._arduino.write(f"MOVE {params['min_steps']}\n".encode())
+        # After all loops, move back to home position
+        print(f"\033[95mMoving back to home position\033[0m")
+        controller._arduino.write(f"MOVE {-params['step_increment'] * params['num_steps']}\n".encode())
         while True:
             response = controller._arduino.readline().decode('utf-8').strip()
             if response:
@@ -233,6 +307,10 @@ def run_test_routine(controller, params):
                     break
                 elif "ERROR" in response:
                     raise Exception(f"Movement error: {response}")
+        
+        # Wait for oil to drain
+        print(f"\033[93mWaiting {params['drain_delay']}s for oil to drain...\033[0m")
+        time.sleep(params['drain_delay'])
             
         print("\n\033[92mTest completed successfully!\033[0m")
         print(f"\033[92mTemperature log saved to: {temp_log_file}\033[0m")
@@ -272,7 +350,7 @@ def cli_mode(controller, gui_logger, hardware_logger):
         print("  MOVE <steps>  - Move stepper motor")
         print("  HOME          - Home the stepper motor")
         print("  STOP          - Stop motor movement")
-        print("  EMERGENCY_STOP - Toggle emergency stop")
+        print("  CALIBRATE     - Calibrate the system")
         print("  HELP          - Show this help message")
         print("  EXIT          - Exit the program")
         print("\033[93mPress Ctrl+C to exit\033[0m")
@@ -292,7 +370,7 @@ def cli_mode(controller, gui_logger, hardware_logger):
                     print("  MOVE <steps>  - Move stepper motor")
                     print("  HOME          - Home the stepper motor")
                     print("  STOP          - Stop motor movement")
-                    print("  EMERGENCY_STOP - Toggle emergency stop")
+                    print("  CALIBRATE     - Calibrate the system")
                     print("  HELP          - Show this help message")
                     print("  EXIT          - Exit the program")
                 elif command == "TEST":
@@ -303,48 +381,21 @@ def cli_mode(controller, gui_logger, hardware_logger):
                             print(f"  \033[93m{key}:\033[0m {value}")
                             
                         # Calculate and show test summary
-                        positions = []
-                        current_steps = params['min_steps']
-                        while current_steps <= params['max_steps']:
-                            positions.append(int(current_steps))
-                            current_steps += params['step_increment']
+                        total_distance = params['step_increment'] * params['num_steps']
+                        print(f"\n\033[93mTest will move through {params['num_steps']} positions:\033[0m")
+                        print(f"  Step size: {params['step_increment']} steps")
+                        print(f"  Total distance per loop: {total_distance} steps")
+                        print(f"  Number of loops: {params['num_loops']}")
+                        print(f"  VNA dwell: {params['vna_dwell']}s")
+                        print(f"  Oil dwell: {params['oil_dwell']}s")
+                        print(f"  Drain delay: {params['drain_delay']}s")
                         
-                        total_points = len(positions)
-                        total_time = total_points * (params['vna_dwell'] + params['oil_dwell'] + 2)  # 2 seconds for movement
-                        minutes = int(total_time // 60)
-                        seconds = int(total_time % 60)
-                        
-                        print("\n\033[95mTest Sequence Summary:\033[0m")
-                        print(f"  \033[93mTotal test points:\033[0m {total_points}")
-                        print(f"  \033[93mStep size:\033[0m {params['step_increment']} steps")
-                        print(f"  \033[93mRange:\033[0m {params['min_steps']} to {params['max_steps']} steps")
-                        print(f"  \033[93mStep sequence:\033[0m")
-                        
-                        # Show positions in a more readable format
-                        pos_str = ""
-                        for i, pos in enumerate(positions):
-                            pos_str += f"{pos:6d}"
-                            if (i + 1) % 8 == 0:  # New line every 8 positions
-                                pos_str += "\n                 "
-                        print(f"                 {pos_str}")
-                        
-                        print(f"  \033[93mEstimated time:\033[0m {minutes} minutes {seconds} seconds")
-                        print("\n\033[95mSequence will:\033[0m")
-                        print(f"  1. Move to first position ({positions[0]} steps)")
-                        print(f"  2. At each position:")
-                        print(f"     - Wait {params['oil_dwell']}s for oil to settle")
-                        print(f"     - Trigger VNA sweep")
-                        print(f"     - Wait {params['vna_dwell']}s for VNA")
-                        print(f"     - Record temperature and tilt")
-                        print(f"  3. Move to next position (+{params['step_increment']} steps)")
-                        print("  4. Repeat until complete")
-                        
-                        # Ask for confirmation
-                        confirm = input("\n\033[93mStart test? (y/n): \033[0m").strip().lower()
+                        confirm = input("\n\033[96mStart test? (y/n): \033[0m").strip().lower()
                         if confirm == 'y':
-                            run_test_routine(controller, params)
-                        else:
-                            print("\033[91mTest cancelled\033[0m")
+                            if run_test_routine(controller, params):
+                                print("\n\033[92mTest completed successfully!\033[0m")
+                            else:
+                                print("\n\033[91mTest failed or was interrupted\033[0m")
                 elif command.startswith("MOVE "):
                     try:
                         # Get target steps from user
@@ -370,8 +421,18 @@ def cli_mode(controller, gui_logger, hardware_logger):
                         print("\033[93mExample: MOVE -200 - Move to -200 steps\033[0m")
                 elif command == "HOME":
                     try:
-                        # Send home command
-                        controller._arduino.write(b"HOME\n")
+                        print("\033[93mSelect homing type:\033[0m")
+                        print("1. Tilt Home (homes and moves to level position)")
+                        print("2. Fill Home (homes without moving to level)")
+                        home_type = input("\033[96mEnter choice (1/2): \033[0m").strip()
+                        
+                        if home_type == "1":
+                            controller._arduino.write(b"TILT_HOME\n")
+                        elif home_type == "2":
+                            controller._arduino.write(b"FILL_HOME\n")
+                        else:
+                            print("\033[91mInvalid choice. Please enter 1 or 2\033[0m")
+                            continue
                         
                         # Read and display messages until homing is complete
                         while True:
@@ -380,7 +441,7 @@ def cli_mode(controller, gui_logger, hardware_logger):
                                 print(f"\033[92m{response}\033[0m")
                                 
                                 # Show appropriate messages based on Arduino state
-                                if "Starting homing sequence" in response:
+                                if "Starting homing sequence" in response or "Starting fill home sequence" in response:
                                     print("\033[93mMoving down to find home switch...\033[0m")
                                 elif "Clearing home switch" in response:
                                     print("\033[93mMoving up to clear home switch...\033[0m")
@@ -392,7 +453,7 @@ def cli_mode(controller, gui_logger, hardware_logger):
                                     print("2. If level sensor confirms position is level, press the leveling button (Pin 4)")
                                     print("3. If not level, press Ctrl+C to abort and adjust manually")
                                     print("\033[93mWaiting for level confirmation button press...\033[0m")
-                                elif "Homing and leveling complete" in response:
+                                elif "Homing and leveling complete" in response or "Fill home complete" in response:
                                     break
                                 elif "ERROR" in response:
                                     break

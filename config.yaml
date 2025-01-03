@@ -1,6 +1,6 @@
 data_paths:
   results: data/results
-  temperature: data/temperature
+  temperature: /home/nate/Desktop/TEMP_export/Test_002_North-South_TEMP
   vna: data/vna
 test_parameters:
   max_tilt: 30.0
@@ -8,6 +8,7 @@ test_parameters:
   oil_level_time: 15
   tilt_accuracy: 0.1
   tilt_increment: 1.0
+  drain_delay: 20.0
 theme:
   dark_mode: true
   font_size: 12

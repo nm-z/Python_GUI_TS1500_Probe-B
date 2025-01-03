@@ -276,17 +276,3 @@ class ArduinoController(QObject):
         except Exception as e:
             self.logger.error(f"Temperature read error: {str(e)}")
             return None
-        
-    def emergency_stop(self):
-        """Send emergency stop command"""
-        try:
-            response = self.send_command("STOP")
-            if response == "STOPPED":
-                self.logger.info("Emergency stop successful")
-                return True
-            else:
-                self.logger.error(f"Emergency stop failed: {response}")
-                return False
-        except Exception as e:
-            self.logger.error(f"Emergency stop error: {str(e)}")
-            return False

@@ -109,11 +109,9 @@ class HardwareController(QObject):
                     values["acceleration"] = float(parts[i + 1])
                 elif parts[i] == "HOMED":
                     values["homed"] = parts[i + 1] == "YES"
-                elif parts[i] == "E_STOP":
-                    values["emergency_stop"] = parts[i + 1] == "YES"
                     
             # Check if we have all required fields
-            required_fields = ["position", "angle", "speed", "acceleration", "homed", "emergency_stop"]
+            required_fields = ["position", "angle", "speed", "acceleration", "homed"]
             if not all(field in values for field in required_fields):
                 missing = [field for field in required_fields if field not in values]
                 return {"error": f"Missing fields: {missing}"}
@@ -144,7 +142,7 @@ class HardwareController(QObject):
                     self.logger.debug('Checking response part', extra={'response': full_resp})
                     
                     # Check if it has all required fields
-                    if all(field in full_resp for field in ["POS", "ANGLE", "SPEED", "ACCEL", "HOMED", "E_STOP"]):
+                    if all(field in full_resp for field in ["POS", "ANGLE", "SPEED", "ACCEL", "HOMED"]):
                         self.logger.debug('Found valid response', extra={'response': full_resp})
                         return full_resp.strip()
                         
@@ -290,3 +288,46 @@ class HardwareController(QObject):
         except Exception as e:
             self.logger.error(f"[arduino] Error finding Arduino port: {str(e)}")
             return None
+
+    def _parse_status(self, response):
+        """Parse status response from Arduino"""
+        try:
+            # Split response into parts
+            parts = response.split()
+            values = {}
+            
+            # Extract values
+            for i in range(0, len(parts), 2):
+                if parts[i] == "POS":
+                    values["position"] = int(parts[i + 1])
+                elif parts[i] == "ANGLE":
+                    values["angle"] = float(parts[i + 1])
+                elif parts[i] == "SPEED":
+                    values["speed"] = float(parts[i + 1])
+                elif parts[i] == "ACCEL":
+                    values["acceleration"] = float(parts[i + 1])
+                elif parts[i] == "HOMED":
+                    values["homed"] = parts[i + 1] == "YES"
+            
+            # Check all required fields are present
+            required_fields = ["position", "angle", "speed", "acceleration", "homed"]
+            if not all(field in values for field in required_fields):
+                self.logger.error(f"Missing required fields in status response: {response}")
+                return None
+            
+            return values
+            
+        except (ValueError, IndexError) as e:
+            self.logger.error(f"Error parsing status response: {str(e)}")
+            return None
+
+    def _is_valid_status(self, response):
+        """Check if response is a valid status message"""
+        if not response:
+            return False
+            
+        # Check for all required fields
+        if all(field in response for field in ["POS", "ANGLE", "SPEED", "ACCEL", "HOMED"]):
+            return True
+            
+        return False
