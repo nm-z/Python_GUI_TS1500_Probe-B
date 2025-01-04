@@ -740,17 +740,40 @@ def gui_mode(controller, gui_logger, hardware_logger):
                 QMessageBox.warning(self, "Error", "No Arduino connected!")
                 return
 
-            reply = QMessageBox.question(self, "Home System",
-                                       "Select homing type:\n\n"
-                                       "Yes = Tilt Home (homes and moves to level)\n"
-                                       "No = Fill Home (homes without moving to level)",
-                                       QMessageBox.StandardButton.Yes | 
-                                       QMessageBox.StandardButton.No)
-
-            if reply == QMessageBox.StandardButton.Yes:
+            # Create custom dialog with two buttons
+            dialog = QMessageBox(self)
+            dialog.setWindowTitle("Home System")
+            dialog.setText("Select homing type:")
+            
+            # Remove default buttons
+            dialog.setStandardButtons(QMessageBox.StandardButton.NoButton)
+            
+            # Add simple Tilt and Fill buttons
+            tilt_btn = dialog.addButton("Tilt", QMessageBox.ButtonRole.AcceptRole)
+            fill_btn = dialog.addButton("Fill", QMessageBox.ButtonRole.RejectRole)
+            
+            # Make buttons bigger and more readable
+            for btn in [tilt_btn, fill_btn]:
+                btn.setMinimumWidth(100)
+                btn.setMinimumHeight(40)
+                btn.setStyleSheet("""
+                    QPushButton {
+                        font-size: 16px;
+                        font-weight: bold;
+                        padding: 10px;
+                    }
+                """)
+            
+            dialog.exec()
+            
+            # Check which button was clicked
+            clicked_button = dialog.clickedButton()
+            if clicked_button == tilt_btn:
                 self.controller._arduino.write(b"TILT_HOME\n")
-            else:
+            elif clicked_button == fill_btn:
                 self.controller._arduino.write(b"FILL_HOME\n")
+            else:
+                return  # Dialog was closed without selecting
 
             self.is_homed = True
             self.run_btn.setEnabled(True)
