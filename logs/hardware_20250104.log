@@ -1,0 +1,114 @@
+2025-01-04 14:25:11 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:25:11 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 14:25:11 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 14:25:14 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 14:25:15 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 14:25:15 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 14:25:15 - hardware - DEBUG - Arduino: READY
+2025-01-04 14:27:32 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:27:33 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 14:27:33 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 14:27:36 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 14:27:36 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 14:27:37 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 14:27:37 - hardware - DEBUG - Arduino: READY
+2025-01-04 14:28:55 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:28:55 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 14:28:55 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 14:28:59 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 14:28:59 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 14:28:59 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 14:28:59 - hardware - DEBUG - Arduino: READY
+2025-01-04 14:29:35 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:29:35 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 14:29:35 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 14:29:39 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 14:29:39 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 14:29:39 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 14:29:39 - hardware - DEBUG - Arduino: READY
+2025-01-04 14:31:15 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:32:11 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:34:24 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:35:06 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:36:53 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:37:08 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:38:28 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:38:41 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:40:14 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:41:43 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:43:04 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:45:04 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:45:29 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:47:47 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:50:35 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:51:04 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:51:26 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:52:06 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:53:15 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:55:43 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:56:12 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:58:03 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 14:59:55 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:00:22 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:00:32 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:01:57 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:03:27 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:04:11 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:04:39 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:05:25 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:05:49 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:06:13 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:06:36 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:07:38 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:08:01 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:08:54 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:10:11 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:10:41 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:11:46 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:13:09 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:13:56 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:20:08 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:20:08 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 15:20:09 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 15:20:12 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 15:20:12 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 15:20:12 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 15:20:13 - hardware - DEBUG - Arduino: READY
+2025-01-04 15:20:13 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:21:47 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:21:47 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 15:21:47 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 15:21:51 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 15:21:51 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 15:21:51 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 15:21:51 - hardware - DEBUG - Arduino: READY
+2025-01-04 15:21:51 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:22:45 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:22:45 - hardware - DEBUG - Arduino: Debug port initialized
+2025-01-04 15:22:45 - hardware - DEBUG - Arduino: Initializing MPU6050...
+2025-01-04 15:22:49 - hardware - DEBUG - Arduino: ERROR: MPU6050 initialization failed!
+2025-01-04 15:22:49 - hardware - DEBUG - Arduino: Check I2C connections and power supply
+2025-01-04 15:22:49 - hardware - DEBUG - Arduino: Initialization complete
+2025-01-04 15:22:49 - hardware - DEBUG - Arduino: READY
+2025-01-04 15:22:49 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:23:53 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:24:13 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:24:57 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:27:44 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:29:16 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:34:10 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:34:10 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:37:01 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:37:01 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:37:30 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:37:30 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:38:49 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:38:49 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:39:08 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:39:08 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:41:59 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:45:49 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:47:19 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:49:33 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:49:50 - hardware - INFO - [arduino] Serial port opened
+2025-01-04 15:49:50 - hardware - INFO - [arduino] Serial port opened

@@ -10,9 +10,6 @@ import colorama
 import traceback
 import pyautogui
 
-# Force headless mode
-HEADLESS_ONLY = True
-
 def setup_logging(headless=True):  # Always headless
     """Set up application logging"""
     try:
@@ -128,21 +125,28 @@ def run_test_routine(controller, params):
         pyautogui.FAILSAFE = False  # Disable fail-safe
         
         # Create temperature log directory if it doesn't exist
-        temp_log_dir = "/home/nate/Desktop/TEMP_Export_Tilt-Test_001"
+        temp_log_dir = params.get('export_path', "/home/test/Desktop/TEMP_Export_Tilt-Test_001")
         if not os.path.exists(temp_log_dir):
             os.makedirs(temp_log_dir)
             
-        # Get next test run number
-        run_counter_file = os.path.join(temp_log_dir, ".run_counter")
-        if os.path.exists(run_counter_file):
-            with open(run_counter_file, 'r') as f:
-                run_number = int(f.read().strip()) + 1
-        else:
-            run_number = 1
+        # Get test number from params or use run counter
+        test_number = params.get('test_number', None)
+        if test_number is None:
+            # Get next test run number from counter file
+            run_counter_file = os.path.join(temp_log_dir, ".run_counter")
+            if os.path.exists(run_counter_file):
+                with open(run_counter_file, 'r') as f:
+                    test_number = int(f.read().strip()) + 1
+            else:
+                test_number = 1
+            
+            # Save the run counter for next time
+            with open(run_counter_file, 'w') as f:
+                f.write(str(test_number))
         
-        # Create CSV file with timestamp and run number in name
+        # Create CSV file with timestamp and test number in name
         timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
-        temp_log_file = os.path.join(temp_log_dir, f"test_run_{run_number:03d}_{timestamp}_temp.csv")
+        temp_log_file = os.path.join(temp_log_dir, f"test_run_{test_number:03d}_{timestamp}_temp.csv")
         
         # Create CSV file with headers
         with open(temp_log_file, 'w') as f:
@@ -317,7 +321,7 @@ def run_test_routine(controller, params):
         
         # Save the run counter for next time
         with open(run_counter_file, 'w') as f:
-            f.write(str(run_number))
+            f.write(str(test_number))
             
         return True
         
@@ -481,12 +485,342 @@ def cli_mode(controller, gui_logger, hardware_logger):
             hardware_logger.critical(f"Critical error in CLI mode: {str(e)}", exc_info=True)
         return 1
 
+def gui_mode(controller, gui_logger, hardware_logger):
+    """
+    Run the application in a simplified GUI mode for technicians.
+    No direct commands; only test selection, parameter input, and real-time logs.
+    """
+    from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+                                QHBoxLayout, QLabel, QLineEdit, QPushButton, 
+                                QTextEdit, QFrame, QMessageBox, QFileDialog)
+    from PyQt6.QtCore import Qt, QThread, pyqtSignal
+    from PyQt6.QtGui import QFont, QPalette, QColor
+    import sys
+    import threading
+    import os
+
+    class LoggerThread(QThread):
+        """Thread to handle Arduino responses and logging"""
+        log_signal = pyqtSignal(str, str)  # message, color
+
+        def __init__(self, controller):
+            super().__init__()
+            self.controller = controller
+            self.running = True
+
+        def run(self):
+            while self.running and self.controller and self.controller._arduino:
+                try:
+                    response = self.controller._arduino.readline().decode('utf-8').strip()
+                    if response:
+                        # Map responses to colors similar to CLI mode
+                        color = "white"  # default
+                        if "ERROR" in response:
+                            color = "#FF6B6B"  # red
+                        elif "complete" in response.lower():
+                            color = "#98FB98"  # light green
+                        elif "READY" in response:
+                            color = "#90EE90"  # pale green
+                        elif "Moving" in response:
+                            color = "#DDA0DD"  # plum
+                        elif "Temperature" in response:
+                            color = "#98FB98"  # light green
+                        elif "Tilt" in response:
+                            color = "#98FB98"  # light green
+                        self.log_signal.emit(response, color)
+                except Exception as e:
+                    self.log_signal.emit(f"Error reading Arduino: {str(e)}", "#FF6B6B")
+                    break
+
+    class MainWindow(QMainWindow):
+        def __init__(self, controller, parent=None):
+            super().__init__(parent)
+            self.controller = controller
+            self.setup_ui()
+            self.logger_thread = None
+            self.is_homed = False
+
+            # Start logger thread
+            if self.controller and self.controller._arduino:
+                self.logger_thread = LoggerThread(self.controller)
+                self.logger_thread.log_signal.connect(self.append_colored_text)
+                self.logger_thread.start()
+
+        def setup_ui(self):
+            self.setWindowTitle("TS1500 Probe Control")
+            self.setMinimumSize(800, 1000)
+
+            # Create central widget and main layout
+            central_widget = QWidget()
+            self.setCentralWidget(central_widget)
+            layout = QVBoxLayout(central_widget)
+            layout.setSpacing(20)
+
+            # Set dark theme
+            self.setStyleSheet("""
+                QMainWindow, QWidget {
+                    background-color: #2b2b2b;
+                    color: #ffffff;
+                }
+                QLabel {
+                    font-size: 14px;
+                }
+                QLineEdit {
+                    background-color: #3b3b3b;
+                    color: #ffffff;
+                    border: 1px solid #555555;
+                    padding: 5px;
+                    border-radius: 3px;
+                    font-size: 14px;
+                    min-height: 25px;
+                }
+                QPushButton {
+                    background-color: #0d47a1;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    min-width: 100px;
+                    min-height: 40px;
+                }
+                QPushButton:hover {
+                    background-color: #1565c0;
+                }
+                QPushButton:disabled {
+                    background-color: #666666;
+                }
+                QTextEdit {
+                    background-color: #1b1b1b;
+                    color: #ffffff;
+                    border: 1px solid #555555;
+                    font-family: "Courier New";
+                    font-size: 14px;
+                    padding: 10px;
+                }
+            """)
+
+            # Temperature Export Path Section
+            export_frame = QFrame()
+            export_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
+            export_layout = QVBoxLayout(export_frame)
+            
+            path_layout = QHBoxLayout()
+            self.export_path = QLineEdit()
+            self.export_path.setPlaceholderText("Temperature Export Path")
+            self.export_path.setText(os.path.expanduser("~/Desktop/TEMP_Export_Tilt-Test_001"))
+            browse_btn = QPushButton("Browse...")
+            browse_btn.clicked.connect(self.browse_export_path)
+            path_layout.addWidget(QLabel("Export Path:"))
+            path_layout.addWidget(self.export_path)
+            path_layout.addWidget(browse_btn)
+            export_layout.addLayout(path_layout)
+            
+            # Test Number Entry
+            test_num_layout = QHBoxLayout()
+            self.test_number = QLineEdit()
+            self.test_number.setPlaceholderText("Test Number")
+            self.test_number.setText("1")
+            test_num_layout.addWidget(QLabel("Test Number:"))
+            test_num_layout.addWidget(self.test_number)
+            export_layout.addLayout(test_num_layout)
+            
+            layout.addWidget(export_frame)
+
+            # Home Button (must be used first)
+            self.home_btn = QPushButton("HOME SYSTEM (Required First)")
+            self.home_btn.clicked.connect(self.home_system)
+            layout.addWidget(self.home_btn)
+
+            # Parameter Entry Section
+            param_frame = QFrame()
+            param_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
+            param_layout = QVBoxLayout(param_frame)
+
+            # Test Type
+            type_layout = QHBoxLayout()
+            self.test_type = QLineEdit()
+            self.test_type.setPlaceholderText("1 for Tilt, 2 for Fill")
+            self.test_type.setText("1")
+            type_layout.addWidget(QLabel("Test Type:"))
+            type_layout.addWidget(self.test_type)
+            param_layout.addLayout(type_layout)
+
+            # Steps per increment
+            step_layout = QHBoxLayout()
+            self.step_inc = QLineEdit()
+            self.step_inc.setText("200")
+            step_layout.addWidget(QLabel("Steps/Increment:"))
+            step_layout.addWidget(self.step_inc)
+            param_layout.addLayout(step_layout)
+
+            # Number of steps
+            num_steps_layout = QHBoxLayout()
+            self.num_steps = QLineEdit()
+            self.num_steps.setText("25")
+            num_steps_layout.addWidget(QLabel("Number of Steps:"))
+            num_steps_layout.addWidget(self.num_steps)
+            param_layout.addLayout(num_steps_layout)
+
+            # Number of loops
+            loops_layout = QHBoxLayout()
+            self.num_loops = QLineEdit()
+            self.num_loops.setText("1")
+            loops_layout.addWidget(QLabel("Number of Loops:"))
+            loops_layout.addWidget(self.num_loops)
+            param_layout.addLayout(loops_layout)
+
+            # VNA dwell time
+            vna_layout = QHBoxLayout()
+            self.vna_dwell = QLineEdit()
+            self.vna_dwell.setText("3")
+            vna_layout.addWidget(QLabel("VNA Dwell (s):"))
+            vna_layout.addWidget(self.vna_dwell)
+            param_layout.addLayout(vna_layout)
+
+            # Oil dwell time
+            oil_layout = QHBoxLayout()
+            self.oil_dwell = QLineEdit()
+            self.oil_dwell.setText("3")
+            oil_layout.addWidget(QLabel("Oil Dwell (s):"))
+            oil_layout.addWidget(self.oil_dwell)
+            param_layout.addLayout(oil_layout)
+
+            # Drain delay time
+            drain_layout = QHBoxLayout()
+            self.drain_delay = QLineEdit()
+            self.drain_delay.setText("20")
+            drain_layout.addWidget(QLabel("Drain Delay (s):"))
+            drain_layout.addWidget(self.drain_delay)
+            param_layout.addLayout(drain_layout)
+
+            layout.addWidget(param_frame)
+
+            # Logger Window
+            self.log_area = QTextEdit()
+            self.log_area.setReadOnly(True)
+            self.log_area.setMinimumHeight(400)
+            layout.addWidget(self.log_area)
+
+            # Run Test Button
+            self.run_btn = QPushButton("Run Test")
+            self.run_btn.setEnabled(False)  # Disabled until homed
+            self.run_btn.clicked.connect(self.run_test)
+            layout.addWidget(self.run_btn)
+
+            # Exit Button
+            exit_btn = QPushButton("Exit")
+            exit_btn.clicked.connect(self.close)
+            layout.addWidget(exit_btn)
+
+            self.append_colored_text("GUI Started. Please HOME the system first!", "#FFD700")
+
+        def browse_export_path(self):
+            path = QFileDialog.getExistingDirectory(self, "Select Export Directory")
+            if path:
+                self.export_path.setText(path)
+
+        def append_colored_text(self, text, color="white"):
+            self.log_area.append(f'<span style="color: {color};">{text}</span>')
+            # Auto-scroll to bottom
+            scrollbar = self.log_area.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
+
+        def home_system(self):
+            if not self.controller or not self.controller._arduino:
+                QMessageBox.warning(self, "Error", "No Arduino connected!")
+                return
+
+            reply = QMessageBox.question(self, "Home System",
+                                       "Select homing type:\n\n"
+                                       "Yes = Tilt Home (homes and moves to level)\n"
+                                       "No = Fill Home (homes without moving to level)",
+                                       QMessageBox.StandardButton.Yes | 
+                                       QMessageBox.StandardButton.No)
+
+            if reply == QMessageBox.StandardButton.Yes:
+                self.controller._arduino.write(b"TILT_HOME\n")
+            else:
+                self.controller._arduino.write(b"FILL_HOME\n")
+
+            self.is_homed = True
+            self.run_btn.setEnabled(True)
+            self.home_btn.setEnabled(False)
+            self.home_btn.setText("System Homed")
+
+        def run_test(self):
+            if not self.is_homed:
+                QMessageBox.warning(self, "Error", "Please home the system first!")
+                return
+
+            try:
+                # Get and validate export path
+                export_path = self.export_path.text().strip()
+                if not export_path:
+                    raise ValueError("Export path is required")
+                os.makedirs(export_path, exist_ok=True)
+
+                # Get and validate test number
+                test_num = int(self.test_number.text().strip())
+                if test_num < 1:
+                    raise ValueError("Test number must be positive")
+
+                # Build params dict
+                params = {
+                    'test_type': self.test_type.text().strip(),
+                    'step_increment': float(self.step_inc.text().strip()),
+                    'num_steps': int(self.num_steps.text().strip()),
+                    'num_loops': int(self.num_loops.text().strip()),
+                    'vna_dwell': float(self.vna_dwell.text().strip()),
+                    'oil_dwell': float(self.oil_dwell.text().strip()),
+                    'drain_delay': float(self.drain_delay.text().strip()),
+                    'export_path': export_path,
+                    'test_number': test_num
+                }
+
+                # Show summary
+                self.append_colored_text("\n=== Test Parameters ===", "#FFD700")
+                for k, v in params.items():
+                    self.append_colored_text(f"{k}: {v}", "#98FB98")
+
+                # Run test in background thread
+                def worker():
+                    try:
+                        success = run_test_routine(self.controller, params)
+                        if success:
+                            self.append_colored_text("\nTest completed successfully!", "#90EE90")
+                        else:
+                            self.append_colored_text("\nTest failed or was interrupted.", "#FF6B6B")
+                    except Exception as e:
+                        self.append_colored_text(f"\nError during test: {str(e)}", "#FF6B6B")
+
+                threading.Thread(target=worker, daemon=True).start()
+
+            except ValueError as e:
+                QMessageBox.warning(self, "Invalid Input", str(e))
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
+
+        def closeEvent(self, event):
+            if self.logger_thread:
+                self.logger_thread.running = False
+                self.logger_thread.wait()
+            event.accept()
+
+    # Create and run application
+    app = QApplication(sys.argv)
+    window = MainWindow(controller)
+    window.show()
+    return app.exec()
+
 def main():
     """Main entry point"""
     try:
-        if not HEADLESS_ONLY:
-            print("\033[91mError: This version only supports headless mode\033[0m")
-            sys.exit(1)
+        # Parse command line arguments
+        parser = argparse.ArgumentParser(description='TS1500 Probe Control')
+        parser.add_argument('--mode', choices=['cli', 'gui'], default='cli',
+                          help='Run mode: cli (default) or gui')
+        args = parser.parse_args()
             
         # Set up logging
         gui_logger, hardware_logger = setup_logging(headless=True)
@@ -505,8 +839,12 @@ def main():
             print("\033[91mContinuing in limited functionality mode...\033[0m")
             controller = None
         
-        # Run in CLI mode
-        exit_code = cli_mode(controller, gui_logger, hardware_logger)
+        # Run in selected mode
+        if args.mode == 'gui':
+            exit_code = gui_mode(controller, gui_logger, hardware_logger)
+        else:
+            exit_code = cli_mode(controller, gui_logger, hardware_logger)
+            
         sys.exit(exit_code)
             
     except Exception as e:
