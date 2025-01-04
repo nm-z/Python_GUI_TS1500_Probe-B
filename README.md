@@ -6,7 +6,7 @@ A PyQt6-based GUI application for controlling and monitoring the TS1500 Probe sy
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Python_GUI_TS1500_Probe-B.git
+git clone https://github.com/nm-z/Python_GUI_TS1500_Probe-B.git
 cd Python_GUI_TS1500_Probe-B
 ```
 
