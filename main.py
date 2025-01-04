@@ -702,17 +702,26 @@ def gui_mode(controller, gui_logger, hardware_logger):
             self.log_area.setMinimumHeight(400)
             layout.addWidget(self.log_area)
 
+            # Button Container
+            button_container = QWidget()
+            button_layout = QVBoxLayout(button_container)
+            button_layout.setSpacing(10)
+
             # Run Test Button
             self.run_btn = QPushButton("Run Test")
             self.run_btn.setEnabled(False)  # Disabled until homed
             self.run_btn.clicked.connect(self.run_test)
-            layout.addWidget(self.run_btn)
+            button_layout.addWidget(self.run_btn)
 
             # Exit Button
             exit_btn = QPushButton("Exit")
             exit_btn.clicked.connect(self.close)
-            layout.addWidget(exit_btn)
+            button_layout.addWidget(exit_btn)
 
+            # Add button container to main layout
+            layout.addWidget(button_container)
+
+            # Initial message
             self.append_colored_text("GUI Started. Please HOME the system first!", "#FFD700")
 
         def browse_export_path(self):
