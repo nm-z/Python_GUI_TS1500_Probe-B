@@ -115,17 +115,56 @@ def run_test_setup():
         print(f"\033[91mInvalid input: {str(e)}\033[0m")
         return None
 
-def run_test_routine(controller, params):
+def run_test_routine(controller, params, gui_logger=None, write_command=None, get_response=None):
     """Run the test routine with given parameters"""
+    def log_message(message, color=None):
+        """Helper to log messages to both CLI and GUI if available"""
+        # Print to terminal with color
+        if color == "#FF6B6B":  # Red
+            print(f"\033[91m{message}\033[0m")
+        elif color == "#98FB98":  # Light green
+            print(f"\033[92m{message}\033[0m")
+        elif color == "#FFD700":  # Yellow/gold
+            print(f"\033[93m{message}\033[0m")
+        elif color == "#DDA0DD":  # Purple
+            print(f"\033[95m{message}\033[0m")
+        elif color == "#87CEEB":  # Light blue
+            print(f"\033[96m{message}\033[0m")
+        else:
+            print(message)
+            
+        # Send clean message to GUI
+        if gui_logger:
+            # Strip any existing ANSI codes
+            clean_message = message
+            for code in ["\033[91m", "\033[92m", "\033[93m", "\033[94m", "\033[95m", "\033[96m", "\033[0m"]:
+                clean_message = clean_message.replace(code, "")
+            gui_logger(clean_message, color)
+
+    def safe_get_response():
+        """Safely get a response with error handling"""
+        try:
+            return get_response()
+        except Exception as e:
+            log_message(f"Error getting response: {str(e)}", "#FF6B6B")
+            return None
+
+    def safe_write_command(cmd):
+        """Safely write a command with error handling"""
+        try:
+            write_command(cmd)
+        except Exception as e:
+            log_message(f"Error writing command: {str(e)}", "#FF6B6B")
+
     try:
-        print("\n\033[93mPreparing to start test...\033[0m")
-        print("\033[91mIMPORTANT: Please click on your VNA window now to ensure it receives the F12 keypress!\033[0m")
+        log_message("Preparing to start test...", "#FFD700")
+        log_message("IMPORTANT: Please click on your VNA window now to ensure it receives the F12 keypress!", "#FF6B6B")
         
         # Import pyautogui here to avoid startup delay
         pyautogui.FAILSAFE = False  # Disable fail-safe
         
         # Create temperature log directory if it doesn't exist
-        temp_log_dir = params.get('export_path', "/home/test/Desktop/TEMP_Export_Tilt-Test_001")
+        temp_log_dir = params.get('export_path', "/home/nate/Desktop/TEMP_Export_Tilt-Test_001")
         if not os.path.exists(temp_log_dir):
             os.makedirs(temp_log_dir)
             
@@ -154,170 +193,209 @@ def run_test_routine(controller, params):
         
         # Countdown
         for i in range(3, 0, -1):
-            print(f"\033[93mStarting test in {i}...\033[0m\n")
+            log_message(f"Starting test in {i}...", "#FFD700")
             time.sleep(1)
             
-        print("\n\033[92mTest started!\033[0m")
+        log_message("\nTest started!", "#98FB98")
 
         # For fill test, take first measurement at current position (after homing)
         if params['test_type'] == "2":  # Fill Test
-            print("\033[93mFill Test: Taking first measurement at home position...\033[0m")
+            log_message("Fill Test: Taking first measurement at home position...", "#FFD700")
             time.sleep(params['oil_dwell'])
             
             # Take initial measurement (point 1)
-            print("\033[93mTaking measurement at home position (point 1)...\033[0m")
+            log_message("Taking measurement at home position (point 1)...", "#FFD700")
             try:
                 pyautogui.press('f12')
             except Exception as e:
-                print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
-                print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
-                input("\033[93mPress Enter after pressing F12...\033[0m")
+                log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
+                log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
+                input("Press Enter after pressing F12...")
             
             # Wait for VNA
-            print(f"\033[93mWaiting {params['vna_dwell']}s for VNA sweep...\033[0m")
+            log_message(f"Waiting {params['vna_dwell']}s for VNA sweep...", "#FFD700")
             time.sleep(params['vna_dwell'])
             
             # Get temperature and tilt readings
-            controller._arduino.write(b"TEMP\n")
-            temp_response = controller._arduino.readline().decode('utf-8').strip()
-            print(f"\033[92mTemperature: {temp_response}\033[0m")
+            safe_write_command("TEMP\n")
+            temp_response = safe_get_response()
+            if temp_response:
+                log_message(f"Temperature: {temp_response}", "#98FB98")
             
-            controller._arduino.write(b"TILT\n")
-            tilt_response = controller._arduino.readline().decode('utf-8').strip()
-            print(f"\033[92mTilt: {tilt_response}\033[0m")
+            safe_write_command("TILT\n")
+            tilt_response = safe_get_response()
+            if tilt_response:
+                log_message(f"Tilt: {tilt_response}", "#98FB98")
             
             # Log temperature to CSV
             try:
-                temp_value = float(temp_response.split()[-1])
-                timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
-                with open(temp_log_file, 'a') as f:
-                    f.write(f"{timestamp},{temp_value:.2f}\n")
+                if temp_response:
+                    temp_value = float(temp_response.split()[-1])
+                    timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                    with open(temp_log_file, 'a') as f:
+                        f.write(f"{timestamp},{temp_value:.2f}\n")
             except Exception as e:
-                print(f"\033[91mError logging temperature: {str(e)}\033[0m")
+                log_message(f"Error logging temperature: {str(e)}", "#FF6B6B")
 
         total_measurements = int(params['num_steps']) * int(params['num_loops'])
         current_measurement = 0
 
         for loop in range(params['num_loops']):
-            print(f"\n\033[95mStarting loop {loop + 1} of {params['num_loops']}\033[0m")
+            log_message(f"\nStarting loop {loop + 1} of {params['num_loops']}", "#DDA0DD")
             
             # Do measurements with step increments
             for i in range(int(params['num_steps'])):
                 current_measurement += 1
                 progress = (current_measurement / total_measurements) * 100
-                print(f"\033[96mProgress: {progress:.1f}% (Loop {loop + 1}/{params['num_loops']})\033[0m")
+                log_message(f"Progress: {progress:.1f}% (Loop {loop + 1}/{params['num_loops']})", "#87CEEB")
                 
                 # Move motor by step increment
-                print(f"\033[95mMoving +{params['step_increment']} steps\033[0m")
-                controller._arduino.write(f"MOVE {params['step_increment']}\n".encode())
-                while True:
-                    response = controller._arduino.readline().decode('utf-8').strip()
-                    if response:
-                        print(f"\033[95m{response}\033[0m")
-                        if "Movement complete" in response:
-                            break
-                        elif "ERROR" in response:
+                log_message(f"Moving +{params['step_increment']} steps", "#DDA0DD")
+                safe_write_command(f"MOVE {params['step_increment']}\n")
+                
+                # Wait for movement to complete
+                movement_complete = False
+                while not movement_complete:
+                    response = safe_get_response()
+                    if not response:
+                        continue
+                    
+                    log_message(response, "#DDA0DD")
+                    if "Movement complete" in response:
+                        movement_complete = True
+                    elif "ERROR" in response:
+                        if "MPU6050" in response:
+                            # Just log MPU6050 errors and continue
+                            log_message(f"Warning: {response}", "#FF6B6B")
+                            continue
+                        else:
                             raise Exception(f"Movement error: {response}")
                 
                 # Wait for oil to settle
-                print(f"\033[93mWaiting {params['oil_dwell']}s for oil to settle...\033[0m")
+                log_message(f"Waiting {params['oil_dwell']}s for oil to settle...", "#FFD700")
                 time.sleep(params['oil_dwell'])
                 
                 # Trigger VNA sweep
-                print("\033[93mTriggering VNA sweep...\033[0m")
+                log_message("Triggering VNA sweep...", "#FFD700")
                 try:
                     pyautogui.press('f12')
                 except Exception as e:
-                    print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
-                    print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
-                    input("\033[93mPress Enter after pressing F12...\033[0m")
+                    log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
+                    log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
+                    input("Press Enter after pressing F12...")
                 
                 # Wait for VNA
-                print(f"\033[93mWaiting {params['vna_dwell']}s for VNA sweep...\033[0m")
+                log_message(f"Waiting {params['vna_dwell']}s for VNA sweep...", "#FFD700")
                 time.sleep(params['vna_dwell'])
                 
                 # Get temperature and tilt readings
-                controller._arduino.write(b"TEMP\n")
-                temp_response = controller._arduino.readline().decode('utf-8').strip()
-                print(f"\033[92mTemperature: {temp_response}\033[0m")
+                safe_write_command("TEMP\n")
+                temp_response = safe_get_response()
+                if temp_response:
+                    log_message(f"Temperature: {temp_response}", "#98FB98")
                 
-                controller._arduino.write(b"TILT\n")
-                tilt_response = controller._arduino.readline().decode('utf-8').strip()
-                print(f"\033[92mTilt: {tilt_response}\033[0m")
+                safe_write_command("TILT\n")
+                tilt_response = safe_get_response()
+                if tilt_response:
+                    log_message(f"Tilt: {tilt_response}", "#98FB98")
                 
                 # Log temperature to CSV
                 try:
-                    temp_value = float(temp_response.split()[-1])
-                    timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
-                    with open(temp_log_file, 'a') as f:
-                        f.write(f"{timestamp},{temp_value:.2f}\n")
-                except Exception as e:
-                    print(f"\033[91mError logging temperature: {str(e)}\033[0m")
-            
-            # After measurements, move back to home position
-            if loop < params['num_loops'] - 1:  # Don't do this on last loop
-                print(f"\033[95mMoving back to home position\033[0m")
-                controller._arduino.write(f"MOVE {-params['step_increment'] * params['num_steps']}\n".encode())
-                while True:
-                    response = controller._arduino.readline().decode('utf-8').strip()
-                    if response:
-                        print(f"\033[95m{response}\033[0m")
-                        if "Movement complete" in response:
-                            break
-                        elif "ERROR" in response:
-                            raise Exception(f"Movement error: {response}")
-                
-                # Add drain delay after the large reset move
-                print(f"\033[93mWaiting {params['drain_delay']}s for oil to drain...\033[0m")
-                time.sleep(params['drain_delay'])
-                
-                # For fill test, if there are more loops, take measurement at 0 (this becomes point 1 of next loop)
-                if params['test_type'] == "2":  # Fill Test
-                    print("\033[93mTaking measurement at home position (point 1 of next loop)...\033[0m")
-                    try:
-                        pyautogui.press('f12')
-                    except Exception as e:
-                        print(f"\033[91mError triggering VNA sweep: {str(e)}\033[0m")
-                        print("\033[91mPlease press F12 manually in the VNA window now\033[0m")
-                        input("\033[93mPress Enter after pressing F12...\033[0m")
-                    
-                    time.sleep(params['vna_dwell'])
-                    
-                    # Get temperature and tilt readings
-                    controller._arduino.write(b"TEMP\n")
-                    temp_response = controller._arduino.readline().decode('utf-8').strip()
-                    print(f"\033[92mTemperature: {temp_response}\033[0m")
-                    
-                    controller._arduino.write(b"TILT\n")
-                    tilt_response = controller._arduino.readline().decode('utf-8').strip()
-                    print(f"\033[92mTilt: {tilt_response}\033[0m")
-                    
-                    try:
+                    if temp_response:
                         temp_value = float(temp_response.split()[-1])
                         timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
                         with open(temp_log_file, 'a') as f:
                             f.write(f"{timestamp},{temp_value:.2f}\n")
+                except Exception as e:
+                    log_message(f"Error logging temperature: {str(e)}", "#FF6B6B")
+            
+            # After measurements, move back to home position
+            if loop < params['num_loops'] - 1:  # Don't do this on last loop
+                log_message("Moving back to home position", "#DDA0DD")
+                safe_write_command(f"MOVE {-params['step_increment'] * params['num_steps']}\n")
+                
+                # Wait for movement to complete
+                movement_complete = False
+                while not movement_complete:
+                    response = safe_get_response()
+                    if not response:
+                        continue
+                    
+                    log_message(response, "#DDA0DD")
+                    if "Movement complete" in response:
+                        movement_complete = True
+                    elif "ERROR" in response:
+                        if "MPU6050" in response:
+                            # Just log MPU6050 errors and continue
+                            log_message(f"Warning: {response}", "#FF6B6B")
+                            continue
+                        else:
+                            raise Exception(f"Movement error: {response}")
+                
+                # Add drain delay after the large reset move
+                log_message(f"Waiting {params['drain_delay']}s for oil to drain...", "#FFD700")
+                time.sleep(params['drain_delay'])
+                
+                # For fill test, if there are more loops, take measurement at 0 (this becomes point 1 of next loop)
+                if params['test_type'] == "2":  # Fill Test
+                    log_message("Taking measurement at home position (point 1 of next loop)...", "#FFD700")
+                    try:
+                        pyautogui.press('f12')
                     except Exception as e:
-                        print(f"\033[91mError logging temperature: {str(e)}\033[0m")
+                        log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
+                        log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
+                        input("Press Enter after pressing F12...")
+                    
+                    time.sleep(params['vna_dwell'])
+                    
+                    # Get temperature and tilt readings
+                    safe_write_command("TEMP\n")
+                    temp_response = safe_get_response()
+                    if temp_response:
+                        log_message(f"Temperature: {temp_response}", "#98FB98")
+                    
+                    safe_write_command("TILT\n")
+                    tilt_response = safe_get_response()
+                    if tilt_response:
+                        log_message(f"Tilt: {tilt_response}", "#98FB98")
+                    
+                    try:
+                        if temp_response:
+                            temp_value = float(temp_response.split()[-1])
+                            timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                            with open(temp_log_file, 'a') as f:
+                                f.write(f"{timestamp},{temp_value:.2f}\n")
+                    except Exception as e:
+                        log_message(f"Error logging temperature: {str(e)}", "#FF6B6B")
         
         # After all loops, move back to home position
-        print(f"\033[95mMoving back to home position\033[0m")
-        controller._arduino.write(f"MOVE {-params['step_increment'] * params['num_steps']}\n".encode())
-        while True:
-            response = controller._arduino.readline().decode('utf-8').strip()
-            if response:
-                print(f"\033[95m{response}\033[0m")
-                if "Movement complete" in response:
-                    break
-                elif "ERROR" in response:
+        log_message("Moving back to home position", "#DDA0DD")
+        safe_write_command(f"MOVE {-params['step_increment'] * params['num_steps']}\n")
+        
+        # Wait for movement to complete
+        movement_complete = False
+        while not movement_complete:
+            response = safe_get_response()
+            if not response:
+                continue
+            
+            log_message(response, "#DDA0DD")
+            if "Movement complete" in response:
+                movement_complete = True
+            elif "ERROR" in response:
+                if "MPU6050" in response:
+                    # Just log MPU6050 errors and continue
+                    log_message(f"Warning: {response}", "#FF6B6B")
+                    continue
+                else:
                     raise Exception(f"Movement error: {response}")
         
         # Wait for oil to drain
-        print(f"\033[93mWaiting {params['drain_delay']}s for oil to drain...\033[0m")
+        log_message(f"Waiting {params['drain_delay']}s for oil to drain...", "#FFD700")
         time.sleep(params['drain_delay'])
             
-        print("\n\033[92mTest completed successfully!\033[0m")
-        print(f"\033[92mTemperature log saved to: {temp_log_file}\033[0m")
+        log_message("\nTest completed successfully!", "#98FB98")
+        log_message(f"Temperature log saved to: {temp_log_file}", "#FFD700")
         
         # Save the run counter for next time
         with open(run_counter_file, 'w') as f:
@@ -326,10 +404,10 @@ def run_test_routine(controller, params):
         return True
         
     except KeyboardInterrupt:
-        print("\n\033[91mTest interrupted by user\033[0m")
+        log_message("\nTest interrupted by user", "#FF6B6B")
         return False
     except Exception as e:
-        print(f"\n\033[91mError during test: {str(e)}\033[0m")
+        log_message(f"\nError during test: {str(e)}", "#FF6B6B")
         return False
 
 def cli_mode(controller, gui_logger, hardware_logger):
@@ -502,238 +580,108 @@ def gui_mode(controller, gui_logger, hardware_logger):
     class LoggerThread(QThread):
         """Thread to handle Arduino responses and logging"""
         log_signal = pyqtSignal(str, str)  # message, color
+        response_signal = pyqtSignal(str)  # For test routine to receive responses
 
         def __init__(self, controller):
             super().__init__()
             self.controller = controller
             self.running = True
+            self._lock = threading.Lock()
+
+        def write_command(self, command):
+            """Write a command to Arduino"""
+            with self._lock:
+                if not self.running or not self.controller._arduino.is_open:
+                    return
+                self.controller._arduino.write(command.encode())
+                self.controller._arduino.flush()
 
         def run(self):
             while self.running and self.controller and self.controller._arduino:
                 try:
-                    response = self.controller._arduino.readline().decode('utf-8').strip()
-                    if response:
-                        # Map responses to colors similar to CLI mode
-                        color = "white"  # default
-                        if "ERROR" in response:
-                            color = "#FF6B6B"  # red
-                        elif "complete" in response.lower():
-                            color = "#98FB98"  # light green
-                        elif "READY" in response:
-                            color = "#90EE90"  # pale green
-                        elif "Moving" in response:
-                            color = "#DDA0DD"  # plum
-                        elif "Temperature" in response:
-                            color = "#98FB98"  # light green
-                        elif "Tilt" in response:
-                            color = "#98FB98"  # light green
-                        self.log_signal.emit(response, color)
+                    with self._lock:
+                        if not self.running or not self.controller._arduino.is_open:
+                            break
+                        response = self.controller._arduino.readline().decode('utf-8').strip()
+                        if response:
+                            # Map responses to colors similar to CLI mode
+                            color = "white"  # default
+                            if "ERROR" in response:
+                                color = "#FF6B6B"  # red
+                                print(f"\033[91m{response}\033[0m")
+                            elif "complete" in response.lower():
+                                color = "#98FB98"  # light green
+                                print(f"\033[92m{response}\033[0m")
+                            elif "READY" in response:
+                                color = "#90EE90"  # pale green
+                                print(f"\033[92m{response}\033[0m")
+                            elif "Moving" in response:
+                                color = "#DDA0DD"  # plum
+                                print(f"\033[95m{response}\033[0m")
+                            elif "Temperature" in response:
+                                color = "#98FB98"  # light green
+                                print(f"\033[92m{response}\033[0m")
+                            elif "Tilt" in response:
+                                color = "#98FB98"  # light green
+                                print(f"\033[92m{response}\033[0m")
+                            else:
+                                print(response)
+                            
+                            # Send to GUI
+                            self.log_signal.emit(response, color)
+                            # Send to test routine
+                            self.response_signal.emit(response)
+
                 except Exception as e:
-                    self.log_signal.emit(f"Error reading Arduino: {str(e)}", "#FF6B6B")
+                    error_msg = f"Error reading Arduino: {str(e)}"
+                    print(f"\033[91m{error_msg}\033[0m")
+                    self.log_signal.emit(error_msg, "#FF6B6B")
                     break
+
+                time.sleep(0.01)  # Small delay to prevent CPU hogging
+
+        def stop(self):
+            """Safely stop the thread"""
+            self.running = False
+            self.wait()
 
     class MainWindow(QMainWindow):
         def __init__(self, controller, parent=None):
             super().__init__(parent)
             self.controller = controller
-            self.setup_ui()
             self.logger_thread = None
             self.is_homed = False
+            self.setup_ui()
+            self.test_responses = []
+            self.test_response_lock = threading.Lock()
 
             # Start logger thread
             if self.controller and self.controller._arduino:
                 self.logger_thread = LoggerThread(self.controller)
                 self.logger_thread.log_signal.connect(self.append_colored_text)
+                self.logger_thread.response_signal.connect(self.handle_response)
                 self.logger_thread.start()
 
-        def setup_ui(self):
-            self.setWindowTitle("TS1500 Probe Control")
-            self.setMinimumSize(800, 1000)
+        def handle_response(self, response):
+            """Handle responses from Arduino"""
+            with self.test_response_lock:
+                self.test_responses.append(response)
 
-            # Create central widget and main layout
-            central_widget = QWidget()
-            self.setCentralWidget(central_widget)
-            layout = QVBoxLayout(central_widget)
-            layout.setSpacing(20)
+        def get_next_response(self):
+            """Get next response from Arduino"""
+            timeout = time.time() + 5.0  # 5 second timeout
+            while time.time() < timeout:
+                with self.test_response_lock:
+                    if self.test_responses:
+                        return self.test_responses.pop(0)
+                time.sleep(0.01)
+            raise Exception("Timeout waiting for Arduino response")
 
-            # Set dark theme
-            self.setStyleSheet("""
-                QMainWindow, QWidget {
-                    background-color: #2b2b2b;
-                    color: #ffffff;
-                }
-                QLabel {
-                    font-size: 14px;
-                }
-                QLineEdit {
-                    background-color: #3b3b3b;
-                    color: #ffffff;
-                    border: 1px solid #555555;
-                    padding: 5px;
-                    border-radius: 3px;
-                    font-size: 14px;
-                    min-height: 25px;
-                }
-                QPushButton {
-                    background-color: #0d47a1;
-                    color: white;
-                    border: none;
-                    padding: 10px;
-                    border-radius: 5px;
-                    font-size: 14px;
-                    min-width: 100px;
-                    min-height: 40px;
-                }
-                QPushButton:hover {
-                    background-color: #1565c0;
-                }
-                QPushButton:disabled {
-                    background-color: #666666;
-                }
-                QTextEdit {
-                    background-color: #1b1b1b;
-                    color: #ffffff;
-                    border: 1px solid #555555;
-                    font-family: "Courier New";
-                    font-size: 14px;
-                    padding: 10px;
-                }
-            """)
-
-            # Temperature Export Path Section
-            export_frame = QFrame()
-            export_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
-            export_layout = QVBoxLayout(export_frame)
-            
-            path_layout = QHBoxLayout()
-            self.export_path = QLineEdit()
-            self.export_path.setPlaceholderText("Temperature Export Path")
-            self.export_path.setText(os.path.expanduser("~/Desktop/TEMP_Export_Tilt-Test_001"))
-            browse_btn = QPushButton("Browse...")
-            browse_btn.clicked.connect(self.browse_export_path)
-            path_layout.addWidget(QLabel("Export Path:"))
-            path_layout.addWidget(self.export_path)
-            path_layout.addWidget(browse_btn)
-            export_layout.addLayout(path_layout)
-            
-            # Test Number Entry
-            test_num_layout = QHBoxLayout()
-            self.test_number = QLineEdit()
-            self.test_number.setPlaceholderText("Test Number")
-            self.test_number.setText("1")
-            test_num_layout.addWidget(QLabel("Test Number:"))
-            test_num_layout.addWidget(self.test_number)
-            export_layout.addLayout(test_num_layout)
-            
-            layout.addWidget(export_frame)
-
-            # Home Button (must be used first)
-            self.home_btn = QPushButton("HOME SYSTEM (Required First)")
-            self.home_btn.clicked.connect(self.home_system)
-            layout.addWidget(self.home_btn)
-
-            # Parameter Entry Section
-            param_frame = QFrame()
-            param_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
-            param_layout = QVBoxLayout(param_frame)
-
-            # Test Type
-            type_layout = QHBoxLayout()
-            self.test_type = QLineEdit()
-            self.test_type.setPlaceholderText("1 for Tilt, 2 for Fill")
-            self.test_type.setText("1")
-            type_layout.addWidget(QLabel("Test Type:"))
-            type_layout.addWidget(self.test_type)
-            param_layout.addLayout(type_layout)
-
-            # Steps per increment
-            step_layout = QHBoxLayout()
-            self.step_inc = QLineEdit()
-            self.step_inc.setText("200")
-            step_layout.addWidget(QLabel("Steps/Increment:"))
-            step_layout.addWidget(self.step_inc)
-            param_layout.addLayout(step_layout)
-
-            # Number of steps
-            num_steps_layout = QHBoxLayout()
-            self.num_steps = QLineEdit()
-            self.num_steps.setText("25")
-            num_steps_layout.addWidget(QLabel("Number of Steps:"))
-            num_steps_layout.addWidget(self.num_steps)
-            param_layout.addLayout(num_steps_layout)
-
-            # Number of loops
-            loops_layout = QHBoxLayout()
-            self.num_loops = QLineEdit()
-            self.num_loops.setText("1")
-            loops_layout.addWidget(QLabel("Number of Loops:"))
-            loops_layout.addWidget(self.num_loops)
-            param_layout.addLayout(loops_layout)
-
-            # VNA dwell time
-            vna_layout = QHBoxLayout()
-            self.vna_dwell = QLineEdit()
-            self.vna_dwell.setText("3")
-            vna_layout.addWidget(QLabel("VNA Dwell (s):"))
-            vna_layout.addWidget(self.vna_dwell)
-            param_layout.addLayout(vna_layout)
-
-            # Oil dwell time
-            oil_layout = QHBoxLayout()
-            self.oil_dwell = QLineEdit()
-            self.oil_dwell.setText("3")
-            oil_layout.addWidget(QLabel("Oil Dwell (s):"))
-            oil_layout.addWidget(self.oil_dwell)
-            param_layout.addLayout(oil_layout)
-
-            # Drain delay time
-            drain_layout = QHBoxLayout()
-            self.drain_delay = QLineEdit()
-            self.drain_delay.setText("20")
-            drain_layout.addWidget(QLabel("Drain Delay (s):"))
-            drain_layout.addWidget(self.drain_delay)
-            param_layout.addLayout(drain_layout)
-
-            layout.addWidget(param_frame)
-
-            # Logger Window
-            self.log_area = QTextEdit()
-            self.log_area.setReadOnly(True)
-            self.log_area.setMinimumHeight(400)
-            layout.addWidget(self.log_area)
-
-            # Button Container
-            button_container = QWidget()
-            button_layout = QVBoxLayout(button_container)
-            button_layout.setSpacing(10)
-
-            # Run Test Button
-            self.run_btn = QPushButton("Run Test")
-            self.run_btn.setEnabled(False)  # Disabled until homed
-            self.run_btn.clicked.connect(self.run_test)
-            button_layout.addWidget(self.run_btn)
-
-            # Exit Button
-            exit_btn = QPushButton("Exit")
-            exit_btn.clicked.connect(self.close)
-            button_layout.addWidget(exit_btn)
-
-            # Add button container to main layout
-            layout.addWidget(button_container)
-
-            # Initial message
-            self.append_colored_text("GUI Started. Please HOME the system first!", "#FFD700")
-
-        def browse_export_path(self):
-            path = QFileDialog.getExistingDirectory(self, "Select Export Directory")
-            if path:
-                self.export_path.setText(path)
-
-        def append_colored_text(self, text, color="white"):
-            self.log_area.append(f'<span style="color: {color};">{text}</span>')
-            # Auto-scroll to bottom
-            scrollbar = self.log_area.verticalScrollBar()
-            scrollbar.setValue(scrollbar.maximum())
+        def closeEvent(self, event):
+            """Clean up when window is closed"""
+            if self.logger_thread:
+                self.logger_thread.stop()
+            event.accept()
 
         def home_system(self):
             if not self.controller or not self.controller._arduino:
@@ -769,9 +717,9 @@ def gui_mode(controller, gui_logger, hardware_logger):
             # Check which button was clicked
             clicked_button = dialog.clickedButton()
             if clicked_button == tilt_btn:
-                self.controller._arduino.write(b"TILT_HOME\n")
+                self.logger_thread.write_command("TILT_HOME\n")
             elif clicked_button == fill_btn:
-                self.controller._arduino.write(b"FILL_HOME\n")
+                self.logger_thread.write_command("FILL_HOME\n")
             else:
                 return  # Dialog was closed without selecting
 
@@ -818,7 +766,10 @@ def gui_mode(controller, gui_logger, hardware_logger):
                 # Run test in background thread
                 def worker():
                     try:
-                        success = run_test_routine(self.controller, params)
+                        success = run_test_routine(self.controller, params, 
+                                                gui_logger=self.append_colored_text,
+                                                write_command=self.logger_thread.write_command,
+                                                get_response=self.get_next_response)
                         if success:
                             self.append_colored_text("\nTest completed successfully!", "#90EE90")
                         else:
@@ -833,11 +784,225 @@ def gui_mode(controller, gui_logger, hardware_logger):
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
 
-        def closeEvent(self, event):
-            if self.logger_thread:
-                self.logger_thread.running = False
-                self.logger_thread.wait()
-            event.accept()
+        def setup_ui(self):
+            self.setWindowTitle("TS1500 Probe Control")
+            self.setMinimumSize(800, 1000)  # Back to original size
+
+            # Create central widget and main layout
+            central_widget = QWidget()
+            self.setCentralWidget(central_widget)
+            layout = QVBoxLayout(central_widget)
+            layout.setSpacing(5)
+            layout.setContentsMargins(10, 10, 10, 10)
+
+            # Create a top container for all controls
+            top_container = QWidget()
+            top_layout = QVBoxLayout(top_container)
+            top_layout.setSpacing(5)
+            top_layout.setContentsMargins(0, 0, 0, 0)
+
+            # Temperature Export Path Section
+            export_frame = QFrame()
+            export_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
+            export_layout = QVBoxLayout(export_frame)
+            export_layout.setSpacing(5)
+            export_layout.setContentsMargins(5, 5, 5, 5)
+            
+            path_layout = QHBoxLayout()
+            path_layout.setSpacing(10)  # Add spacing between elements
+            self.export_path = QLineEdit()
+            self.export_path.setPlaceholderText("Temperature Export Path")
+            self.export_path.setText(os.path.expanduser("~/Desktop/TEMP_Export_Tilt-Test_001"))
+            browse_btn = QPushButton("Browse...")
+            browse_btn.setFixedWidth(100)  # Fixed width for browse button
+            path_layout.addWidget(QLabel("Export Path:"), 1)
+            path_layout.addWidget(self.export_path, 4)  # Give more space to path field
+            path_layout.addWidget(browse_btn, 1)
+            export_layout.addLayout(path_layout)
+            
+            # Test Number Entry
+            test_num_layout = QHBoxLayout()
+            test_num_layout.setSpacing(10)
+            self.test_number = QLineEdit()
+            self.test_number.setPlaceholderText("Test Number")
+            self.test_number.setText("1")
+            test_num_layout.addWidget(QLabel("Test Number:"), 1)
+            test_num_layout.addWidget(self.test_number, 5)
+            export_layout.addLayout(test_num_layout)
+            
+            top_layout.addWidget(export_frame)
+
+            # Home Button
+            self.home_btn = QPushButton("HOME SYSTEM (Required First)")
+            self.home_btn.clicked.connect(self.home_system)
+            top_layout.addWidget(self.home_btn)
+
+            # Parameter Entry Section
+            param_frame = QFrame()
+            param_frame.setFrameStyle(QFrame.Shape.Box | QFrame.Shadow.Sunken)
+            param_layout = QVBoxLayout(param_frame)
+            param_layout.setSpacing(5)
+            param_layout.setContentsMargins(5, 5, 5, 5)
+
+            # Create two columns for parameters
+            param_columns = QHBoxLayout()
+            param_columns.setSpacing(20)  # Add spacing between columns
+            left_column = QVBoxLayout()
+            left_column.setSpacing(5)
+            right_column = QVBoxLayout()
+            right_column.setSpacing(5)
+
+            # Helper function to create parameter rows
+            def create_param_row(label_text, default_value=""):
+                layout = QHBoxLayout()
+                layout.setSpacing(10)
+                label = QLabel(label_text)
+                label.setFixedWidth(120)  # Fixed width for labels
+                entry = QLineEdit()
+                entry.setText(default_value)
+                layout.addWidget(label)
+                layout.addWidget(entry)
+                return layout, entry
+
+            # Left Column
+            type_layout, self.test_type = create_param_row("Test Type:", "1")
+            self.test_type.setPlaceholderText("1 for Tilt, 2 for Fill")
+            left_column.addLayout(type_layout)
+
+            step_layout, self.step_inc = create_param_row("Steps/Increment:", "200")
+            left_column.addLayout(step_layout)
+
+            num_steps_layout, self.num_steps = create_param_row("Number of Steps:", "25")
+            left_column.addLayout(num_steps_layout)
+
+            loops_layout, self.num_loops = create_param_row("Number of Loops:", "1")
+            left_column.addLayout(loops_layout)
+
+            # Right Column
+            vna_layout, self.vna_dwell = create_param_row("VNA Dwell (s):", "3")
+            right_column.addLayout(vna_layout)
+
+            oil_layout, self.oil_dwell = create_param_row("Oil Dwell (s):", "3")
+            right_column.addLayout(oil_layout)
+
+            drain_layout, self.drain_delay = create_param_row("Drain Delay (s):", "20")
+            right_column.addLayout(drain_layout)
+
+            # Add columns to parameter layout
+            param_columns.addLayout(left_column)
+            param_columns.addLayout(right_column)
+            param_layout.addLayout(param_columns)
+
+            top_layout.addWidget(param_frame)
+
+            # Button Container - Horizontal layout
+            button_container = QWidget()
+            button_layout = QHBoxLayout(button_container)
+            button_layout.setSpacing(10)
+            button_layout.setContentsMargins(0, 0, 0, 0)
+
+            # Run Test Button
+            self.run_btn = QPushButton("Run Test")
+            self.run_btn.setEnabled(False)
+            self.run_btn.clicked.connect(self.run_test)
+            button_layout.addWidget(self.run_btn)
+
+            # Exit Button
+            exit_btn = QPushButton("Exit")
+            exit_btn.clicked.connect(self.close)
+            button_layout.addWidget(exit_btn)
+
+            top_layout.addWidget(button_container)
+
+            # Add the top container to main layout
+            layout.addWidget(top_container)
+
+            # Logger Window
+            log_container = QWidget()
+            log_layout = QVBoxLayout(log_container)
+            log_layout.setContentsMargins(0, 0, 0, 0)
+            
+            self.log_area = QTextEdit()
+            self.log_area.setReadOnly(True)
+            self.log_area.setMinimumHeight(400)  # Back to original height
+            log_layout.addWidget(self.log_area)
+            
+            # Add the log container to main layout with stretch
+            layout.addWidget(log_container, 1)
+
+            # Initial message
+            self.append_colored_text("GUI Started. Please HOME the system first!", "#FFD700")
+
+            # Set dark theme
+            self.setStyleSheet("""
+                QMainWindow, QWidget {
+                    background-color: #2b2b2b;
+                    color: #ffffff;
+                }
+                QLabel {
+                    font-size: 14px;
+                }
+                QLineEdit {
+                    background-color: #3b3b3b;
+                    color: #ffffff;
+                    border: 1px solid #555555;
+                    padding: 5px;
+                    border-radius: 3px;
+                    font-size: 14px;
+                    min-height: 25px;
+                }
+                QPushButton {
+                    background-color: #0d47a1;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    min-width: 100px;
+                    min-height: 40px;
+                }
+                QPushButton:hover {
+                    background-color: #1565c0;
+                }
+                QPushButton:disabled {
+                    background-color: #666666;
+                }
+                QTextEdit {
+                    background-color: #1b1b1b;
+                    color: #ffffff;
+                    border: 1px solid #555555;
+                    font-family: "Courier New";
+                    font-size: 14px;
+                    padding: 10px;
+                }
+                QFrame {
+                    margin-bottom: 5px;
+                }
+            """)
+
+        def browse_export_path(self):
+            path = QFileDialog.getExistingDirectory(self, "Select Export Directory")
+            if path:
+                self.export_path.setText(path)
+
+        def append_colored_text(self, text, color="white"):
+            """Add colored text to log area and ensure it's visible"""
+            self.log_area.append(f'<span style="color: {color};">{text}</span>')
+            
+            # Force processing of pending events to ensure text is added
+            QApplication.processEvents()
+            
+            # Move cursor to end
+            cursor = self.log_area.textCursor()
+            cursor.movePosition(cursor.MoveOperation.End)
+            self.log_area.setTextCursor(cursor)
+            
+            # Ensure the last line is visible
+            self.log_area.ensureCursorVisible()
+            
+            # Force scroll to bottom
+            scrollbar = self.log_area.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
 
     # Create and run application
     app = QApplication(sys.argv)
