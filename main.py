@@ -144,6 +144,12 @@ def run_test_routine(controller, params, gui_logger=None, write_command=None, ge
     def safe_get_response():
         """Safely get a response with error handling"""
         try:
+            if get_response is None:
+                # If no get_response function provided, read directly from Arduino
+                if controller and controller._arduino:
+                    response = controller._arduino.readline().decode('utf-8').strip()
+                    return response
+                return None
             return get_response()
         except Exception as e:
             log_message(f"Error getting response: {str(e)}", "#FF6B6B")
@@ -152,13 +158,85 @@ def run_test_routine(controller, params, gui_logger=None, write_command=None, ge
     def safe_write_command(cmd):
         """Safely write a command with error handling"""
         try:
+            if write_command is None:
+                # If no write_command function provided, write directly to Arduino
+                if controller and controller._arduino:
+                    controller._arduino.write(cmd.encode())
+                    controller._arduino.flush()
+                return
             write_command(cmd)
         except Exception as e:
             log_message(f"Error writing command: {str(e)}", "#FF6B6B")
 
+    def focus_vna_window():
+        """Attempt to focus the VNA window before sweep"""
+        try:
+            from Xlib import X, display, protocol
+            from Xlib.error import BadWindow
+            
+            # Connect to X display
+            d = display.Display()
+            root = d.screen().root
+            
+            # Get window list
+            window_list = root.query_tree().children
+            target_window = None
+            
+            # Function to get window name
+            def get_window_name(window):
+                try:
+                    window_name = window.get_wm_name()
+                    if isinstance(window_name, bytes):
+                        return window_name.decode('utf-8')
+                    return window_name
+                except (BadWindow, UnicodeDecodeError):
+                    return None
+            
+            # Search through windows recursively
+            def find_vna_window(windows):
+                for window in windows:
+                    try:
+                        name = get_window_name(window)
+                        if name and 'vna/J' in name:
+                            return window
+                        # Check child windows
+                        children = window.query_tree().children
+                        if children:
+                            result = find_vna_window(children)
+                            if result:
+                                return result
+                    except BadWindow:
+                        continue
+                return None
+            
+            # Find VNA window
+            target_window = find_vna_window(window_list)
+            
+            if target_window:
+                # Raise and focus window
+                target_window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                target_window.configure(stack_mode=X.Above)
+                d.sync()
+                time.sleep(1)  # Wait for window to focus
+            else:
+                log_message("Warning: Could not find VNA window with 'vna/J' in title", "#FFD700")
+                
+        except Exception as e:
+            log_message(f"Warning: Could not focus VNA window: {str(e)}", "#FFD700")
+
+    def trigger_vna_sweep():
+        """Trigger VNA sweep with window focusing"""
+        try:
+            focus_vna_window()
+            pyautogui.press('f12')
+        except Exception as e:
+            log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
+            log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
+            input("Press Enter after pressing F12...")
+
     try:
         log_message("Preparing to start test...", "#FFD700")
-        log_message("IMPORTANT: Please click on your VNA window now to ensure it receives the F12 keypress!", "#FF6B6B")
+        log_message("IMPORTANT: Please ensure VNA window with 'vna/J' in title is open!", "#FF6B6B")
         
         # Import pyautogui here to avoid startup delay
         pyautogui.FAILSAFE = False  # Disable fail-safe
@@ -205,12 +283,7 @@ def run_test_routine(controller, params, gui_logger=None, write_command=None, ge
             
             # Take initial measurement (point 1)
             log_message("Taking measurement at home position (point 1)...", "#FFD700")
-            try:
-                pyautogui.press('f12')
-            except Exception as e:
-                log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
-                log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
-                input("Press Enter after pressing F12...")
+            trigger_vna_sweep()
             
             # Wait for VNA
             log_message(f"Waiting {params['vna_dwell']}s for VNA sweep...", "#FFD700")
@@ -277,12 +350,7 @@ def run_test_routine(controller, params, gui_logger=None, write_command=None, ge
                 
                 # Trigger VNA sweep
                 log_message("Triggering VNA sweep...", "#FFD700")
-                try:
-                    pyautogui.press('f12')
-                except Exception as e:
-                    log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
-                    log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
-                    input("Press Enter after pressing F12...")
+                trigger_vna_sweep()
                 
                 # Wait for VNA
                 log_message(f"Waiting {params['vna_dwell']}s for VNA sweep...", "#FFD700")
@@ -339,12 +407,7 @@ def run_test_routine(controller, params, gui_logger=None, write_command=None, ge
                 # For fill test, if there are more loops, take measurement at 0 (this becomes point 1 of next loop)
                 if params['test_type'] == "2":  # Fill Test
                     log_message("Taking measurement at home position (point 1 of next loop)...", "#FFD700")
-                    try:
-                        pyautogui.press('f12')
-                    except Exception as e:
-                        log_message(f"Error triggering VNA sweep: {str(e)}", "#FF6B6B")
-                        log_message("Please press F12 manually in the VNA window now", "#FF6B6B")
-                        input("Press Enter after pressing F12...")
+                    trigger_vna_sweep()
                     
                     time.sleep(params['vna_dwell'])
                     

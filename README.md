@@ -2,6 +2,36 @@
 
 A PyQt6-based GUI application for controlling and monitoring the TS1500 Probe system.
 
+## Running the Application
+
+To run in CLI (headless) mode:
+```bash
+python main.py
+```
+
+To run the GUI version of the application:
+```bash
+python main.py --mode gui
+```
+
+This launches the graphical interface for:
+- Setting temperature export paths
+- Entering test parameters  
+- Homing the system
+- Running tests
+- Monitoring progress through the log window
+
+## Hardware Commands
+
+- `TEST`: System-wide self-test
+- `STATUS`: Current system status
+- `TEMP`: Read temperature sensor
+- `MOVE <steps>`: Move stepper motor
+- `HOME`: Home stepper motor
+- `STOP`: Stop motor movement
+- `CALIBRATE`: System calibration
+- `EMERGENCY_STOP`: Emergency stop
+
 ## Quick Start Installation
 
 1. Clone the repository:
@@ -59,35 +89,8 @@ sudo apt install libxcb-cursor0 libxcb-xinerama0 libxcb-xfixes0 libxcb-shape0 \
 
 These libraries are required for the PyQt6 GUI components to function properly.
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 9a821f2 (WIP)
 ## Features
 
-### Hardware Control
-- VNA integration with key event triggering
-- Stepper motor control (±0.0002° precision)
-- Temperature sensor monitoring
-- Real-time connection status updates
-- Emergency stop functionality
-
-### GUI Interface
-- Dark theme with Ubuntu Bold font
-- Draggable dividers with light blue borders (#47A8E5)
-- Real-time plotting of tilt angle and temperature
-- Color-coded logger messages
-- Test progress monitoring
-
-### Configuration
-- Test parameter configuration:
-  - Tilt Increment (0.1° accuracy)
-  - Minimum Tilt (-30° to +30°)
-  - Maximum Tilt (-30° to +30°)
-  - Oil Level Time (stabilization delay)
-- YAML-based configuration management
-- Auto-loading of last used settings
 
 ### Data Management
 - Automatic data logging
@@ -104,17 +107,6 @@ These libraries are required for the PyQt6 GUI components to function properly.
   - Total execution time
   - Angles tested
   - Configuration used
-
-- Data directory structure:
-  ```
-  data/
-  ├── vna/
-  │   └── vna_measurements.csv
-  ├── temperature/
-  │   └── temperature_log.csv
-  ├���─ logs/
-  └── results/
-  ```
 
 
 # Arduino Library: 
@@ -178,35 +170,10 @@ These libraries are required for the PyQt6 GUI components to function properly.
 | **SO**          | **Pin 12 - MISO**       | SPI Data Out (Slave Out).                                      |
 | **SCK**         | **Pin 13 - SCK**        | SPI Clock.                                                     |
 | **CS**          | **PWM Pin 10**          | Chip Select (can be any digital pin).                          |
-|                 |                         |                                                                |
-|                 |                         |                                                                |
 
 
 
 
-## Hardware Commands
-
-- `TEST`: System-wide self-test
-- `STATUS`: Current system status
-- `TEMP`: Read temperature sensor
-- `MOVE <steps>`: Move stepper motor
-- `HOME`: Home stepper motor
-- `STOP`: Stop motor movement
-- `CALIBRATE`: System calibration
-- `EMERGENCY_STOP`: Emergency stop
-
-## Development
-
-The project follows a modular architecture:
-- `controllers/`: Business logic and hardware control
-- `gui/`: PyQt6 interface components
-- `utils/`: Helper functions and utilities
-- `models/`: Data models and structures
-- `hardware/`: Hardware communication layer
-
-## License
-
-[Your License Here]
 
 
 
